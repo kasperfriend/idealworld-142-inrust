@@ -39,11 +39,10 @@ pub struct SceneCtrlConfig {
 }
 
 impl SceneCtrlConfig {
-    /// Camera index in `self.cameras` for Character Creation preview of `cls` (`0..=7`).
-    /// Verified directly against `configs\scenectrl.ini`:
-    /// `Cam[0]` = Login, `Cam[1]` = Tideborn intro, `Cam[2..=9]` = Create Character (`[NewChar] Pos[0..=7]`),
-    /// `Cam[10..=17]` = Select Character (`[NewChar] Pos[0..=7]`), `Cam[18..=25]` = Face Customize Zoom.
-    pub const CREATE_CAM_FOR_CLASS: [usize; 8] = [2, 3, 4, 5, 6, 7, 8, 9];
+    /// Character-Creation camera slot per class (`0..=7`) — verified against the original
+    /// `elementclient.exe` (`CREATE_CAM_FOR_CLASS = [2,3,1,5,13,4,8,9]`, findings/00 & findings/05).
+    /// `Cam[0]` = Login, `Cam[10..=17]` = Select Character, `Cam[18..=25]` = Face Customize Zoom.
+    pub const CREATE_CAM_FOR_CLASS: [usize; 8] = [2, 3, 1, 5, 13, 4, 8, 9];
 
     pub fn from_ini(ini: &IniFile) -> Self {
         let get_f = |sec: &str, k: &str| -> Option<f32> {
@@ -1374,6 +1373,16 @@ impl MapInstanceBundle {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_create_cam_for_class_matches_original_engine() {
+        // Verified against `elementclient.exe` (findings/00_MASTER_REVERSE_ENGINEERING_REPORT.md
+        // and findings/05): `CREATE_CAM_FOR_CLASS = [2,3,1,5,13,4,8,9]`.
+        assert_eq!(
+            SceneCtrlConfig::CREATE_CAM_FOR_CLASS,
+            [2, 3, 1, 5, 13, 4, 8, 9]
+        );
+    }
 
     #[test]
     fn test_real_a01_login_and_midlands_world_maps() {
