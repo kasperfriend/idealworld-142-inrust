@@ -315,6 +315,12 @@ pub struct LoadedScene3D {
 
 impl LoadedScene3D {
     pub fn build(map: &MapInstanceBundle, vfs: &VirtualFileSystem) -> Self {
+        Self::build_with_night(map, vfs, 0.0)
+    }
+
+    /// Builds the scene with a day→night lightmap blend (`night_weight` 0.0 = full day `.t2lm`,
+    /// 1.0 = full night `.t2lm1` baked lightmaps on terrain).
+    pub fn build_with_night(map: &MapInstanceBundle, vfs: &VirtualFileSystem, night_weight: f32) -> Self {
         let mut textures = Vec::new();
         let mut tex_lookup = HashMap::new();
 
@@ -395,7 +401,7 @@ impl LoadedScene3D {
 
         // 2. Terrain (`A3DTerrain2` 16-area tri-planar splat + `.t2lm` DXT1 `MODULATE2X` lightmap compositor)
         let (terrain_blocks, terrain_detail_tex, terrain_sub_splats) =
-            build_terrain_blocks(map, vfs, &mut textures, &mut tex_lookup);
+            build_terrain_blocks(map, vfs, &mut textures, &mut tex_lookup, night_weight);
 
         // 3. Ornaments (`CECOrnament` + `A3DLitModel` `.bmd`)
         let mut bmd_path_to_idx: HashMap<String, usize> = HashMap::new();
@@ -2506,6 +2512,7 @@ fn build_terrain_blocks(
     vfs: &VirtualFileSystem,
     textures: &mut Vec<SurfaceImage>,
     tex_lookup: &mut HashMap<String, usize>,
+    night_weight: f32,
 ) -> (
     Vec<TerrainBlockDraw>,
     Vec<Option<SurfaceImage>>,
@@ -2561,7 +2568,7 @@ fn build_terrain_blocks(
         map.t2mk.as_ref(),
         map.t2lm_day.as_ref(),
         map.t2lm_night.as_ref(),
-        0.0,
+        night_weight,
         &detail_imgs,
         &map.map_name,
         768,

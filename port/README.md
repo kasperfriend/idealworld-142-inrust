@@ -19,6 +19,8 @@ You can also launch with `eSTART.bat` flags (`pw-elementclient.exe nocheck game:
 
 **Sandbox mode** (headless/scripted play): `--map <name>` boots straight into `maps\<name>` instead of the login map (e.g. `--map world` loads the 8192x11264m Midlands continent), and `--pos <x,z>` sets the world spawn/streaming center in meters (e.g. `--pos 1292,1132` = Archosaur West Plaza). Combine with `--screenshots DIR` to render the scripted 20-frame world tour (Archosaur, City of the Plume, Etherblade, Raging Tides, City of the Lost) or the 8-frame login/a01 suite, and `--check` for a boot-only smoke test.
 
+**Teleport menu** (sandbox): `--list-tp` prints all 54 `world_targets.txt` landmarks of the active map with their IDs and world coordinates; `--tp <id|name>` (repeatable, name matched case-insensitively/substring) teleports the player there and renders one `tpNN_<name>.bmp` screenshot frame per target into the `--screenshots` directory — works for any landmark on the continent, hopping to `maps\world` automatically when needed. **`--night`** blends in the real baked `.t2lm1` night lightmaps (day `.t2lm` by default) for all rendered frames.
+
 ### Authentic Game Flow & Controls
 
 - **Login Screen (`Maps\Login` `Cam[0]` + `interfaces\loginui.dcf`)**:

@@ -20,6 +20,12 @@ fn main() {
     // (e.g. `--map world --pos 1292,1132` = Archosaur West Plaza on the Midlands continent).
     let mut sandbox_map: Option<String> = None;
     let mut sandbox_pos: Option<(f32, f32)> = None;
+    // Sandbox teleport menu: `--list-tp` prints the world_targets.txt landmarks,
+    // `--tp <id|name>` (repeatable) renders a screenshot frame at each target.
+    let mut list_tp = false;
+    let mut tp_specs: Vec<String> = Vec::new();
+    // Sandbox day/night: `--night` blends in the real `.t2lm1` night lightmaps.
+    let mut night = false;
 
     let mut idx = 0usize;
     while idx < args.len() {
@@ -31,8 +37,10 @@ fn main() {
             println!(
                 "Usage: pw-elementclient [element_dir] [--check] [--offline] [--screenshots DIR]\n\
                  \x20                     [--connect ADDR | server:ADDR] [--user U | user:U] [--pass P | pwd:P] [--role R | role:R]\n\
-                 \x20                     [--map NAME] [--pos X,Z]\n\
-                 Sandbox: --map boots straight into maps/<NAME> (default login), --pos X,Z sets the world spawn center."
+                 \x20                     [--map NAME] [--pos X,Z] [--list-tp] [--tp ID|NAME]... [--night]\n\
+                 Sandbox: --map boots straight into maps/<NAME> (default login), --pos X,Z sets the world spawn center.\n\
+                 Teleport menu: --list-tp prints all world_targets.txt landmarks; --tp <id|name> (repeatable)\n\
+                 \x20             renders one screenshot frame per target; --night uses the .t2lm1 night lightmaps."
             );
             return;
         } else if low == "--offline" {
@@ -76,6 +84,15 @@ fn main() {
                 }
                 idx += 1;
             }
+        } else if low == "--list-tp" {
+            list_tp = true;
+        } else if low == "--tp" {
+            if idx + 1 < args.len() {
+                tp_specs.push(args[idx + 1].clone());
+                idx += 1;
+            }
+        } else if low == "--night" {
+            night = true;
         } else if let Some(v) = a.strip_prefix("server:").or_else(|| a.strip_prefix("SERVER:")) {
             connect_addr = Some(v.to_string());
         } else if let Some(v) = a.strip_prefix("user:").or_else(|| a.strip_prefix("USER:")) {
@@ -127,6 +144,31 @@ fn main() {
                 process::exit(1);
             }
         }
+    }
+
+    // Sandbox teleport menu: print the active (or Midlands) map's `world_targets.txt` landmarks.
+    if list_tp {
+        if game.active_map.world_targets.is_empty()
+            && game.available_maps.iter().any(|m| m.eq_ignore_ascii_case("world"))
+        {
+            let _ = game.load_map_by_name_at(
+                "world",
+                pw_world::MapInstanceBundle::ARCHOSAUR_DEFAULT_CENTER,
+            );
+        }
+        println!(
+            "Teleport menu (map '{}', {} targets):",
+            game.active_map.map_name,
+            game.active_map.world_targets.len()
+        );
+        for t in &game.active_map.world_targets {
+            println!(
+                "  [{:>2}] {:<44} ({:>9.1}, {:>8.1}, {:>9.1})",
+                t.id, t.name, t.pos.x, t.pos.y, t.pos.z
+            );
+        }
+        println!("Use with: --screenshots DIR --tp <id|name> (repeatable)");
+        return;
     }
 
     let default_srv = game
@@ -183,6 +225,9 @@ fn main() {
         let out_dir = std::path::Path::new(&sdir);
         let _ = std::fs::create_dir_all(out_dir);
         let mut app = InteractiveClientApp::new(game);
+        if night {
+            app.set_night_weight(1.0);
+        }
         let mut fb = pw_render_audio::FrameBuffer::new(1280, 800);
         let idle_in = pw_client::game_app::InputSnapshot::default();
 
@@ -399,6 +444,75 @@ fn main() {
             );
         } else {
             println!("  Saved 8 full-parity 1280x800 frames to '{}'", out_dir.display());
+        }
+
+        // Sandbox teleport menu: render one 1280x800 frame per `--tp <id|name>` landmark
+        // (targets come from the active map's `world_targets.txt`; hops to `maps/world` if needed).
+        if !tp_specs.is_empty() {
+            if !app.game.active_map.map_name.eq_ignore_ascii_case("world")
+                && app
+                    .game
+                    .available_maps
+                    .iter()
+                    .any(|m| m.eq_ignore_ascii_case("world"))
+            {
+                let _ = app.load_map_and_reload(
+                    "world",
+                    pw_world::MapInstanceBundle::ARCHOSAUR_DEFAULT_CENTER,
+                );
+            }
+            let targets = app.game.active_map.world_targets.clone();
+            if targets.is_empty() {
+                eprintln!(
+                    "  --tp: active map '{}' has no world_targets.txt",
+                    app.game.active_map.map_name
+                );
+            }
+            let mut n = 0usize;
+            for spec in &tp_specs {
+                let t = if let Ok(id) = spec.parse::<u32>() {
+                    targets.iter().find(|t| t.id == id).cloned()
+                } else {
+                    let low = spec.to_ascii_lowercase();
+                    targets
+                        .iter()
+                        .find(|t| t.name.to_ascii_lowercase() == low)
+                        .or_else(|| {
+                            targets
+                                .iter()
+                                .find(|t| t.name.to_ascii_lowercase().contains(&low))
+                        })
+                        .cloned()
+                };
+                let Some(t) = t else {
+                    eprintln!("  --tp '{spec}': not found (see --list-tp)");
+                    continue;
+                };
+                if !app.game.active_map.map_name.eq_ignore_ascii_case("world") {
+                    let _ = app.load_map_and_reload("world", t.pos);
+                }
+                n += 1;
+                app.modal = pw_client::game_app::InWorldModal::None;
+                app.flying_mode = false;
+                app.cam_dist = 9.5;
+                app.cam_pitch = 0.22;
+                app.player_yaw = 2.18;
+                app.cam_yaw = 2.18;
+                app.teleport_to_world_pos(t.pos.x, t.pos.z, Some(&t.name));
+                app.tick(0.35, &idle_in);
+                app.render(&mut fb, 640, 400);
+                let slug: String = t
+                    .name
+                    .chars()
+                    .map(|c| if c.is_ascii_alphanumeric() { c.to_ascii_lowercase() } else { '_' })
+                    .collect();
+                let fname = format!("tp{n:02}_{slug}.bmp");
+                std::fs::write(out_dir.join(&fname), fb.encode_bmp()).unwrap();
+                println!(
+                    "  Teleport [{:>2}] {:<40} ({:>9.1}, {:>8.1}, {:>9.1}) => {}",
+                    t.id, t.name, t.pos.x, t.pos.y, t.pos.z, fname
+                );
+            }
         }
         return;
     }

@@ -15,7 +15,7 @@
 use pw_aui::AuiRuntime;
 use pw_core::{
     decode_gbk_null_terminated, decode_utf16le_null_terminated, find_path_case_insensitive,
-    IniFile, Vec3,
+    IniFile, PwResult, Vec3,
 };
 use pw_data::ElementSectionData;
 use pw_gnet::{CharacterSummary, GLinkEvent, GLinkLiveClient, GsS2cPacket};
@@ -200,6 +200,8 @@ pub struct InteractiveClientApp {
     pub cam_yaw: f32,
     pub cam_pitch: f32,
     pub cam_dist: f32,
+    /// Day→night terrain lightmap blend (`0.0` day `.t2lm`, `1.0` night `.t2lm1`); sandbox `--night`.
+    pub night_weight: f32,
     pub player_yaw: f32,
     pub player_vel_y: f32,
     pub player_moving: bool,
@@ -288,7 +290,7 @@ impl InteractiveClientApp {
             }
         }
 
-        let mut scene_3d = LoadedScene3D::build(&game.active_map, &game.vfs);
+        let mut scene_3d = LoadedScene3D::build_with_night(&game.active_map, &game.vfs, 0.0);
         scene_3d.load_cursors_from_dir(&game.element_root);
         scene_3d.show_software_cursor = true;
         let mut login_ui = AuiRuntime::from_dcf(&game.aui_manager, "interfaces/loginui.dcf");
@@ -395,6 +397,7 @@ impl InteractiveClientApp {
             cam_yaw: 0.55,
             cam_pitch: 0.24,
             cam_dist: 8.5,
+            night_weight: 0.0,
             player_yaw: 0.55,
             player_vel_y: 0.0,
             player_moving: false,
@@ -569,6 +572,19 @@ impl InteractiveClientApp {
         app.ensure_login_map_loaded();
         app.populate_world_entities();
         app
+    }
+
+    /// Sets the day→night terrain lightmap blend and rebuilds the 3D scene (sandbox `--night`).
+    pub fn set_night_weight(&mut self, w: f32) {
+        self.night_weight = w.clamp(0.0, 1.0);
+        self.reload_active_scene_3d();
+    }
+
+    /// Switches the active map and rebuilds the 3D scene (sandbox teleport-menu map hop).
+    pub fn load_map_and_reload(&mut self, map_name: &str, center: Vec3) -> PwResult<()> {
+        self.game.load_map_by_name_at(map_name, center)?;
+        self.reload_active_scene_3d();
+        Ok(())
     }
 
     fn reload_active_scene_3d(&mut self) {
