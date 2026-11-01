@@ -23,6 +23,14 @@ on:
         required: false
         default: true
         type: boolean
+  # Also run when a version tag (v*) is pushed, so the release can be
+  # triggered from git as well as from the Actions UI. Tags created by this
+  # workflow itself use GITHUB_TOKEN, which does not re-trigger workflows,
+  # so there is no feedback loop. On tag pushes the version falls back to
+  # the tag name (see RELEASE_VERSION below).
+  push:
+    tags:
+      - "v*"
 
 permissions:
   contents: read
@@ -45,12 +53,20 @@ jobs:
     env:
       RUSTFLAGS: "-D warnings"
     steps:
+      # NOTE: this step intentionally overrides working-directory to the repo
+      # root, because the job-level default 'port' does not exist on the
+      # runner until after checkout — running it there fails the whole job
+      # with "No such file or directory" before anything is built.
       - name: Validate version tag input
+        working-directory: .
+        env:
+          VERSION_INPUT: ${{ inputs.version || github.ref_name }}
         run: |
-          if [[ ! "${{ inputs.version }}" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9._-]+)?$ ]]; then
-            echo "::error::Invalid version '${{ inputs.version }}'. Expected format like v1.4.2-r1 or v0.1.0."
+          if [[ ! "$VERSION_INPUT" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9._-]+)?$ ]]; then
+            echo "::error::Invalid version '$VERSION_INPUT'. Expected format like v1.4.2-r1 or v0.1.0."
             exit 1
           fi
+          echo "Version tag '$VERSION_INPUT' is valid."
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -91,6 +107,9 @@ jobs:
       CARGO_PROFILE_RELEASE_LTO: "thin"
       CARGO_PROFILE_RELEASE_CODEGEN_UNITS: "1"
       CARGO_PROFILE_RELEASE_STRIP: "symbols"
+      # On workflow_dispatch this is the version input; on a tag push it is the tag name.
+      RELEASE_VERSION: ${{ inputs.version || github.ref_name }}
+      BUNDLE_CONFIGS: ${{ inputs.bundle_configs || 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -119,7 +138,7 @@ jobs:
       - name: Assemble 1:1 Perfect World 1.4.2 release directory & archive
         run: |
           set -euo pipefail
-          VERSION="${{ inputs.version }}"
+          VERSION="$RELEASE_VERSION"
           PLATFORM="${{ matrix.platform }}"
           EXT="${{ matrix.ext }}"
           TARGET_BIN_DIR="port/target/${{ matrix.target }}/release"
@@ -133,7 +152,7 @@ jobs:
           cp README.md "${STAGE_DIR}/README.md"
 
           # Optionally bundle clean reference configs, launcher/patcher skins & 237 presets
-          if [[ "${{ inputs.bundle_configs }}" == "true" ]]; then
+          if [[ "$BUNDLE_CONFIGS" == "true" ]]; then
             cp -R source/pw142/config "${STAGE_DIR}/config"
             cp -R source/pw142/launcher "${STAGE_DIR}/launcher"
             cp -R source/pw142/patcher "${STAGE_DIR}/patcher"
@@ -185,6 +204,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # On workflow_dispatch this is the version input; on a tag push it is the tag name.
+      RELEASE_VERSION: ${{ inputs.version || github.ref_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -230,15 +252,15 @@ jobs:
           cat artifacts/SHA256SUMS.txt >> release_notes.md
           echo '```' >> release_notes.md
 
-      - name: Publish GitHub Release (${{ inputs.version }})
+      - name: Publish GitHub Release (${{ env.RELEASE_VERSION }})
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ inputs.version }}
+          tag_name: ${{ env.RELEASE_VERSION }}
           target_commitish: ${{ github.sha }}
-          name: "Ideal World 1.4.2 in Rust — ${{ inputs.version }}"
+          name: "Ideal World 1.4.2 in Rust — ${{ env.RELEASE_VERSION }}"
           body_path: release_notes.md
-          draft: ${{ inputs.draft }}
-          prerelease: ${{ inputs.prerelease }}
+          draft: ${{ inputs.draft || 'false' }}
+          prerelease: ${{ inputs.prerelease || 'false' }}
           generate_release_notes: true
           files: |
             artifacts/*.zip
