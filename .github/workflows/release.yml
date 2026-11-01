@@ -1,0 +1,246 @@
+name: Manual Full Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release tag / version (e.g. v1.4.2-r1)"
+        required: true
+        default: "v1.4.2-r1"
+        type: string
+      draft:
+        description: "Create as a Draft release for review before publishing"
+        required: false
+        default: false
+        type: boolean
+      prerelease:
+        description: "Mark release as a Pre-release"
+        required: false
+        default: false
+        type: boolean
+      bundle_configs:
+        description: "Include clean reference configs, launcher/patcher skins & 237 character presets"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  verify:
+    name: Pre-Release Verification (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        working-directory: port
+        shell: bash
+    env:
+      RUSTFLAGS: "-D warnings"
+    steps:
+      - name: Validate version tag input
+        run: |
+          if [[ ! "${{ inputs.version }}" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9._-]+)?$ ]]; then
+            echo "::error::Invalid version '${{ inputs.version }}'. Expected format like v1.4.2-r1 or v0.1.0."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "port -> target"
+
+      - name: Run full 35-test workspace suite (release, zero warnings)
+        run: cargo test --workspace --release
+
+  build-release-archives:
+    name: Package Release (${{ matrix.platform }})
+    needs: verify
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows-x86_64
+            target: x86_64-pc-windows-msvc
+            ext: .exe
+            archive_ext: .zip
+          - os: ubuntu-latest
+            platform: linux-x86_64
+            target: x86_64-unknown-linux-gnu
+            ext: ""
+            archive_ext: .tar.gz
+    defaults:
+      run:
+        shell: bash
+    env:
+      CARGO_PROFILE_RELEASE_LTO: "thin"
+      CARGO_PROFILE_RELEASE_CODEGEN_UNITS: "1"
+      CARGO_PROFILE_RELEASE_STRIP: "symbols"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install stable Rust toolchain (${{ matrix.target }})
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Cache Cargo build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "port -> target"
+          key: release-${{ matrix.target }}
+
+      - name: Compile all 5 binaries with LTO & symbol stripping
+        working-directory: port
+        run: |
+          cargo build --release --target "${{ matrix.target }}" \
+            --bin pw-elementclient \
+            --bin pw-elementlocalize \
+            --bin pw-launcher \
+            --bin pw-patcher \
+            --bin pw-data-versions
+
+      - name: Assemble 1:1 Perfect World 1.4.2 release directory & archive
+        run: |
+          set -euo pipefail
+          VERSION="${{ inputs.version }}"
+          PLATFORM="${{ matrix.platform }}"
+          EXT="${{ matrix.ext }}"
+          TARGET_BIN_DIR="port/target/${{ matrix.target }}/release"
+          PKG_NAME="idealworld-142-inrust-${VERSION}-${PLATFORM}"
+          STAGE_DIR="dist/${PKG_NAME}"
+
+          rm -rf dist
+          mkdir -p "${STAGE_DIR}/element/data"
+
+          # Copy root documentation
+          cp README.md "${STAGE_DIR}/README.md"
+
+          # Optionally bundle clean reference configs, launcher/patcher skins & 237 presets
+          if [[ "${{ inputs.bundle_configs }}" == "true" ]]; then
+            cp -R source/pw142/config "${STAGE_DIR}/config"
+            cp -R source/pw142/launcher "${STAGE_DIR}/launcher"
+            cp -R source/pw142/patcher "${STAGE_DIR}/patcher"
+            cp -R source/pw142/element/userdata "${STAGE_DIR}/element/userdata"
+          fi
+
+          # Place all 5 compiled binaries in their exact 1:1 PW 1.4.2 locations
+          cp "${TARGET_BIN_DIR}/pw-launcher${EXT}"        "${STAGE_DIR}/pw-launcher${EXT}"
+          cp "${TARGET_BIN_DIR}/pw-patcher${EXT}"         "${STAGE_DIR}/pw-patcher${EXT}"
+          cp "${TARGET_BIN_DIR}/pw-elementclient${EXT}"   "${STAGE_DIR}/element/pw-elementclient${EXT}"
+          cp "${TARGET_BIN_DIR}/pw-elementlocalize${EXT}" "${STAGE_DIR}/element/pw-elementlocalize${EXT}"
+          cp "${TARGET_BIN_DIR}/pw-data-versions${EXT}"   "${STAGE_DIR}/element/data/pw-data-versions${EXT}"
+
+          if [[ -z "${EXT}" ]]; then
+            chmod +x \
+              "${STAGE_DIR}/pw-launcher" \
+              "${STAGE_DIR}/pw-patcher" \
+              "${STAGE_DIR}/element/pw-elementclient" \
+              "${STAGE_DIR}/element/pw-elementlocalize" \
+              "${STAGE_DIR}/element/data/pw-data-versions"
+          fi
+
+          ARCHIVE_FILE="${PKG_NAME}${{ matrix.archive_ext }}"
+          pushd dist > /dev/null
+          if [[ "${{ matrix.archive_ext }}" == ".zip" ]]; then
+            7z a -tzip -mx=9 "${ARCHIVE_FILE}" "${PKG_NAME}" > /dev/null
+          else
+            tar -czf "${ARCHIVE_FILE}" "${PKG_NAME}"
+          fi
+          sha256sum "${ARCHIVE_FILE}" > "${ARCHIVE_FILE}.sha256"
+          popd > /dev/null
+
+          ls -lh "dist/${ARCHIVE_FILE}" "dist/${ARCHIVE_FILE}.sha256"
+
+      - name: Upload packaged release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.platform }}
+          path: |
+            dist/*.zip
+            dist/*.tar.gz
+            dist/*.sha256
+          if-no-files-found: error
+          retention-days: 14
+
+  publish-github-release:
+    name: Create Tag & Publish GitHub Release
+    needs: [verify, build-release-archives]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all platform release archives
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Generate combined SHA256SUMS.txt & release summary
+        run: |
+          set -euo pipefail
+          pushd artifacts > /dev/null
+          cat *.sha256 | sort -k2 > SHA256SUMS.txt
+          rm -f *.sha256
+          ls -lh
+          cat SHA256SUMS.txt
+          popd > /dev/null
+
+          cat << 'EOF' > release_notes.md
+          ### Included Binaries (Zero External Crate Dependencies)
+          | Binary | Location in Archive | Original PW `1.4.2` Equivalent |
+          | --- | --- | --- |
+          | `pw-elementclient` (`.exe`) | `element/` | `element/elementclient.exe` (`Build 2305` + `ElementSkill.dll` v15) |
+          | `pw-elementlocalize` (`.exe`) | `element/` | `element/elementlocalize.exe` |
+          | `pw-launcher` (`.exe`) | `<root>/` | `Launcher.exe` + `SysInfo.dll` |
+          | `pw-patcher` (`.exe`) | `<root>/` | `patcher/patcher.exe` + `PackDLL.dll` |
+          | `pw-data-versions` (`.exe`) | `element/data/` | `element/data/PW_Data_Versions.exe` |
+
+          ### Quick Start
+          1. Extract the `.zip` (Windows x64) or `.tar.gz` (Linux x64) archive.
+          2. Copy your Perfect World `1.4.2` (`Build 2305`) `.pck` archives into `element/` and `.data` databases into `element/data/`.
+          3. Launch **Offline 3D Sandbox Mode**:
+             ```bash
+             ./element/pw-elementclient startbypatcher
+             ```
+             or connect to a live `glinkd:29000` server (configured in `element/userdata/server/serverlist.txt` or via `--server host:29000 --user <account> --pass <password>`).
+
+          ### SHA-256 Checksums
+          ```text
+          EOF
+          cat artifacts/SHA256SUMS.txt >> release_notes.md
+          echo '```' >> release_notes.md
+
+      - name: Publish GitHub Release (${{ inputs.version }})
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          target_commitish: ${{ github.sha }}
+          name: "Ideal World 1.4.2 in Rust — ${{ inputs.version }}"
+          body_path: release_notes.md
+          draft: ${{ inputs.draft }}
+          prerelease: ${{ inputs.prerelease }}
+          generate_release_notes: true
+          files: |
+            artifacts/*.zip
+            artifacts/*.tar.gz
+            artifacts/SHA256SUMS.txt
