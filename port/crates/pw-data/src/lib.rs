@@ -2314,7 +2314,18 @@ mod tests {
     #[test]
     fn test_tasks_sample_and_full_tasks_data_v75_exact_eof() {
         let Some(dd) = data_dir_opt() else { return };
-        let sample = fs::read(dd.join("tasks_sample.data")).unwrap();
+        // `tasks_sample.data` is a repo fixture not shipped in the retail data/ folder; skip if absent.
+        let sample = match fs::read(dd.join("tasks_sample.data")) {
+            Ok(s) => s,
+            Err(_) => {
+                let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+                    .join("../../../source/pw142/element/data/tasks_sample.data");
+                if !fixture.is_file() {
+                    return;
+                }
+                fs::read(fixture).unwrap()
+            }
+        };
         let db = TasksDatabase::parse_exact(&sample).unwrap();
         assert_eq!(db.version, 75);
         assert_eq!(db.top_tasks.len(), 32);
@@ -2408,7 +2419,13 @@ mod tests {
         assert!(face_tex.get(&100).unwrap().base_tex.contains("虎"));
 
         // Verify all 14 class*gender `character{cls}{gender}.ini` presets resolve valid `elements.data` records
-        let char_dir = elem_root.join("userdata/character");
+        // Prefer the game root's `userdata/character`; fall back to the repo fixture copy.
+        let fixture_char_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../../source/pw142/element/userdata/character");
+        let char_dir = {
+            let staged = elem_root.join("userdata/character");
+            if staged.is_dir() { staged } else { fixture_char_dir }
+        };
         let valid_pairs = [
             "00", "01", "10", "11", "20", "21", "31", "40", "50", "51", "60", "61", "70", "71",
         ];
@@ -2445,8 +2462,14 @@ mod tests {
         let fallback_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("../../../source/pw142/element");
         let elem_root = pw_core::find_test_pw142_element(env!("CARGO_MANIFEST_DIR"))
-            .unwrap_or(fallback_root);
-        let char_dir = elem_root.join("userdata/character");
+            .unwrap_or_else(|| fallback_root.clone());
+        // Prefer the game root's `userdata/character`; fall back to the repo fixture copy.
+        let fixture_char_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../../source/pw142/element/userdata/character");
+        let char_dir = {
+            let staged = elem_root.join("userdata/character");
+            if staged.is_dir() { staged } else { fixture_char_dir }
+        };
         assert!(char_dir.is_dir(), "expected userdata/character at {}", char_dir.display());
         let valid_pairs = [
             "00", "01", "10", "11", "20", "21", "31", "40", "50", "51", "60", "61", "70", "71",
@@ -2467,7 +2490,13 @@ mod tests {
         }
 
         // Also verify `CustomizePresetCatalog` loads all `customize/` & `customize1/` named English presets (`>= 180` unique presets) with 0 CJK!
-        let catalog = CustomizePresetCatalog::load_from_element_dir(&elem_root);
+        // Fall back to the repo fixture when the staged game root lacks `userdata/character/customize*`.
+        let catalog_root = if elem_root.join("userdata/character/customize").is_dir() {
+            elem_root.clone()
+        } else {
+            fallback_root.clone()
+        };
+        let catalog = CustomizePresetCatalog::load_from_element_dir(&catalog_root);
         assert!(
             catalog.total_presets() >= 180,
             "expected >=180 named presets from customize/ & customize1/, got {}",

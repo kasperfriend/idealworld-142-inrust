@@ -188,6 +188,75 @@ pub struct UiText2D {
     pub clip_rect: Option<(i32, i32, i32, i32)>,
 }
 
+/// Fallback `facedata.pck` texture candidates for a `CECFace` submesh whose raw texture failed
+/// primary resolution. Real archive layout (verified entry-by-entry against the shipped pck):
+///   facedata/{武侠男,法师女,影族男,影族女,妖兽男}/个性化/五官贴图库/{眼型,脸型,眉型,鼻型,嘴型,胡型,眼球}/*.dds
+///   facedata/{...}/头发模型库/textures/*.dds   (+ 预定义/*.ini, 表情库/*.eface)
+/// Only these five class folders exist; other professions share them via their 预定义 presets.
+pub fn cec_face_fallback_candidates(
+    cls: i32,
+    gender: u8,
+    hint: &str,
+    raw_tex: &str,
+    is_hair_skin: bool,
+) -> Vec<String> {
+    let is_female = match cls.clamp(0, 7) {
+        3 => true,
+        4 => false,
+        _ => gender != 0,
+    };
+    let raw_low = raw_tex.to_ascii_lowercase();
+    let class_dir: &str = match (cls.clamp(0, 7), is_female) {
+        (2 | 5, true) => "影族女",
+        (2 | 5, false) => "影族男",
+        (4, _) => "妖兽男",
+        (_, true) => "法师女",
+        _ => "武侠男",
+    };
+    if is_hair_skin || hint.contains("头发") || raw_tex.contains('发') {
+        let hair = if class_dir.starts_with("影族") {
+            format!("facedata/{class_dir}/头发模型库/textures/影族头发a01.dds")
+        } else {
+            format!("facedata/{class_dir}/头发模型库/textures/头发a01.dds")
+        };
+        // Cross-folder fallbacks: 影族 folders only carry 影族头发*.dds, others only 头发*.dds.
+        let other = if class_dir.starts_with("影族") {
+            "facedata/法师女/头发模型库/textures/头发a01.dds".to_string()
+        } else {
+            "facedata/影族女/头发模型库/textures/影族头发a01.dds".to_string()
+        };
+        vec![hair, other]
+    } else if raw_tex.contains("眼珠") || raw_low.contains("eyeball") || raw_tex.contains('瞳') {
+        vec![
+            format!("facedata/{class_dir}/个性化/五官贴图库/眼球/眼珠a01.dds"),
+            "facedata/武侠男/个性化/五官贴图库/眼球/眼珠a01.dds".to_string(),
+            "facedata/法师女/个性化/五官贴图库/眼球/眼珠a01.dds".to_string(),
+        ]
+    } else if raw_tex.contains('嘴') || raw_tex.contains('唇') || raw_low.contains("mouth") {
+        // 嘴型 textures exist only in the 武侠男 / 法师女 folders.
+        vec![
+            format!("facedata/{class_dir}/个性化/五官贴图库/嘴型/嘴唇a01.dds"),
+            "facedata/武侠男/个性化/五官贴图库/嘴型/嘴唇a01.dds".to_string(),
+            "facedata/法师女/个性化/五官贴图库/嘴型/嘴唇a01.dds".to_string(),
+        ]
+    } else {
+        let face = if class_dir.starts_with("影族") {
+            format!("facedata/{class_dir}/个性化/五官贴图库/脸型/rw_头01.dds")
+        } else if class_dir == "妖兽男" {
+            // 妖兽男 has no 脸型 library; reuse the human face base texture.
+            "facedata/武侠男/个性化/五官贴图库/脸型/头01.dds".to_string()
+        } else {
+            format!("facedata/{class_dir}/个性化/五官贴图库/脸型/头01.dds")
+        };
+        vec![
+            face,
+            "facedata/武侠男/个性化/五官贴图库/脸型/头01.dds".to_string(),
+            "facedata/法师女/个性化/五官贴图库/脸型/头01.dds".to_string(),
+            "facedata/影族女/个性化/五官贴图库/脸型/rw_头01.dds".to_string(),
+        ]
+    }
+}
+
 pub struct LoadedScene3D {
     pub map_name: String,
     pub world_width: f32,
@@ -1090,42 +1159,14 @@ impl LoadedScene3D {
             return (id, ha);
         }
 
-        let is_female = match cls.clamp(0, 7) {
-            3 => true,
-            4 => false,
-            _ => gender != 0,
-        };
-        let fallback_facedata_path: &str = if is_hair_skin || hint.contains("头发") || raw_tex.contains('发') {
-            match (cls.clamp(0, 7), is_female) {
-                (2 | 5, true) => "facedata/影族女/头发/头发纹理/影族女头发10.dds",
-                (2 | 5, false) => "facedata/影族男/头发/头发纹理/影族男头发10.dds",
-                (_, true) => "facedata/女/头发/头发纹理/法师女头发12.dds",
-                (_, false) => "facedata/男/头发/头发纹理/武侠男头发10.dds",
-            }
-        } else if raw_tex.contains("眼珠") || raw_low.contains("eyeball") || raw_tex.contains('瞳') {
-            if is_female {
-                "facedata/女/眼皮/小眼球/普通眼珠.dds"
-            } else {
-                "facedata/男/眼皮/小眼球/普通眼珠.dds"
-            }
-        } else if raw_tex.contains('嘴') || raw_tex.contains('唇') || raw_low.contains("mouth") {
-            if is_female {
-                "facedata/女/嘴唇/下唇线/女标准双唇.dds"
-            } else {
-                "facedata/男/嘴唇/男标准双唇.dds"
-            }
-        } else {
-            match (cls.clamp(0, 7), is_female) {
-                (2 | 5, true) => "facedata/影族女/脸/基本纹理/巫师女标准脸5/头05.dds",
-                (2 | 5, false) => "facedata/影族男/脸/基本纹理/巫师男标准脸5/头05.dds",
-                (4, _) => "facedata/妖兽/脸/基本纹理/虎.dds",
-                (_, true) => "facedata/女/脸/基本纹理/法师女标准脸/头.dds",
-                (_, false) => "facedata/男/脸/基本纹理/武侠男标准脸/头.dds",
-            }
-        };
+        let fallback_facedata_candidates =
+            cec_face_fallback_candidates(cls, gender, hint, raw_tex, is_hair_skin);
 
-        let tex_bytes = read_model_texture_bytes(vfs, hint, raw_tex)
-            .or_else(|| vfs.read_file(fallback_facedata_path).ok());
+        let tex_bytes = read_model_texture_bytes(vfs, hint, raw_tex).or_else(|| {
+            fallback_facedata_candidates
+                .iter()
+                .find_map(|p| vfs.read_file(p).ok())
+        });
         if let Some(tb) = tex_bytes {
             if let Ok(simg) = decode_surface_auto(&tb) {
                 let tinted = tint_surface_image_rgb(&simg, tint, preserve_alpha);

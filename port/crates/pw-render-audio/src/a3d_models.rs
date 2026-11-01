@@ -860,15 +860,16 @@ pub fn load_cec_face_bundle(
                 "facedata/影族男/头发模型库/影族男头发10.ski".into(),
                 "facedata/影族男/头发模型库/影族男头发01.ski".into(),
             ],
+            // Verified facedata.pck layout: hair models live under `facedata/{class}/头发模型库/`.
             (_, true) => vec![
-                format!("facedata/女/头发模型库/法师女头发{hair_num:02}.ski"),
-                "facedata/女/头发模型库/法师女头发12.ski".into(),
-                "facedata/女/头发模型库/法师女头发01.ski".into(),
+                format!("facedata/法师女/头发模型库/法师女头发{hair_num:02}.ski"),
+                "facedata/法师女/头发模型库/法师女头发12.ski".into(),
+                "facedata/法师女/头发模型库/法师女头发01.ski".into(),
             ],
             (_, false) => vec![
-                format!("facedata/男/头发模型库/武侠男头发{hair_num:02}.ski"),
-                "facedata/男/头发模型库/武侠男头发11.ski".into(),
-                "facedata/男/头发模型库/武侠男头发01.ski".into(),
+                format!("facedata/武侠男/头发模型库/武侠男头发{hair_num:02}.ski"),
+                "facedata/武侠男/头发模型库/武侠男头发11.ski".into(),
+                "facedata/武侠男/头发模型库/武侠男头发01.ski".into(),
             ],
         };
         for hp in &hair_cands {
