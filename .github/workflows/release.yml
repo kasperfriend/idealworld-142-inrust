@@ -45,12 +45,20 @@ jobs:
     env:
       RUSTFLAGS: "-D warnings"
     steps:
+      # NOTE: this step intentionally overrides working-directory to the repo
+      # root, because the job-level default 'port' does not exist on the
+      # runner until after checkout — running it there fails the whole job
+      # with "No such file or directory" before anything is built.
       - name: Validate version tag input
+        working-directory: .
+        env:
+          VERSION_INPUT: ${{ inputs.version }}
         run: |
-          if [[ ! "${{ inputs.version }}" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9._-]+)?$ ]]; then
-            echo "::error::Invalid version '${{ inputs.version }}'. Expected format like v1.4.2-r1 or v0.1.0."
+          if [[ ! "$VERSION_INPUT" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9._-]+)?$ ]]; then
+            echo "::error::Invalid version '$VERSION_INPUT'. Expected format like v1.4.2-r1 or v0.1.0."
             exit 1
           fi
+          echo "Version tag '$VERSION_INPUT' is valid."
 
       - name: Checkout repository
         uses: actions/checkout@v4
