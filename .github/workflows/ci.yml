@@ -4,6 +4,18 @@ on:
   push:
     branches: [main, master]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
 
 jobs:
   build-and-test:
@@ -16,6 +28,7 @@ jobs:
     defaults:
       run:
         working-directory: port
+        shell: bash
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,10 +36,15 @@ jobs:
       - name: Install stable Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Build all libraries & binaries (release)
+      - name: Cache Cargo build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "port -> target"
+
+      - name: Build all 10 crates & 5 binaries (release, zero warnings)
         run: cargo build --workspace --all-targets --release
 
-      - name: Run full workspace test suite (release)
+      - name: Run full 35-test workspace suite (release)
         run: cargo test --workspace --release
 
       - name: Smoke-test Launcher & Patcher CLIs against bundled reference configs
