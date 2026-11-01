@@ -1,0 +1,8 @@
+[package]
+name = "pw-world"
+version.workspace = true
+edition.workspace = true
+description = "1:1 port of CECWorld, CECScene, and A3DTerrain2 (.trn2, .t2bk, .t2mk, .t2lm, .t2hc, .ecwld, .ecbsd, .cld, scenelights.dat, precinct.clt, region.clt)"
+
+[dependencies]
+pw-core = { path = "../pw-core" }

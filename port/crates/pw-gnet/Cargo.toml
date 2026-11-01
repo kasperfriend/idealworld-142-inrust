@@ -1,0 +1,8 @@
+[package]
+name = "pw-gnet"
+version.workspace = true
+edition.workspace = true
+description = "Perfect World 1.4.2 GNET wire protocol, CompactUINT, OctetsStream, MD5/HMAC-MD5, RC4, MPPC, 210+ opcodes, and CECGameSession"
+
+[dependencies]
+pw-core = { path = "../pw-core" }

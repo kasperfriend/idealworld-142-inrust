@@ -1,0 +1,11 @@
+    Checking pw-core v1.4.2 (port/crates/pw-core)
+    Checking pw-pck v1.4.2 (port/crates/pw-pck)
+    Checking pw-data v1.4.2 (port/crates/pw-data)
+    Checking pw-aui v1.4.2 (port/crates/pw-aui)
+    Checking pw-world v1.4.2 (port/crates/pw-world)
+    Checking pw-launcher-patcher v1.4.2 (port/crates/pw-launcher-patcher)
+    Checking pw-skill v1.4.2 (port/crates/pw-skill)
+    Checking pw-gnet v1.4.2 (port/crates/pw-gnet)
+    Checking pw-render-audio v1.4.2 (port/crates/pw-render-audio)
+    Checking pw-client v1.4.2 (port/crates/pw-client)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.93s

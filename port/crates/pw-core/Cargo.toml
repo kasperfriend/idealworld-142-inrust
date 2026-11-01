@@ -1,0 +1,5 @@
+[package]
+name = "pw-core"
+version.workspace = true
+edition.workspace = true
+description = "Angelica 2.2 core math, binary cursors, AFileImage (MOXB/MOXT), INI/CFG parser, zlibwapi FFI, and GBK/UTF-16LE/XOR codecs"

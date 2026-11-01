@@ -1,0 +1,4073 @@
+{
+  "4804": {
+    "opcode": 4804,
+    "opcode_hex": "0x12c4",
+    "class": "GNET::FactionOPRequest",
+    "vtable": "0x8e4ab8",
+    "stub_ctor": "0x5e5bc0",
+    "vtable_methods": [
+      "0x5d5c80",
+      "0x5e4960",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e48b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "0": {
+    "opcode": 0,
+    "opcode_hex": "0x0",
+    "class": "AAU1::UMODELSTATUS::?$AArray",
+    "vtable": "0x8ea998",
+    "stub_ctor": "0x6b1ac0",
+    "vtable_methods": [
+      "0x6b1ac0"
+    ]
+  },
+  "605": {
+    "opcode": 605,
+    "opcode_hex": "0x25d",
+    "class": "GNET::SellCancel",
+    "vtable": "0x8e50bc",
+    "stub_ctor": "0x6167b0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee7a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4264": {
+    "opcode": 4264,
+    "opcode_hex": "0x10a8",
+    "class": "GNET::CashPasswordSet_Re",
+    "vtable": "0x8e6954",
+    "stub_ctor": "0x619a50",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x619b60",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "224": {
+    "opcode": 224,
+    "opcode_hex": "0xe0",
+    "class": "GNET::ChatRoomJoin_Re",
+    "vtable": "0x8e5f70",
+    "stub_ctor": "0x60ace0",
+    "vtable_methods": [
+      "0x60afc0",
+      "0x60b1a0",
+      "0x60b420",
+      "0x5d49c0",
+      "0x436060",
+      "0x60ae30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d39c0",
+      "0x4360a0"
+    ]
+  },
+  "119": {
+    "opcode": 119,
+    "opcode_hex": "0x77",
+    "class": "GNET::GetPlayerIDByName_Re",
+    "vtable": "0x8e58a8",
+    "stub_ctor": "0x600390",
+    "vtable_methods": [
+      "0x600500",
+      "0x600720",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x600440",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "610": {
+    "opcode": 610,
+    "opcode_hex": "0x262",
+    "class": "GNET::AnnounceSellResult",
+    "vtable": "0x8e67c8",
+    "stub_ctor": "0x617590",
+    "vtable_methods": [
+      "0x617700",
+      "0x611020",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6176a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4817": {
+    "opcode": 4817,
+    "opcode_hex": "0x12d1",
+    "class": "GNET::GetPlayerFactionInfo_Re",
+    "vtable": "0x8e5540",
+    "stub_ctor": "0x5f8820",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x5f9440",
+      "0x5d49c0",
+      "0x436060",
+      "0x5f9220",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5f9420",
+      "0x4360a0"
+    ]
+  },
+  "359": {
+    "opcode": 359,
+    "opcode_hex": "0x167",
+    "class": "GNET::GMRestartServer_Re",
+    "vtable": "0x8e6294",
+    "stub_ctor": "0x60e900",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60ea10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "128": {
+    "opcode": 128,
+    "opcode_hex": "0x80",
+    "class": "GNET::SetHelpStates",
+    "vtable": "0x8e4460",
+    "stub_ctor": "0x5f75f0",
+    "vtable_methods": [
+      "0x5d5c80",
+      "0x5d68f0",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d6840",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "4908": {
+    "opcode": 4908,
+    "opcode_hex": "0x132c",
+    "class": "GNET::RefGetReferenceCode",
+    "vtable": "0x8e51c4",
+    "stub_ctor": "0x61ba40",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ef970",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "222": {
+    "opcode": 222,
+    "opcode_hex": "0xde",
+    "class": "GNET::ChatRoomInvite_Re",
+    "vtable": "0x8e4bc0",
+    "stub_ctor": "0x60ab90",
+    "vtable_methods": [
+      "0x5e7690",
+      "0x5e78b0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e7630",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "203": {
+    "opcode": 203,
+    "opcode_hex": "0xcb",
+    "class": "GNET::AddFriend_Re",
+    "vtable": "0x8e5d84",
+    "stub_ctor": "0x607650",
+    "vtable_methods": [
+      "0x607de0",
+      "0x607f30",
+      "0x607fc0",
+      "0x5d49c0",
+      "0x436060",
+      "0x607d10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4207": {
+    "opcode": 4207,
+    "opcode_hex": "0x106f",
+    "class": "GNET::GetMailAttachObj_Re",
+    "vtable": "0x8e6410",
+    "stub_ctor": "0x6103a0",
+    "vtable_methods": [
+      "0x610500",
+      "0x5e25c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6104b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "4509": {
+    "opcode": 4509,
+    "opcode_hex": "0x119d",
+    "class": "GNET::FactionMasterResign_Re",
+    "vtable": "0x8e5bf8",
+    "stub_ctor": "0x605740",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x605850",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "206": {
+    "opcode": 206,
+    "opcode_hex": "0xce",
+    "class": "GNET::GetFriends",
+    "vtable": "0x8e49b0",
+    "stub_ctor": "0x5f7a10",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e2fd0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "4502": {
+    "opcode": 4502,
+    "opcode_hex": "0x1196",
+    "class": "GNET::FactionCreate_Re",
+    "vtable": "0x8e5ad4",
+    "stub_ctor": "0x6036f0",
+    "vtable_methods": [
+      "0x603860",
+      "0x603a90",
+      "0x623f90",
+      "0x5d49c0",
+      "0x436060",
+      "0x6037a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "807": {
+    "opcode": 807,
+    "opcode_hex": "0x327",
+    "class": "GNET::AuctionClose_Re",
+    "vtable": "0x8e6518",
+    "stub_ctor": "0x6120f0",
+    "vtable_methods": [
+      "0x5e8560",
+      "0x5e8760",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x612200",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4261": {
+    "opcode": 4261,
+    "opcode_hex": "0x10a5",
+    "class": "GNET::CashLock_Re",
+    "vtable": "0x8e6928",
+    "stub_ctor": "0x6198c0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6199d0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4": {
+    "opcode": 4,
+    "opcode_hex": "0x4",
+    "class": "GNET::OnlineAnnounce",
+    "vtable": "0x8e5680",
+    "stub_ctor": "0x5fcd60",
+    "vtable_methods": [
+      "0x5fced0",
+      "0x5fd110",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fce70",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "105": {
+    "opcode": 105,
+    "opcode_hex": "0x69",
+    "class": "GNET::GetUIConfig_Re",
+    "vtable": "0x8e5900",
+    "stub_ctor": "0x600b80",
+    "vtable_methods": [
+      "0x5df190",
+      "0x600cf0",
+      "0x5d2f50",
+      "0x5d49c0",
+      "0x436060",
+      "0x600c30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "4294967295": {
+    "opcode": 4294967295,
+    "opcode_hex": "0xffffffff",
+    "class": "UnknownGNET_0x8edf24",
+    "vtable": "0x8edf24",
+    "stub_ctor": "0x723250",
+    "vtable_methods": []
+  },
+  "71": {
+    "opcode": 71,
+    "opcode_hex": "0x47",
+    "class": "GNET::SelectRole_Re",
+    "vtable": "0x8e5778",
+    "stub_ctor": "0x5fe3f0",
+    "vtable_methods": [
+      "0x60f620",
+      "0x60f330",
+      "0x5fe5a0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fe4a0",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d39c0",
+      "0x4360a0"
+    ]
+  },
+  "809": {
+    "opcode": 809,
+    "opcode_hex": "0x329",
+    "class": "GNET::AuctionGet_Re",
+    "vtable": "0x8e6570",
+    "stub_ctor": "0x612850",
+    "vtable_methods": [
+      "0x612ca0",
+      "0x612e90",
+      "0x612f70",
+      "0x5d49c0",
+      "0x436060",
+      "0x612b60",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "84": {
+    "opcode": 84,
+    "opcode_hex": "0x54",
+    "class": "GNET::CreateRole",
+    "vtable": "0x8e4234",
+    "stub_ctor": "0x5f66e0",
+    "vtable_methods": [
+      "0x5d4170",
+      "0x5d43b0",
+      "0x5d4670",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d3fc0",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "352": {
+    "opcode": 352,
+    "opcode_hex": "0x160",
+    "class": "GNET::GMListOnlineUser",
+    "vtable": "0x8e466c",
+    "stub_ctor": "0x5f9d90",
+    "vtable_methods": [
+      "0x5df190",
+      "0x5df3d0",
+      "0x5d2f50",
+      "0x5d49c0",
+      "0x436060",
+      "0x5df0d0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4503": {
+    "opcode": 4503,
+    "opcode_hex": "0x1197",
+    "class": "GNET::FactionListMember_Re",
+    "vtable": "0x8e5b2c",
+    "stub_ctor": "0x603f20",
+    "vtable_methods": [
+      "0x6041d0",
+      "0x604300",
+      "0x604540",
+      "0x5d49c0",
+      "0x436060",
+      "0x604030",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5f9420",
+      "0x4360a0"
+    ]
+  },
+  "89": {
+    "opcode": 89,
+    "opcode_hex": "0x59",
+    "class": "GNET::UndoDeleteRole_Re",
+    "vtable": "0x8e574c",
+    "stub_ctor": "0x5fe250",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fe360",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "5032": {
+    "opcode": 5032,
+    "opcode_hex": "0x13a8",
+    "class": "GNET::ACAnswer",
+    "vtable": "0x8e4184",
+    "stub_ctor": "0x619ec0",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d22e0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "350": {
+    "opcode": 350,
+    "opcode_hex": "0x15e",
+    "class": "GNET::GMOnlineNum",
+    "vtable": "0x8e4698",
+    "stub_ctor": "0x5f9c40",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5df700",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "820": {
+    "opcode": 820,
+    "opcode_hex": "0x334",
+    "class": "GNET::AuctionGetItem",
+    "vtable": "0x8e4f04",
+    "stub_ctor": "0x615160",
+    "vtable_methods": [
+      "0x5ed0c0",
+      "0x5ed250",
+      "0x5ed2f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ecfc0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "217": {
+    "opcode": 217,
+    "opcode_hex": "0xd9",
+    "class": "GNET::GetSavedMsg",
+    "vtable": "0x8e4a60",
+    "stub_ctor": "0x609ca0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e3b30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "801": {
+    "opcode": 801,
+    "opcode_hex": "0x321",
+    "class": "GNET::AuctionOpen_Re",
+    "vtable": "0x8e64c0",
+    "stub_ctor": "0x611820",
+    "vtable_methods": [
+      "0x611970",
+      "0x611b50",
+      "0x616ea0",
+      "0x5d49c0",
+      "0x436060",
+      "0x6118e0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "821": {
+    "opcode": 821,
+    "opcode_hex": "0x335",
+    "class": "GNET::AuctionGetItem_Re",
+    "vtable": "0x8e66a4",
+    "stub_ctor": "0x615250",
+    "vtable_methods": [
+      "0x6154c0",
+      "0x6155a0",
+      "0x615610",
+      "0x5d49c0",
+      "0x436060",
+      "0x615330",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "80": {
+    "opcode": 80,
+    "opcode_hex": "0x50",
+    "class": "GNET::ChatMessage",
+    "vtable": "0x8e5a24",
+    "stub_ctor": "0x601ea0",
+    "vtable_methods": [
+      "0x602010",
+      "0x602210",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x601f50",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "408": {
+    "opcode": 408,
+    "opcode_hex": "0x198",
+    "class": "GNET::StockAccount_Re",
+    "vtable": "0x8e6878",
+    "stub_ctor": "0x6186e0",
+    "vtable_methods": [
+      "0x6188b0",
+      "0x618ad0",
+      "0x618be0",
+      "0x5d49c0",
+      "0x436060",
+      "0x618790",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "866": {
+    "opcode": 866,
+    "opcode_hex": "0x362",
+    "class": "GNET::BattleStatus",
+    "vtable": "0x8e500c",
+    "stub_ctor": "0x615c60",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee300",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5bc870",
+      "0x4360a0"
+    ]
+  },
+  "4206": {
+    "opcode": 4206,
+    "opcode_hex": "0x106e",
+    "class": "GNET::GetMailAttachObj",
+    "vtable": "0x8e4d20",
+    "stub_ctor": "0x5fad40",
+    "vtable_methods": [
+      "0x5e9880",
+      "0x5e9a50",
+      "0x5d2f50",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e97c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60dd90",
+      "0x4360a0"
+    ]
+  },
+  "70": {
+    "opcode": 70,
+    "opcode_hex": "0x46",
+    "class": "GNET::SelectRole",
+    "vtable": "0x8e4260",
+    "stub_ctor": "0x5f62f0",
+    "vtable_methods": [
+      "0x5d4820",
+      "0x5eea60",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d47e0",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "218": {
+    "opcode": 218,
+    "opcode_hex": "0xda",
+    "class": "GNET::GetSavedMsg_Re",
+    "vtable": "0x8e5efc",
+    "stub_ctor": "0x609df0",
+    "vtable_methods": [
+      "0x609fc0",
+      "0x60a1c0",
+      "0x60a2b0",
+      "0x5d49c0",
+      "0x436060",
+      "0x609ea0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60a290",
+      "0x4360a0"
+    ]
+  },
+  "4012": {
+    "opcode": 4012,
+    "opcode_hex": "0xfac",
+    "class": "GNET::TradeConfirm",
+    "vtable": "0x8e487c",
+    "stub_ctor": "0x5f99a0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e1ea0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4955": {
+    "opcode": 4955,
+    "opcode_hex": "0x135b",
+    "class": "GNET::ExchangeConsumePoints_Re",
+    "vtable": "0x8e6afc",
+    "stub_ctor": "0x61c950",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x61ca60",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "805": {
+    "opcode": 805,
+    "opcode_hex": "0x325",
+    "class": "GNET::AuctionList_Re",
+    "vtable": "0x8e6544",
+    "stub_ctor": "0x612290",
+    "vtable_methods": [
+      "0x612450",
+      "0x612660",
+      "0x612740",
+      "0x5d49c0",
+      "0x436060",
+      "0x612340",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d39c0",
+      "0x4360a0"
+    ]
+  },
+  "351": {
+    "opcode": 351,
+    "opcode_hex": "0x15f",
+    "class": "GNET::GMOnlineNum_Re",
+    "vtable": "0x8e6144",
+    "stub_ctor": "0x60d8e0",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60d9f0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "88": {
+    "opcode": 88,
+    "opcode_hex": "0x58",
+    "class": "GNET::UndoDeleteRole",
+    "vtable": "0x8e42b8",
+    "stub_ctor": "0x5f6aa0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d4a30",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "3": {
+    "opcode": 3,
+    "opcode_hex": "0x3",
+    "class": "AUIFrame",
+    "vtable": "0x8ef444",
+    "stub_ctor": "0x752d70",
+    "vtable_methods": [
+      "0x752d90"
+    ]
+  },
+  "604": {
+    "opcode": 604,
+    "opcode_hex": "0x25c",
+    "class": "GNET::GetSellList_Re",
+    "vtable": "0x8e6770",
+    "stub_ctor": "0x616f10",
+    "vtable_methods": [
+      "0x6173b0",
+      "0x6170b0",
+      "0x617110",
+      "0x5d49c0",
+      "0x436060",
+      "0x616fc0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60dd90",
+      "0x4360a0"
+    ]
+  },
+  "405": {
+    "opcode": 405,
+    "opcode_hex": "0x195",
+    "class": "GNET::StockBill",
+    "vtable": "0x8e4900",
+    "stub_ctor": "0x617e10",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e23d0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "603": {
+    "opcode": 603,
+    "opcode_hex": "0x25b",
+    "class": "GNET::GetSellList",
+    "vtable": "0x8e5038",
+    "stub_ctor": "0x616510",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee370",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "86": {
+    "opcode": 86,
+    "opcode_hex": "0x56",
+    "class": "GNET::DeleteRole",
+    "vtable": "0x8e428c",
+    "stub_ctor": "0x5f6950",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d4970",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "353": {
+    "opcode": 353,
+    "opcode_hex": "0x161",
+    "class": "GNET::GMListOnlineUser_Re",
+    "vtable": "0x8e6170",
+    "stub_ctor": "0x60da80",
+    "vtable_methods": [
+      "0x5fd630",
+      "0x60dc70",
+      "0x60ddb0",
+      "0x5d49c0",
+      "0x436060",
+      "0x60db30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60dd90",
+      "0x4360a0"
+    ]
+  },
+  "366": {
+    "opcode": 366,
+    "opcode_hex": "0x16e",
+    "class": "GNET::GMForbidRole",
+    "vtable": "0x8e4748",
+    "stub_ctor": "0x5fa390",
+    "vtable_methods": [
+      "0x5e0560",
+      "0x5e0780",
+      "0x628740",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e04a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "6": {
+    "opcode": 6,
+    "opcode_hex": "0x6",
+    "class": "GNET::StatusAnnounce",
+    "vtable": "0x8e59cc",
+    "stub_ctor": "0x601b60",
+    "vtable_methods": [
+      "0x5e9e90",
+      "0x5ee400",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x601c70",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "209": {
+    "opcode": 209,
+    "opcode_hex": "0xd1",
+    "class": "GNET::SetGroupName_Re",
+    "vtable": "0x8e5e4c",
+    "stub_ctor": "0x6088f0",
+    "vtable_methods": [
+      "0x608a60",
+      "0x608c70",
+      "0x5d2f50",
+      "0x5d49c0",
+      "0x436060",
+      "0x6089a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "358": {
+    "opcode": 358,
+    "opcode_hex": "0x166",
+    "class": "GNET::GMRestartServer",
+    "vtable": "0x8e46c4",
+    "stub_ctor": "0x60d790",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5df7b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "225": {
+    "opcode": 225,
+    "opcode_hex": "0xe1",
+    "class": "GNET::ChatRoomLeave",
+    "vtable": "0x8e4c18",
+    "stub_ctor": "0x60b550",
+    "vtable_methods": [
+      "0x5e8560",
+      "0x5e8760",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e8510",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5bc870",
+      "0x4360a0"
+    ]
+  },
+  "361": {
+    "opcode": 361,
+    "opcode_hex": "0x169",
+    "class": "GNET::GMKickoutRole_Re",
+    "vtable": "0x8e61e4",
+    "stub_ctor": "0x60e070",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60e180",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "363": {
+    "opcode": 363,
+    "opcode_hex": "0x16b",
+    "class": "GNET::GMShutupRole_Re",
+    "vtable": "0x8e623c",
+    "stub_ctor": "0x60e3b0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60e4c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4263": {
+    "opcode": 4263,
+    "opcode_hex": "0x10a7",
+    "class": "GNET::CashPasswordSet",
+    "vtable": "0x8e516c",
+    "stub_ctor": "0x6197d0",
+    "vtable_methods": [
+      "0x5ef2e0",
+      "0x5ef4d0",
+      "0x623f90",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ef230",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4954": {
+    "opcode": 4954,
+    "opcode_hex": "0x135a",
+    "class": "GNET::ExchangeConsumePoints",
+    "vtable": "0x8e5274",
+    "stub_ctor": "0x61c800",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5efc10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "101": {
+    "opcode": 101,
+    "opcode_hex": "0x65",
+    "class": "UnknownGNET_0x8eb660",
+    "vtable": "0x8eb660",
+    "stub_ctor": "0x6db940",
+    "vtable_methods": []
+  },
+  "4505": {
+    "opcode": 4505,
+    "opcode_hex": "0x1199",
+    "class": "GNET::FactionAcceptJoin_Re",
+    "vtable": "0x8e5b74",
+    "stub_ctor": "0x604740",
+    "vtable_methods": [
+      "0x6048d0",
+      "0x604b50",
+      "0x604ea0",
+      "0x5d49c0",
+      "0x436060",
+      "0x6047f0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4015": {
+    "opcode": 4015,
+    "opcode_hex": "0xfaf",
+    "class": "GNET::TradeDiscard_Re",
+    "vtable": "0x8e60ec",
+    "stub_ctor": "0x60d350",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60d460",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "131": {
+    "opcode": 131,
+    "opcode_hex": "0x83",
+    "class": "GNET::GetHelpStates_Re",
+    "vtable": "0x8e5958",
+    "stub_ctor": "0x601180",
+    "vtable_methods": [
+      "0x5df190",
+      "0x6012f0",
+      "0x5d2f50",
+      "0x5d49c0",
+      "0x436060",
+      "0x601230",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "100": {
+    "opcode": 100,
+    "opcode_hex": "0x64",
+    "class": "GNET::SetCustomData",
+    "vtable": "0x8e43dc",
+    "stub_ctor": "0x5f71d0",
+    "vtable_methods": [
+      "0x5d5c80",
+      "0x5d5e60",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d5bd0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d60d0",
+      "0x4360a0"
+    ]
+  },
+  "92": {
+    "opcode": 92,
+    "opcode_hex": "0x5c",
+    "class": "GNET::PlayerBaseInfo_Re",
+    "vtable": "0x8e5818",
+    "stub_ctor": "0x5fed90",
+    "vtable_methods": [
+      "0x610060",
+      "0x610200",
+      "0x5ffcb0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ffb10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d60d0",
+      "0x4360a0"
+    ]
+  },
+  "368": {
+    "opcode": 368,
+    "opcode_hex": "0x170",
+    "class": "GNET::Report2GM",
+    "vtable": "0x8e4510",
+    "stub_ctor": "0x5fa480",
+    "vtable_methods": [
+      "0x5d7b50",
+      "0x5d7d90",
+      "0x5d8120",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d7a00",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "4212": {
+    "opcode": 4212,
+    "opcode_hex": "0x1074",
+    "class": "GNET::PlayerSendMail",
+    "vtable": "0x8e4da4",
+    "stub_ctor": "0x5fb0d0",
+    "vtable_methods": [
+      "0x5ea960",
+      "0x5eabe0",
+      "0x5eafc0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ea7c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60dd90",
+      "0x4360a0"
+    ]
+  },
+  "4210": {
+    "opcode": 4210,
+    "opcode_hex": "0x1072",
+    "class": "GNET::PreserveMail",
+    "vtable": "0x8e4d78",
+    "stub_ctor": "0x5faf80",
+    "vtable_methods": [
+      "0x5ea210",
+      "0x5ea410",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ea1c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "607": {
+    "opcode": 607,
+    "opcode_hex": "0x25f",
+    "class": "GNET::BuyPoint",
+    "vtable": "0x8e50e8",
+    "stub_ctor": "0x6163c0",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee940",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4816": {
+    "opcode": 4816,
+    "opcode_hex": "0x12d0",
+    "class": "GNET::GetPlayerFactionInfo",
+    "vtable": "0x8e4b10",
+    "stub_ctor": "0x5f86d0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e5ed0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "357": {
+    "opcode": 357,
+    "opcode_hex": "0x165",
+    "class": "GNET::GMShutup_Re",
+    "vtable": "0x8e6210",
+    "stub_ctor": "0x60e210",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60e320",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4008": {
+    "opcode": 4008,
+    "opcode_hex": "0xfa8",
+    "class": "GNET::TradeMoveObj",
+    "vtable": "0x8e4824",
+    "stub_ctor": "0x5f9880",
+    "vtable_methods": [
+      "0x5e1aa0",
+      "0x5e1c30",
+      "0x5e14b0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e19a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "91": {
+    "opcode": 91,
+    "opcode_hex": "0x5b",
+    "class": "GNET::PlayerBaseInfo",
+    "vtable": "0x8e433c",
+    "stub_ctor": "0x5f6bf0",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x5d53f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d52c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "867": {
+    "opcode": 867,
+    "opcode_hex": "0x363",
+    "class": "GNET::BattleStatus_Re",
+    "vtable": "0x8e66fc",
+    "stub_ctor": "0x615db0",
+    "vtable_methods": [
+      "0x615f60",
+      "0x6160f0",
+      "0x616190",
+      "0x5d49c0",
+      "0x436060",
+      "0x615e60",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4508": {
+    "opcode": 4508,
+    "opcode_hex": "0x119c",
+    "class": "GNET::FactionChangProclaim_Re",
+    "vtable": "0x8e5c7c",
+    "stub_ctor": "0x6061e0",
+    "vtable_methods": [
+      "0x5df9e0",
+      "0x606350",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x606290",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "362": {
+    "opcode": 362,
+    "opcode_hex": "0x16a",
+    "class": "GNET::GMShutupRole",
+    "vtable": "0x8e46f0",
+    "stub_ctor": "0x5fa150",
+    "vtable_methods": [
+      "0x5df9e0",
+      "0x5dfbe0",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5df920",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "207": {
+    "opcode": 207,
+    "opcode_hex": "0xcf",
+    "class": "GNET::GetFriends_Re",
+    "vtable": "0x8e5dcc",
+    "stub_ctor": "0x608050",
+    "vtable_methods": [
+      "0x608310",
+      "0x608420",
+      "0x6084d0",
+      "0x5d49c0",
+      "0x436060",
+      "0x608170",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "4016": {
+    "opcode": 4016,
+    "opcode_hex": "0xfb0",
+    "class": "GNET::TradeEnd",
+    "vtable": "0x8e6118",
+    "stub_ctor": "0x60d4f0",
+    "vtable_methods": [
+      "0x60ec00",
+      "0x60d650",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60d600",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4952": {
+    "opcode": 4952,
+    "opcode_hex": "0x1358",
+    "class": "GNET::GetRewardList",
+    "vtable": "0x8e5248",
+    "stub_ctor": "0x61c060",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5efb60",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "98": {
+    "opcode": 98,
+    "opcode_hex": "0x62",
+    "class": "GNET::PlayerBaseInfoCRC",
+    "vtable": "0x8e54cc",
+    "stub_ctor": "0x5f6ce0",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x5f7000",
+      "0x5d49c0",
+      "0x436060",
+      "0x5f6d90",
+      "0x4328d0",
+      "0x5dec00",
+      "0x6071c0",
+      "0x4360a0"
+    ]
+  },
+  "4510": {
+    "opcode": 4510,
+    "opcode_hex": "0x119e",
+    "class": "GNET::FactionAppoint_Re",
+    "vtable": "0x8e5c24",
+    "stub_ctor": "0x6058e0",
+    "vtable_methods": [
+      "0x605a50",
+      "0x605c90",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6059f0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "229": {
+    "opcode": 229,
+    "opcode_hex": "0xe5",
+    "class": "GNET::ChatRoomList_Re",
+    "vtable": "0x8e5f9c",
+    "stub_ctor": "0x60b8e0",
+    "vtable_methods": [
+      "0x60bac0",
+      "0x60bcc0",
+      "0x60bd90",
+      "0x5d49c0",
+      "0x436060",
+      "0x60b990",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d39c0",
+      "0x4360a0"
+    ]
+  },
+  "4904": {
+    "opcode": 4904,
+    "opcode_hex": "0x1328",
+    "class": "GNET::RefListReferrals",
+    "vtable": "0x8e51f0",
+    "stub_ctor": "0x61b220",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5efa10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "860": {
+    "opcode": 860,
+    "opcode_hex": "0x35c",
+    "class": "GNET::BattleEnter",
+    "vtable": "0x8e4fe0",
+    "stub_ctor": "0x615760",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee250",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "117": {
+    "opcode": 117,
+    "opcode_hex": "0x75",
+    "class": "GNET::GetCustomData_Re",
+    "vtable": "0x8e57ec",
+    "stub_ctor": "0x5fe810",
+    "vtable_methods": [
+      "0x5df9e0",
+      "0x5fe980",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fe8c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d60d0",
+      "0x4360a0"
+    ]
+  },
+  "4014": {
+    "opcode": 4014,
+    "opcode_hex": "0xfae",
+    "class": "GNET::TradeDiscard",
+    "vtable": "0x8e48a8",
+    "stub_ctor": "0x5f9af0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e1f60",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "107": {
+    "opcode": 107,
+    "opcode_hex": "0x6b",
+    "class": "GNET::GetPlayerBriefInfo",
+    "vtable": "0x8e44b8",
+    "stub_ctor": "0x5f7830",
+    "vtable_methods": [
+      "0x5d6ed0",
+      "0x5d70a0",
+      "0x5d7170",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d6db0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "4514": {
+    "opcode": 4514,
+    "opcode_hex": "0x11a2",
+    "class": "GNET::FactionDegrade_Re",
+    "vtable": "0x8e5d58",
+    "stub_ctor": "0x6073c0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6074d0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "411": {
+    "opcode": 411,
+    "opcode_hex": "0x19b",
+    "class": "GNET::StockCancel",
+    "vtable": "0x8e4958",
+    "stub_ctor": "0x619590",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e2850",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4953": {
+    "opcode": 4953,
+    "opcode_hex": "0x1359",
+    "class": "GNET::GetRewardList_Re",
+    "vtable": "0x8e6ab4",
+    "stub_ctor": "0x61c1b0",
+    "vtable_methods": [
+      "0x61c3a0",
+      "0x61c590",
+      "0x61c6f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x61c260",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "4204": {
+    "opcode": 4204,
+    "opcode_hex": "0x106c",
+    "class": "GNET::GetMail",
+    "vtable": "0x8e4cf4",
+    "stub_ctor": "0x5fabf0",
+    "vtable_methods": [
+      "0x5e9e90",
+      "0x5ee400",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e9600",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "800": {
+    "opcode": 800,
+    "opcode_hex": "0x320",
+    "class": "GNET::AuctionOpen",
+    "vtable": "0x8e4dd0",
+    "stub_ctor": "0x6111f0",
+    "vtable_methods": [
+      "0x5eb350",
+      "0x5eb5d0",
+      "0x5eb990",
+      "0x5d49c0",
+      "0x436060",
+      "0x5eb270",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5eb970",
+      "0x4360a0"
+    ]
+  },
+  "123": {
+    "opcode": 123,
+    "opcode_hex": "0x7b",
+    "class": "GNET::AnnounceForbidInfo",
+    "vtable": "0x8e5638",
+    "stub_ctor": "0x5fc500",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x5fccd0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fcbe0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fccb0",
+      "0x4360a0"
+    ]
+  },
+  "4905": {
+    "opcode": 4905,
+    "opcode_hex": "0x1329",
+    "class": "GNET::RefListReferrals_Re",
+    "vtable": "0x8e6a5c",
+    "stub_ctor": "0x61b370",
+    "vtable_methods": [
+      "0x61b550",
+      "0x61b7b0",
+      "0x61b930",
+      "0x5d49c0",
+      "0x436060",
+      "0x61b420",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "220": {
+    "opcode": 220,
+    "opcode_hex": "0xdc",
+    "class": "GNET::ChatRoomCreate_Re",
+    "vtable": "0x8e5f44",
+    "stub_ctor": "0x60a3c0",
+    "vtable_methods": [
+      "0x60a540",
+      "0x60a780",
+      "0x623f90",
+      "0x5d49c0",
+      "0x436060",
+      "0x60a470",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60aa20",
+      "0x4360a0"
+    ]
+  },
+  "99": {
+    "opcode": 99,
+    "opcode_hex": "0x63",
+    "class": "GNET::PlayerBaseInfoCRC_Re",
+    "vtable": "0x8e587c",
+    "stub_ctor": "0x5ffdf0",
+    "vtable_methods": [
+      "0x6000a0",
+      "0x600190",
+      "0x600280",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ffef0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x6071c0",
+      "0x4360a0"
+    ]
+  },
+  "804": {
+    "opcode": 804,
+    "opcode_hex": "0x324",
+    "class": "GNET::AuctionList",
+    "vtable": "0x8e4e28",
+    "stub_ctor": "0x611430",
+    "vtable_methods": [
+      "0x5ec130",
+      "0x5ec360",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ec0d0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4006": {
+    "opcode": 4006,
+    "opcode_hex": "0xfa6",
+    "class": "GNET::TradeRemoveGoods",
+    "vtable": "0x8e47f8",
+    "stub_ctor": "0x5f9610",
+    "vtable_methods": [
+      "0x5e1310",
+      "0x5e1730",
+      "0x5e14b0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e1630",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4504": {
+    "opcode": 4504,
+    "opcode_hex": "0x1198",
+    "class": "GNET::FactionApplyJoin_Re",
+    "vtable": "0x8e5b00",
+    "stub_ctor": "0x603d80",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x603e90",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "850": {
+    "opcode": 850,
+    "opcode_hex": "0x352",
+    "class": "GNET::BattleGetMap",
+    "vtable": "0x8e4fb4",
+    "stub_ctor": "0x613ae0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee040",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5bc870",
+      "0x4360a0"
+    ]
+  },
+  "2": {
+    "opcode": 2,
+    "opcode_hex": "0x2",
+    "class": "CECMatterMan",
+    "vtable": "0x8e35f0",
+    "stub_ctor": "0x5ad250",
+    "vtable_methods": [
+      "0x5ad3a0",
+      "0x5acdc0",
+      "0x5ad670",
+      "0x5ad7d0",
+      "0x436090",
+      "0x436090",
+      "0x778e60",
+      "0x5adc10",
+      "0x430850",
+      "0x5ad990"
+    ]
+  },
+  "4909": {
+    "opcode": 4909,
+    "opcode_hex": "0x132d",
+    "class": "GNET::RefGetReferenceCode_Re",
+    "vtable": "0x8e6a88",
+    "stub_ctor": "0x61bb90",
+    "vtable_methods": [
+      "0x606c90",
+      "0x61bd10",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x61bc40",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "410": {
+    "opcode": 410,
+    "opcode_hex": "0x19a",
+    "class": "GNET::StockTransaction_Re",
+    "vtable": "0x8e68a4",
+    "stub_ctor": "0x618cf0",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x618e00",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "1": {
+    "opcode": 1,
+    "opcode_hex": "0x1",
+    "class": "CECCustomizeBound",
+    "vtable": "0x8e2ec4",
+    "stub_ctor": "0x588370",
+    "vtable_methods": [
+      "0x588630"
+    ]
+  },
+  "602": {
+    "opcode": 602,
+    "opcode_hex": "0x25a",
+    "class": "GNET::SellPoint_Re",
+    "vtable": "0x8e6728",
+    "stub_ctor": "0x616900",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x616ea0",
+      "0x5d49c0",
+      "0x436060",
+      "0x616e20",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "551": {
+    "opcode": 551,
+    "opcode_hex": "0x227",
+    "class": "GNET::MatrixChallenge",
+    "vtable": "0x8e6980",
+    "stub_ctor": "0x619be0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x619cf0",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4208": {
+    "opcode": 4208,
+    "opcode_hex": "0x1070",
+    "class": "GNET::DeleteMail",
+    "vtable": "0x8e4d4c",
+    "stub_ctor": "0x5fae30",
+    "vtable_methods": [
+      "0x5e9e90",
+      "0x5ee400",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e9e40",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "823": {
+    "opcode": 823,
+    "opcode_hex": "0x337",
+    "class": "GNET::AuctionListUpdate",
+    "vtable": "0x8e4f30",
+    "stub_ctor": "0x61a910",
+    "vtable_methods": [
+      "0x5ed650",
+      "0x5ed7e0",
+      "0x5ed880",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ed550",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "806": {
+    "opcode": 806,
+    "opcode_hex": "0x326",
+    "class": "GNET::AuctionClose",
+    "vtable": "0x8e4e54",
+    "stub_ctor": "0x611580",
+    "vtable_methods": [
+      "0x5ec650",
+      "0x5ec850",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ec600",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "619": {
+    "opcode": 619,
+    "opcode_hex": "0x26b",
+    "class": "GNET::FindSellPointInfo",
+    "vtable": "0x8e5064",
+    "stub_ctor": "0x616660",
+    "vtable_methods": [
+      "0x5e9e90",
+      "0x5ee400",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee3b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x6071c0",
+      "0x4360a0"
+    ]
+  },
+  "226": {
+    "opcode": 226,
+    "opcode_hex": "0xe2",
+    "class": "GNET::ChatRoomExpel",
+    "vtable": "0x8e4b68",
+    "stub_ctor": "0x60b6a0",
+    "vtable_methods": [
+      "0x5e6900",
+      "0x5e6b20",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e68b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "118": {
+    "opcode": 118,
+    "opcode_hex": "0x76",
+    "class": "GNET::GetPlayerIDByName",
+    "vtable": "0x8e44e4",
+    "stub_ctor": "0x5f70e0",
+    "vtable_methods": [
+      "0x5d73c0",
+      "0x5d75d0",
+      "0x5d2850",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d7310",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4814": {
+    "opcode": 4814,
+    "opcode_hex": "0x12ce",
+    "class": "GNET::GetFactionBaseInfo",
+    "vtable": "0x8e43b0",
+    "stub_ctor": "0x5f7da0",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x5d5a40",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d5910",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "819": {
+    "opcode": 819,
+    "opcode_hex": "0x333",
+    "class": "GNET::AuctionExitBid_Re",
+    "vtable": "0x8e65c8",
+    "stub_ctor": "0x6137a0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6138b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4002": {
+    "opcode": 4002,
+    "opcode_hex": "0xfa2",
+    "class": "GNET::TradeStart_Re",
+    "vtable": "0x8e5fe4",
+    "stub_ctor": "0x60bff0",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60c100",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "365": {
+    "opcode": 365,
+    "opcode_hex": "0x16d",
+    "class": "GNET::GMToggleChat_Re",
+    "vtable": "0x8e6268",
+    "stub_ctor": "0x60e550",
+    "vtable_methods": [
+      "0x60e6b0",
+      "0x6108b0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60e660",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "90": {
+    "opcode": 90,
+    "opcode_hex": "0x5a",
+    "class": "GNET::KeepAlive",
+    "vtable": "0x8e3be8",
+    "stub_ctor": "0x5fd2e0",
+    "vtable_methods": [
+      "0x5bc770",
+      "0x5bc830",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5bc730",
+      "0x4328d0",
+      "0x436080",
+      "0x5bc870",
+      "0x4360a0"
+    ]
+  },
+  "103": {
+    "opcode": 103,
+    "opcode_hex": "0x67",
+    "class": "GNET::SetUIConfig_Re",
+    "vtable": "0x8e58d4",
+    "stub_ctor": "0x6009e0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x600af0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "360": {
+    "opcode": 360,
+    "opcode_hex": "0x168",
+    "class": "GNET::GMKickoutRole",
+    "vtable": "0x8e4614",
+    "stub_ctor": "0x5f9f70",
+    "vtable_methods": [
+      "0x5df9e0",
+      "0x5de920",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5de860",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "4803": {
+    "opcode": 4803,
+    "opcode_hex": "0x12c3",
+    "class": "GNET::FactionChat",
+    "vtable": "0x8e4a8c",
+    "stub_ctor": "0x603460",
+    "vtable_methods": [
+      "0x5e3dc0",
+      "0x5e3fe0",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e3d00",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "102": {
+    "opcode": 102,
+    "opcode_hex": "0x66",
+    "class": "GNET::SetUIConfig",
+    "vtable": "0x8e4408",
+    "stub_ctor": "0x5f73b0",
+    "vtable_methods": [
+      "0x5d5c80",
+      "0x5d62b0",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d6200",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "4005": {
+    "opcode": 4005,
+    "opcode_hex": "0xfa5",
+    "class": "GNET::TradeAddGoods_Re",
+    "vtable": "0x8e6010",
+    "stub_ctor": "0x60c190",
+    "vtable_methods": [
+      "0x60c380",
+      "0x60c570",
+      "0x60c930",
+      "0x5d49c0",
+      "0x436060",
+      "0x60c270",
+      "0x4328d0",
+      "0x5dec00",
+      "0x6071c0",
+      "0x4360a0"
+    ]
+  },
+  "130": {
+    "opcode": 130,
+    "opcode_hex": "0x82",
+    "class": "GNET::GetHelpStates",
+    "vtable": "0x8e448c",
+    "stub_ctor": "0x5f76e0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d6bf0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4805": {
+    "opcode": 4805,
+    "opcode_hex": "0x12c5",
+    "class": "GNET::FactionOPRequest_Re",
+    "vtable": "0x8e5aa8",
+    "stub_ctor": "0x603550",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x603660",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "407": {
+    "opcode": 407,
+    "opcode_hex": "0x197",
+    "class": "GNET::StockAccount",
+    "vtable": "0x8e48d4",
+    "stub_ctor": "0x617f60",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e2270",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "133": {
+    "opcode": 133,
+    "opcode_hex": "0x85",
+    "class": "GNET::WorldChat",
+    "vtable": "0x8e5a50",
+    "stub_ctor": "0x6024e0",
+    "vtable_methods": [
+      "0x6026c0",
+      "0x6028b0",
+      "0x624fb0",
+      "0x5d49c0",
+      "0x436060",
+      "0x6025a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "406": {
+    "opcode": 406,
+    "opcode_hex": "0x196",
+    "class": "GNET::StockBill_Re",
+    "vtable": "0x8e68d0",
+    "stub_ctor": "0x618e90",
+    "vtable_methods": [
+      "0x619110",
+      "0x619200",
+      "0x619270",
+      "0x5d49c0",
+      "0x436060",
+      "0x618f60",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "4512": {
+    "opcode": 4512,
+    "opcode_hex": "0x11a0",
+    "class": "GNET::FactionLeave_Re",
+    "vtable": "0x8e5ca8",
+    "stub_ctor": "0x606670",
+    "vtable_methods": [
+      "0x605f90",
+      "0x6067d0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x606780",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "371": {
+    "opcode": 371,
+    "opcode_hex": "0x173",
+    "class": "GNET::Complain2GM_Re",
+    "vtable": "0x8e6318",
+    "stub_ctor": "0x60efe0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60f0f0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "83": {
+    "opcode": 83,
+    "opcode_hex": "0x53",
+    "class": "GNET::RoleList_Re",
+    "vtable": "0x8e56ac",
+    "stub_ctor": "0x5fd430",
+    "vtable_methods": [
+      "0x5fd630",
+      "0x60dc70",
+      "0x5fd7b0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fd4e0",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "370": {
+    "opcode": 370,
+    "opcode_hex": "0x172",
+    "class": "GNET::Complain2GM",
+    "vtable": "0x8e453c",
+    "stub_ctor": "0x5fa590",
+    "vtable_methods": [
+      "0x5d8580",
+      "0x5d8790",
+      "0x5d8b60",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d83e0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "4010": {
+    "opcode": 4010,
+    "opcode_hex": "0xfaa",
+    "class": "GNET::TradeSubmit",
+    "vtable": "0x8e4850",
+    "stub_ctor": "0x5f9730",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e1db0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "824": {
+    "opcode": 824,
+    "opcode_hex": "0x338",
+    "class": "GNET::AuctionListUpdate_Re",
+    "vtable": "0x8e6a04",
+    "stub_ctor": "0x61aa00",
+    "vtable_methods": [
+      "0x61ac80",
+      "0x61ad70",
+      "0x61ade0",
+      "0x5d49c0",
+      "0x436060",
+      "0x61aad0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d39c0",
+      "0x4360a0"
+    ]
+  },
+  "4209": {
+    "opcode": 4209,
+    "opcode_hex": "0x1071",
+    "class": "GNET::DeleteMail_Re",
+    "vtable": "0x8e643c",
+    "stub_ctor": "0x610750",
+    "vtable_methods": [
+      "0x60e6b0",
+      "0x6108b0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x610860",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "606": {
+    "opcode": 606,
+    "opcode_hex": "0x25e",
+    "class": "GNET::SellCancel_Re",
+    "vtable": "0x8e67f4",
+    "stub_ctor": "0x617980",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x617a90",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "34": {
+    "opcode": 34,
+    "opcode_hex": "0x22",
+    "class": "GNET::GamedataSend",
+    "vtable": "0x8e41b0",
+    "stub_ctor": "0x5feca0",
+    "vtable_methods": [
+      "0x5d24e0",
+      "0x5d2640",
+      "0x5d2850",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d2430",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d2830",
+      "0x4360a0"
+    ]
+  },
+  "104": {
+    "opcode": 104,
+    "opcode_hex": "0x68",
+    "class": "GNET::GetUIConfig",
+    "vtable": "0x8e4434",
+    "stub_ctor": "0x5f74a0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d6580",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4511": {
+    "opcode": 4511,
+    "opcode_hex": "0x119f",
+    "class": "GNET::FactionResign_Re",
+    "vtable": "0x8e5c50",
+    "stub_ctor": "0x605e30",
+    "vtable_methods": [
+      "0x605f90",
+      "0x6067d0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x605f40",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "854": {
+    "opcode": 854,
+    "opcode_hex": "0x356",
+    "class": "GNET::BattleChallengeMap",
+    "vtable": "0x8e4f88",
+    "stub_ctor": "0x613d80",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5edfa0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "210": {
+    "opcode": 210,
+    "opcode_hex": "0xd2",
+    "class": "GNET::SetFriendGroup",
+    "vtable": "0x8e4a08",
+    "stub_ctor": "0x608f40",
+    "vtable_methods": [
+      "0x5e3720",
+      "0x5e3920",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e36d0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "369": {
+    "opcode": 369,
+    "opcode_hex": "0x171",
+    "class": "GNET::Report2GM_Re",
+    "vtable": "0x8e62ec",
+    "stub_ctor": "0x60ee40",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60ef50",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4907": {
+    "opcode": 4907,
+    "opcode_hex": "0x132b",
+    "class": "GNET::RefWithdrawBonus_Re",
+    "vtable": "0x8e6a30",
+    "stub_ctor": "0x61b080",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x61b190",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "783": {
+    "opcode": 783,
+    "opcode_hex": "0x30f",
+    "class": "GNET::AutolockSet_Re",
+    "vtable": "0x8e69d8",
+    "stub_ctor": "0x61a770",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x61a880",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "817": {
+    "opcode": 817,
+    "opcode_hex": "0x331",
+    "class": "GNET::AuctionAttendList_Re",
+    "vtable": "0x8e659c",
+    "stub_ctor": "0x613150",
+    "vtable_methods": [
+      "0x613310",
+      "0x6134a0",
+      "0x613540",
+      "0x5d49c0",
+      "0x436060",
+      "0x613200",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "364": {
+    "opcode": 364,
+    "opcode_hex": "0x16c",
+    "class": "GNET::GMToggleChat",
+    "vtable": "0x8e4774",
+    "stub_ctor": "0x5fa240",
+    "vtable_methods": [
+      "0x5e9e90",
+      "0x5ee400",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e0b10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "5001": {
+    "opcode": 5001,
+    "opcode_hex": "0x1389",
+    "class": "GNET::ACReport",
+    "vtable": "0x8d6c80",
+    "stub_ctor": "0x5fa6c0",
+    "vtable_methods": [
+      "0x436160",
+      "0x436370",
+      "0x623f90",
+      "0x5d49c0",
+      "0x436060",
+      "0x4360b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "69": {
+    "opcode": 69,
+    "opcode_hex": "0x45",
+    "class": "GNET::PlayerLogout",
+    "vtable": "0x8e59f8",
+    "stub_ctor": "0x601d00",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x601e10",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4011": {
+    "opcode": 4011,
+    "opcode_hex": "0xfab",
+    "class": "GNET::TradeSubmit_Re",
+    "vtable": "0x8e6068",
+    "stub_ctor": "0x60c990",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60caa0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d39c0",
+      "0x4360a0"
+    ]
+  },
+  "816": {
+    "opcode": 816,
+    "opcode_hex": "0x330",
+    "class": "GNET::AuctionAttendList",
+    "vtable": "0x8e4eac",
+    "stub_ctor": "0x613000",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ecc10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4001": {
+    "opcode": 4001,
+    "opcode_hex": "0xfa1",
+    "class": "GNET::TradeStart",
+    "vtable": "0x8e47a0",
+    "stub_ctor": "0x60bea0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e0d40",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "802": {
+    "opcode": 802,
+    "opcode_hex": "0x322",
+    "class": "GNET::AuctionBid",
+    "vtable": "0x8e4dfc",
+    "stub_ctor": "0x6112e0",
+    "vtable_methods": [
+      "0x5ebbb0",
+      "0x5ebdf0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ebb50",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "601": {
+    "opcode": 601,
+    "opcode_hex": "0x259",
+    "class": "GNET::SellPoint",
+    "vtable": "0x8e5090",
+    "stub_ctor": "0x616270",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ee610",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "96": {
+    "opcode": 96,
+    "opcode_hex": "0x60",
+    "class": "GNET::PrivateChat",
+    "vtable": "0x8e4208",
+    "stub_ctor": "0x602cf0",
+    "vtable_methods": [
+      "0x5d3350",
+      "0x5d3590",
+      "0x5d3a00",
+      "0x5d39e0",
+      "0x436060",
+      "0x5d31e0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d39c0",
+      "0x4360a0"
+    ]
+  },
+  "87": {
+    "opcode": 87,
+    "opcode_hex": "0x57",
+    "class": "GNET::DeleteRole_Re",
+    "vtable": "0x8e5720",
+    "stub_ctor": "0x5fe0b0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fe1c0",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "129": {
+    "opcode": 129,
+    "opcode_hex": "0x81",
+    "class": "GNET::SetHelpStates_Re",
+    "vtable": "0x8e592c",
+    "stub_ctor": "0x600fe0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6010f0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4202": {
+    "opcode": 4202,
+    "opcode_hex": "0x106a",
+    "class": "GNET::GetMailList",
+    "vtable": "0x8e4cc8",
+    "stub_ctor": "0x5faaa0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e94a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "108": {
+    "opcode": 108,
+    "opcode_hex": "0x6c",
+    "class": "GNET::GetPlayerBriefInfo_Re",
+    "vtable": "0x8e5984",
+    "stub_ctor": "0x6015e0",
+    "vtable_methods": [
+      "0x6017b0",
+      "0x601940",
+      "0x601a50",
+      "0x5d49c0",
+      "0x436060",
+      "0x601690",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5f9420",
+      "0x4360a0"
+    ]
+  },
+  "85": {
+    "opcode": 85,
+    "opcode_hex": "0x55",
+    "class": "GNET::CreateRole_Re",
+    "vtable": "0x8e56f4",
+    "stub_ctor": "0x5fd8d0",
+    "vtable_methods": [
+      "0x5fdcb0",
+      "0x5fde50",
+      "0x5fdf70",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fdb00",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "36": {
+    "opcode": 36,
+    "opcode_hex": "0x24",
+    "class": "GNET::UpdateRemainTime",
+    "vtable": "0x8e65f4",
+    "stub_ctor": "0x613940",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x613a50",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4211": {
+    "opcode": 4211,
+    "opcode_hex": "0x1073",
+    "class": "GNET::PreserveMail_Re",
+    "vtable": "0x8e6468",
+    "stub_ctor": "0x6109f0",
+    "vtable_methods": [
+      "0x610b50",
+      "0x610d40",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x610b00",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4516": {
+    "opcode": 4516,
+    "opcode_hex": "0x11a4",
+    "class": "GNET::FactionRename_Re",
+    "vtable": "0x8e5d00",
+    "stub_ctor": "0x606b10",
+    "vtable_methods": [
+      "0x606c90",
+      "0x606ef0",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x606bc0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x6071c0",
+      "0x4360a0"
+    ]
+  },
+  "4203": {
+    "opcode": 4203,
+    "opcode_hex": "0x106b",
+    "class": "GNET::GetMailList_Re",
+    "vtable": "0x8e63b8",
+    "stub_ctor": "0x60f810",
+    "vtable_methods": [
+      "0x610060",
+      "0x610200",
+      "0x60fa10",
+      "0x5d49c0",
+      "0x436060",
+      "0x60f8c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60f9f0",
+      "0x4360a0"
+    ]
+  },
+  "79": {
+    "opcode": 79,
+    "opcode_hex": "0x4f",
+    "class": "GNET::PublicChat",
+    "vtable": "0x8e41dc",
+    "stub_ctor": "0x5f7920",
+    "vtable_methods": [
+      "0x5d2aa0",
+      "0x5d2c80",
+      "0x5d2f50",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d29e0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "213": {
+    "opcode": 213,
+    "opcode_hex": "0xd5",
+    "class": "GNET::DelFriend_Re",
+    "vtable": "0x8e5ea4",
+    "stub_ctor": "0x6096b0",
+    "vtable_methods": [
+      "0x5e3720",
+      "0x5e3920",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6097c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4007": {
+    "opcode": 4007,
+    "opcode_hex": "0xfa7",
+    "class": "GNET::TradeRemoveGoods_Re",
+    "vtable": "0x8e603c",
+    "stub_ctor": "0x60c740",
+    "vtable_methods": [
+      "0x60c380",
+      "0x60c570",
+      "0x60c930",
+      "0x5d49c0",
+      "0x436060",
+      "0x60c820",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4507": {
+    "opcode": 4507,
+    "opcode_hex": "0x119b",
+    "class": "GNET::FactionBroadcastNotice_Re",
+    "vtable": "0x8e5bcc",
+    "stub_ctor": "0x6052e0",
+    "vtable_methods": [
+      "0x5df190",
+      "0x605450",
+      "0x5d2f50",
+      "0x5d49c0",
+      "0x436060",
+      "0x605390",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4201": {
+    "opcode": 4201,
+    "opcode_hex": "0x1069",
+    "class": "GNET::AnnounceNewMail",
+    "vtable": "0x8e5588",
+    "stub_ctor": "0x5fa900",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5faa10",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4906": {
+    "opcode": 4906,
+    "opcode_hex": "0x132a",
+    "class": "GNET::RefWithdrawBonus",
+    "vtable": "0x8e521c",
+    "stub_ctor": "0x61af30",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5efac0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "401": {
+    "opcode": 401,
+    "opcode_hex": "0x191",
+    "class": "GNET::StockCommission",
+    "vtable": "0x8e492c",
+    "stub_ctor": "0x617cc0",
+    "vtable_methods": [
+      "0x610500",
+      "0x5e25c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e2570",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "355": {
+    "opcode": 355,
+    "opcode_hex": "0x163",
+    "class": "GNET::GMKickoutUser_Re",
+    "vtable": "0x8e61b8",
+    "stub_ctor": "0x60ded0",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60dfe0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4513": {
+    "opcode": 4513,
+    "opcode_hex": "0x11a1",
+    "class": "GNET::FactionUpgrade_Re",
+    "vtable": "0x8e5d2c",
+    "stub_ctor": "0x607220",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x607330",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4260": {
+    "opcode": 4260,
+    "opcode_hex": "0x10a4",
+    "class": "GNET::CashLock",
+    "vtable": "0x8e5140",
+    "stub_ctor": "0x6196e0",
+    "vtable_methods": [
+      "0x5eec90",
+      "0x5eeec0",
+      "0x623f90",
+      "0x5d49c0",
+      "0x436060",
+      "0x5eebd0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4004": {
+    "opcode": 4004,
+    "opcode_hex": "0xfa4",
+    "class": "GNET::TradeAddGoods",
+    "vtable": "0x8e47cc",
+    "stub_ctor": "0x5f94f0",
+    "vtable_methods": [
+      "0x5e1310",
+      "0x5e1730",
+      "0x5e14b0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e1210",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "853": {
+    "opcode": 853,
+    "opcode_hex": "0x355",
+    "class": "GNET::BattleChallenge_Re",
+    "vtable": "0x8e664c",
+    "stub_ctor": "0x614520",
+    "vtable_methods": [
+      "0x6146a0",
+      "0x614900",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x614630",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "227": {
+    "opcode": 227,
+    "opcode_hex": "0xe3",
+    "class": "GNET::ChatRoomSpeak",
+    "vtable": "0x8e4c70",
+    "stub_ctor": "0x60b7f0",
+    "vtable_methods": [
+      "0x5e8dc0",
+      "0x5e9010",
+      "0x623f90",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e8cf0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "5031": {
+    "opcode": 5031,
+    "opcode_hex": "0x13a7",
+    "class": "GNET::ACQuestion",
+    "vtable": "0x8e69ac",
+    "stub_ctor": "0x61a010",
+    "vtable_methods": [
+      "0x61a1d0",
+      "0x61a400",
+      "0x61a520",
+      "0x5d49c0",
+      "0x436060",
+      "0x61a0c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "106": {
+    "opcode": 106,
+    "opcode_hex": "0x6a",
+    "class": "UnknownGNET_0x8ebf78",
+    "vtable": "0x8ebf78",
+    "stub_ctor": "0x6f75c0",
+    "vtable_methods": []
+  },
+  "82": {
+    "opcode": 82,
+    "opcode_hex": "0x52",
+    "class": "GNET::RoleList",
+    "vtable": "0x8e4310",
+    "stub_ctor": "0x5f6590",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d5100",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "608": {
+    "opcode": 608,
+    "opcode_hex": "0x260",
+    "class": "GNET::BuyPoint_Re",
+    "vtable": "0x8e6820",
+    "stub_ctor": "0x617b20",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x617c30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4009": {
+    "opcode": 4009,
+    "opcode_hex": "0xfa9",
+    "class": "GNET::TradeMoveObj_Re",
+    "vtable": "0x8e6094",
+    "stub_ctor": "0x60cb30",
+    "vtable_methods": [
+      "0x60cca0",
+      "0x60ceb0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60cc40",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "5": {
+    "opcode": 5,
+    "opcode_hex": "0x5",
+    "class": "GNET::ErrorInfo",
+    "vtable": "0x8e55b4",
+    "stub_ctor": "0x5fb200",
+    "vtable_methods": [
+      "0x5fb360",
+      "0x5fb560",
+      "0x623f90",
+      "0x5d49c0",
+      "0x436060",
+      "0x5fb2b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "110": {
+    "opcode": 110,
+    "opcode_hex": "0x6e",
+    "class": "UnknownGNET_0x8ebe50",
+    "vtable": "0x8ebe50",
+    "stub_ctor": "0x6f1950",
+    "vtable_methods": []
+  },
+  "7": {
+    "opcode": 7,
+    "opcode_hex": "0x7",
+    "class": "GNET::RoleStatusAnnounce",
+    "vtable": "0x8e5a7c",
+    "stub_ctor": "0x602e00",
+    "vtable_methods": [
+      "0x602f70",
+      "0x603150",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x602eb0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "507": {
+    "opcode": 507,
+    "opcode_hex": "0x1fb",
+    "class": "GNET::QueryUserPrivilege_Re",
+    "vtable": "0x8e6344",
+    "stub_ctor": "0x60f180",
+    "vtable_methods": [
+      "0x60f620",
+      "0x60f330",
+      "0x60f390",
+      "0x5d49c0",
+      "0x436060",
+      "0x60f230",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x6071c0",
+      "0x4360a0"
+    ]
+  },
+  "803": {
+    "opcode": 803,
+    "opcode_hex": "0x323",
+    "class": "GNET::AuctionBid_Re",
+    "vtable": "0x8e64ec",
+    "stub_ctor": "0x611c70",
+    "vtable_methods": [
+      "0x611dc0",
+      "0x611f60",
+      "0x612080",
+      "0x5d49c0",
+      "0x436060",
+      "0x611d30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "367": {
+    "opcode": 367,
+    "opcode_hex": "0x16f",
+    "class": "GNET::GMForbidRole_Re",
+    "vtable": "0x8e62c0",
+    "stub_ctor": "0x60eaa0",
+    "vtable_methods": [
+      "0x60ec00",
+      "0x60d650",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60ebb0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "202": {
+    "opcode": 202,
+    "opcode_hex": "0xca",
+    "class": "GNET::AddFriend",
+    "vtable": "0x8e4984",
+    "stub_ctor": "0x607560",
+    "vtable_methods": [
+      "0x5e2a70",
+      "0x5e2cb0",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e29b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "5003": {
+    "opcode": 5003,
+    "opcode_hex": "0x138b",
+    "class": "GNET::ACRemoteCode",
+    "vtable": "0x8e6370",
+    "stub_ctor": "0x60f460",
+    "vtable_methods": [
+      "0x60f620",
+      "0x60f330",
+      "0x60f700",
+      "0x5d49c0",
+      "0x436060",
+      "0x60f510",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d4650",
+      "0x4360a0"
+    ]
+  },
+  "354": {
+    "opcode": 354,
+    "opcode_hex": "0x162",
+    "class": "GNET::GMKickoutUser",
+    "vtable": "0x8e4640",
+    "stub_ctor": "0x5f9e80",
+    "vtable_methods": [
+      "0x5df9e0",
+      "0x5dedf0",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ded30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "782": {
+    "opcode": 782,
+    "opcode_hex": "0x30e",
+    "class": "GNET::AutolockSet",
+    "vtable": "0x8e5198",
+    "stub_ctor": "0x61a620",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ef7b0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "4213": {
+    "opcode": 4213,
+    "opcode_hex": "0x1075",
+    "class": "GNET::PlayerSendMail_Re",
+    "vtable": "0x8e6494",
+    "stub_ctor": "0x610eb0",
+    "vtable_methods": [
+      "0x617700",
+      "0x611020",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x610fc0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "212": {
+    "opcode": 212,
+    "opcode_hex": "0xd4",
+    "class": "GNET::DelFriend",
+    "vtable": "0x8e4a34",
+    "stub_ctor": "0x609560",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e3a80",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "211": {
+    "opcode": 211,
+    "opcode_hex": "0xd3",
+    "class": "GNET::SetFriendGroup_Re",
+    "vtable": "0x8e5e78",
+    "stub_ctor": "0x609090",
+    "vtable_methods": [
+      "0x6091f0",
+      "0x6093f0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6091a0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "620": {
+    "opcode": 620,
+    "opcode_hex": "0x26c",
+    "class": "GNET::FindSellPointInfo_Re",
+    "vtable": "0x8e679c",
+    "stub_ctor": "0x617210",
+    "vtable_methods": [
+      "0x6173b0",
+      "0x6170b0",
+      "0x617490",
+      "0x5d49c0",
+      "0x436060",
+      "0x6172c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x60dd90",
+      "0x4360a0"
+    ]
+  },
+  "4812": {
+    "opcode": 4812,
+    "opcode_hex": "0x12cc",
+    "class": "GNET::FactionAcceptJoin",
+    "vtable": "0x8e4ae4",
+    "stub_ctor": "0x5f7c50",
+    "vtable_methods": [
+      "0x61cab0",
+      "0x5ef800",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e4dc0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "851": {
+    "opcode": 851,
+    "opcode_hex": "0x353",
+    "class": "GNET::BattleGetMap_Re",
+    "vtable": "0x8e6620",
+    "stub_ctor": "0x613ed0",
+    "vtable_methods": [
+      "0x6140b0",
+      "0x6142e0",
+      "0x614400",
+      "0x5d49c0",
+      "0x436060",
+      "0x613f80",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "552": {
+    "opcode": 552,
+    "opcode_hex": "0x228",
+    "class": "GNET::MatrixResponse",
+    "vtable": "0x8e5114",
+    "stub_ctor": "0x619d70",
+    "vtable_methods": [
+      "0x5d4820",
+      "0x5eea60",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5eea20",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4515": {
+    "opcode": 4515,
+    "opcode_hex": "0x11a3",
+    "class": "GNET::FactionDismiss_Re",
+    "vtable": "0x8e5cd4",
+    "stub_ctor": "0x606970",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x606a80",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "409": {
+    "opcode": 409,
+    "opcode_hex": "0x199",
+    "class": "GNET::StockCommission_Re",
+    "vtable": "0x8e684c",
+    "stub_ctor": "0x6180b0",
+    "vtable_methods": [
+      "0x618280",
+      "0x6184b0",
+      "0x6185d0",
+      "0x5d49c0",
+      "0x436060",
+      "0x618160",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d5a20",
+      "0x4360a0"
+    ]
+  },
+  "412": {
+    "opcode": 412,
+    "opcode_hex": "0x19c",
+    "class": "GNET::StockCancel_Re",
+    "vtable": "0x8e68fc",
+    "stub_ctor": "0x6193f0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x619500",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "4956": {
+    "opcode": 4956,
+    "opcode_hex": "0x135c",
+    "class": "GNET::RewardMatureNotice",
+    "vtable": "0x8e6b28",
+    "stub_ctor": "0x61cd20",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x61ce30",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "116": {
+    "opcode": 116,
+    "opcode_hex": "0x74",
+    "class": "GNET::GetCustomData",
+    "vtable": "0x8e4384",
+    "stub_ctor": "0x5f72c0",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x5d5710",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d5600",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "356": {
+    "opcode": 356,
+    "opcode_hex": "0x164",
+    "class": "GNET::GMShutup",
+    "vtable": "0x8e471c",
+    "stub_ctor": "0x5fa060",
+    "vtable_methods": [
+      "0x5df9e0",
+      "0x5e00a0",
+      "0x61bfe0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5dffe0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fb780",
+      "0x4360a0"
+    ]
+  },
+  "4200": {
+    "opcode": 4200,
+    "opcode_hex": "0x1068",
+    "class": "GNET::CheckNewMail",
+    "vtable": "0x8e4c9c",
+    "stub_ctor": "0x5fa7b0",
+    "vtable_methods": [
+      "0x5d65c0",
+      "0x5ee080",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e9340",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "72": {
+    "opcode": 72,
+    "opcode_hex": "0x48",
+    "class": "GNET::EnterWorld",
+    "vtable": "0x8e42e4",
+    "stub_ctor": "0x5f6440",
+    "vtable_methods": [
+      "0x5d4bf0",
+      "0x5d4e40",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5d4b90",
+      "0x4328d0",
+      "0x5d49b0",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4013": {
+    "opcode": 4013,
+    "opcode_hex": "0xfad",
+    "class": "GNET::TradeConfirm_Re",
+    "vtable": "0x8e60c0",
+    "stub_ctor": "0x60d060",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x60d170",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "861": {
+    "opcode": 861,
+    "opcode_hex": "0x35d",
+    "class": "GNET::BattleEnter_Re",
+    "vtable": "0x8e66d0",
+    "stub_ctor": "0x6158b0",
+    "vtable_methods": [
+      "0x615a00",
+      "0x615b90",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x6159c0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "208": {
+    "opcode": 208,
+    "opcode_hex": "0xd0",
+    "class": "GNET::SetGroupName",
+    "vtable": "0x8e49dc",
+    "stub_ctor": "0x608800",
+    "vtable_methods": [
+      "0x5e31e0",
+      "0x5e3400",
+      "0x5d60f0",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e3120",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "852": {
+    "opcode": 852,
+    "opcode_hex": "0x354",
+    "class": "GNET::BattleChallenge",
+    "vtable": "0x8e4f5c",
+    "stub_ctor": "0x613c30",
+    "vtable_methods": [
+      "0x5edb10",
+      "0x5edd30",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5edac0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "818": {
+    "opcode": 818,
+    "opcode_hex": "0x332",
+    "class": "GNET::AuctionExitBid",
+    "vtable": "0x8e4ed8",
+    "stub_ctor": "0x613650",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5ecda0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "214": {
+    "opcode": 214,
+    "opcode_hex": "0xd6",
+    "class": "GNET::FriendStatus",
+    "vtable": "0x8e5ed0",
+    "stub_ctor": "0x609850",
+    "vtable_methods": [
+      "0x6099b0",
+      "0x609ba0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x609960",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d48f0",
+      "0x4360a0"
+    ]
+  },
+  "4205": {
+    "opcode": 4205,
+    "opcode_hex": "0x106d",
+    "class": "GNET::GetMail_Re",
+    "vtable": "0x8e63e4",
+    "stub_ctor": "0x60fb30",
+    "vtable_methods": [
+      "0x610060",
+      "0x610200",
+      "0x6102e0",
+      "0x5d49c0",
+      "0x436060",
+      "0x60ff00",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "4506": {
+    "opcode": 4506,
+    "opcode_hex": "0x119a",
+    "class": "GNET::FactionExpel_Re",
+    "vtable": "0x8e5ba0",
+    "stub_ctor": "0x604f20",
+    "vtable_methods": [
+      "0x605080",
+      "0x60d1c0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x605030",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "808": {
+    "opcode": 808,
+    "opcode_hex": "0x328",
+    "class": "GNET::AuctionGet",
+    "vtable": "0x8e4e80",
+    "stub_ctor": "0x6116d0",
+    "vtable_methods": [
+      "0x5e0d90",
+      "0x5e0fa0",
+      "0x5d2330",
+      "0x5d49c0",
+      "0x436060",
+      "0x5eca90",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5fbec0",
+      "0x4360a0"
+    ]
+  },
+  "221": {
+    "opcode": 221,
+    "opcode_hex": "0xdd",
+    "class": "GNET::ChatRoomInvite",
+    "vtable": "0x8e4b94",
+    "stub_ctor": "0x60aa80",
+    "vtable_methods": [
+      "0x5e6e60",
+      "0x5e7090",
+      "0x5e7400",
+      "0x5d49c0",
+      "0x436060",
+      "0x5e6d00",
+      "0x4328d0",
+      "0x5dec00",
+      "0x606910",
+      "0x4360a0"
+    ]
+  },
+  "855": {
+    "opcode": 855,
+    "opcode_hex": "0x357",
+    "class": "GNET::BattleChallengeMap_Re",
+    "vtable": "0x8e6678",
+    "stub_ctor": "0x614af0",
+    "vtable_methods": [
+      "0x614cd0",
+      "0x614ef0",
+      "0x615050",
+      "0x5d49c0",
+      "0x436060",
+      "0x614ba0",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5d53d0",
+      "0x4360a0"
+    ]
+  },
+  "4815": {
+    "opcode": 4815,
+    "opcode_hex": "0x12cf",
+    "class": "GNET::GetFactionBaseInfo_Re",
+    "vtable": "0x8e54f8",
+    "stub_ctor": "0x5f7e90",
+    "vtable_methods": [
+      "0x5f6ea0",
+      "0x5f9380",
+      "0x5f8640",
+      "0x5d49c0",
+      "0x436060",
+      "0x5f8560",
+      "0x4328d0",
+      "0x5dec00",
+      "0x5f9420",
+      "0x4360a0"
+    ]
+  }
+}

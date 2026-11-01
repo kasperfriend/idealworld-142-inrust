@@ -1,0 +1,20 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/pw-core",
+    "crates/pw-pck",
+    "crates/pw-data",
+    "crates/pw-gnet",
+    "crates/pw-skill",
+    "crates/pw-world",
+    "crates/pw-aui",
+    "crates/pw-render-audio",
+    "crates/pw-client",
+    "crates/pw-launcher-patcher",
+]
+
+[workspace.package]
+version = "1.4.2"
+edition = "2021"
+license = "Proprietary-ReverseEngineered-CleanRoom"
+authors = ["Arena Agent Mode (REA + Ghidra 12.1.4 1:1 Port)"]

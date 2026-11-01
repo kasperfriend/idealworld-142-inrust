@@ -1,0 +1,30 @@
+# Rust / Cargo build outputs
+target/
+**/target/
+
+# OS & editor scratch files
+.DS_Store
+Thumbs.db
+*.swp
+*.part
+*.tmp
+
+# Local Perfect World 1.4.2 proprietary binary blobs & archives
+# (Unpack pw142.zip into source/pw142/ locally or set PW142_ELEMENT_DIR — Git stays lightweight!)
+*.pck
+*.pkx
+*.data
+source/pw142/**/*.exe
+source/pw142/**/*.dll
+source/pw142/**/*.ani
+source/pw142/**/*.cur
+source/pw142/**/*.dds
+source/pw142/**/*.tga
+source/pw142/**/*.bmp
+source/pw142/element/maps/
+source/pw142/element/info/
+source/pw142/element/help/
+source/pw142/element/logs/
+
+# Export zip bundle if regenerated locally
+pw142-rust-port.zip

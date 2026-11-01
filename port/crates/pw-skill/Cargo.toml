@@ -1,0 +1,8 @@
+[package]
+name = "pw-skill"
+version.workspace = true
+edition.workspace = true
+description = "1:1 port of elementskill.dll (ABI v15): all 1,175 SkillStubs, 69 VisibleStates, and 167 TeamStates"
+
+[dependencies]
+pw-core = { path = "../pw-core" }

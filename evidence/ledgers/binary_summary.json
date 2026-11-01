@@ -1,0 +1,309 @@
+{
+  "total_procedures": 51572,
+  "unknown_procedures": 0,
+  "failed_decompile": 0,
+  "binaries": {
+    "elementclient": {
+      "path": "pw142/element/elementclient.exe",
+      "size_bytes": 6000640,
+      "sha256": "a290998dc13cc5558b54bda3f65d099f95bc0702e54a0613c6d7669f35c6cdb0",
+      "procedures": 28730,
+      "rtti_types": 1134,
+      "rtti_cols": 1166,
+      "vtables": 1163,
+      "vtable_slots": 8803,
+      "rust_crate": "pw-client",
+      "categories": {
+        "tu_linkmap_classified": 12529,
+        "rtti_virtual_method": 2035,
+        "string_attributed_method": 1890,
+        "exported_or_rtti_named": 239,
+        "compiler_jump_thunk": 52,
+        "gnet_protocol_stub": 210,
+        "seh_unwind_thunk": 11292,
+        "external_import": 483
+      }
+    },
+    "elementskill": {
+      "path": "pw142/element/elementskill.dll",
+      "size_bytes": 798720,
+      "sha256": "036f866f3dcacee04fcc071d541f8a87cfe74e9932b432c19642af3dab0081d4",
+      "procedures": 7188,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-skill",
+      "categories": {
+        "module_internal_procedure": 3919,
+        "exported_or_rtti_named": 62,
+        "crt_or_static_init_helper": 1187,
+        "skill_or_state_stub": 1411,
+        "seh_unwind_thunk": 601,
+        "external_import": 8
+      }
+    },
+    "elementlocalize": {
+      "path": "pw142/element/elementlocalize.exe",
+      "size_bytes": 622592,
+      "sha256": "20238f2fc5b5866ac17e99eccbda6f7ee63194abc33e97b587baad2fbc71e744",
+      "procedures": 3808,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-launcher-patcher",
+      "categories": {
+        "module_internal_procedure": 1520,
+        "exported_or_rtti_named": 116,
+        "crt_or_static_init_helper": 16,
+        "string_attributed_method": 63,
+        "compiler_jump_thunk": 3,
+        "seh_unwind_thunk": 1723,
+        "external_import": 367
+      }
+    },
+    "patcher_exe": {
+      "path": "pw142/patcher/patcher.exe",
+      "size_bytes": 561152,
+      "sha256": "cc48504d07d3ccdfd24315e90167ef73e6ebd1635010ac0dd76f8719dff7efed",
+      "procedures": 2941,
+      "rtti_types": 100,
+      "rtti_cols": 75,
+      "vtables": 75,
+      "vtable_slots": 1049,
+      "rust_crate": "pw-launcher-patcher",
+      "categories": {
+        "module_internal_procedure": 1600,
+        "exported_or_rtti_named": 170,
+        "string_attributed_method": 27,
+        "rtti_virtual_method": 211,
+        "crt_or_static_init_helper": 6,
+        "compiler_jump_thunk": 8,
+        "seh_unwind_thunk": 634,
+        "external_import": 285
+      }
+    },
+    "launcher_exe": {
+      "path": "pw142/launcher/Launcher.exe",
+      "size_bytes": 421888,
+      "sha256": "529a822140aecb38e4b8b275dc956ae5c9900a91e4f94af2b18590cbce3107ef",
+      "procedures": 1863,
+      "rtti_types": 45,
+      "rtti_cols": 40,
+      "vtables": 40,
+      "vtable_slots": 461,
+      "rust_crate": "pw-launcher-patcher",
+      "categories": {
+        "module_internal_procedure": 1224,
+        "rtti_virtual_method": 117,
+        "string_attributed_method": 14,
+        "exported_or_rtti_named": 100,
+        "crt_or_static_init_helper": 1,
+        "compiler_jump_thunk": 6,
+        "seh_unwind_thunk": 182,
+        "external_import": 219
+      }
+    },
+    "speedtreert": {
+      "path": "pw142/element/speedtreert.dll",
+      "size_bytes": 450560,
+      "sha256": "7f0a401688f63c520ab717a4b9939705e5aac635a649a8cfb5df6af19681b46f",
+      "procedures": 3050,
+      "rtti_types": 58,
+      "rtti_cols": 56,
+      "vtables": 50,
+      "vtable_slots": 305,
+      "rust_crate": "pw-world",
+      "categories": {
+        "module_internal_procedure": 798,
+        "compiler_jump_thunk": 3,
+        "string_attributed_method": 56,
+        "rtti_virtual_method": 99,
+        "crt_or_static_init_helper": 98,
+        "exported_or_rtti_named": 299,
+        "seh_unwind_thunk": 1630,
+        "external_import": 67
+      }
+    },
+    "unicows": {
+      "path": "pw142/element/unicows.dll",
+      "size_bytes": 258352,
+      "sha256": "f06f36fa03a5db4980c9d1120ada1d9e558515be73eff5b7cd34c48c0d9afd35",
+      "procedures": 1645,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-core",
+      "categories": {
+        "module_internal_procedure": 188,
+        "string_attributed_method": 12,
+        "exported_or_rtti_named": 661,
+        "external_import": 784
+      }
+    },
+    "ifc22": {
+      "path": "pw142/element/ifc22.dll",
+      "size_bytes": 196608,
+      "sha256": "04654e83e748885187622a1e89b64eb4cd3aa201b40ef3d00354bbb2fee5e1ed",
+      "procedures": 899,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-core",
+      "categories": {
+        "exported_or_rtti_named": 561,
+        "string_attributed_method": 22,
+        "module_internal_procedure": 205,
+        "seh_unwind_thunk": 28,
+        "external_import": 83
+      }
+    },
+    "ftdriver": {
+      "path": "pw142/element/ftdriver.dll",
+      "size_bytes": 135168,
+      "sha256": "52394a8bfc07e116eac94a4aab1a4af652c10357cb7fe10ea8edaf0c8061a0c4",
+      "procedures": 488,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-aui",
+      "categories": {
+        "module_internal_procedure": 431,
+        "exported_or_rtti_named": 14,
+        "string_attributed_method": 4,
+        "crt_or_static_init_helper": 1,
+        "seh_unwind_thunk": 15,
+        "external_import": 23
+      }
+    },
+    "patcher_packdll": {
+      "path": "pw142/patcher/packdll.dll",
+      "size_bytes": 73728,
+      "sha256": "18575cf86679c0cb70567888dce7d75f230151d278c32835b8f2808e1b92c8b0",
+      "procedures": 248,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-pck",
+      "categories": {
+        "module_internal_procedure": 127,
+        "crt_or_static_init_helper": 6,
+        "exported_or_rtti_named": 20,
+        "string_attributed_method": 29,
+        "compiler_jump_thunk": 1,
+        "seh_unwind_thunk": 18,
+        "external_import": 47
+      }
+    },
+    "launcher_packdll": {
+      "path": "pw142/launcher/PackDLL.dll",
+      "size_bytes": 69632,
+      "sha256": "dc77813a1a38c285a86c57c7047f2828ee2956424999eb2abb354ef91b823fb5",
+      "procedures": 230,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-pck",
+      "categories": {
+        "module_internal_procedure": 114,
+        "crt_or_static_init_helper": 6,
+        "exported_or_rtti_named": 18,
+        "compiler_jump_thunk": 3,
+        "string_attributed_method": 28,
+        "seh_unwind_thunk": 16,
+        "external_import": 45
+      }
+    },
+    "zlibwapi": {
+      "path": "pw142/element/zlibwapi.dll",
+      "size_bytes": 72704,
+      "sha256": "0d38360003865e84a2842c337d7c440c8ab4c41809cc87b8758df6d852c02afc",
+      "procedures": 195,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-pck",
+      "categories": {
+        "module_internal_procedure": 61,
+        "compiler_jump_thunk": 1,
+        "exported_or_rtti_named": 103,
+        "crt_or_static_init_helper": 1,
+        "external_import": 29
+      }
+    },
+    "sysinfo": {
+      "path": "pw142/patcher/SysInfo.dll",
+      "size_bytes": 28672,
+      "sha256": "e81b14c3da009bdf0e9ca5b996c1d004b3d1aedd4dbbd45aeb72d0729a781b30",
+      "procedures": 180,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-core",
+      "categories": {
+        "module_internal_procedure": 61,
+        "string_attributed_method": 28,
+        "exported_or_rtti_named": 35,
+        "crt_or_static_init_helper": 2,
+        "seh_unwind_thunk": 17,
+        "external_import": 37
+      }
+    },
+    "immwrapper": {
+      "path": "pw142/element/immwrapper.dll",
+      "size_bytes": 24576,
+      "sha256": "845f9bf1cfcdd6940c1b516ff20df233e5949741a66a06323037ffb8519311a9",
+      "procedures": 92,
+      "rtti_types": 0,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-core",
+      "categories": {
+        "exported_or_rtti_named": 18,
+        "module_internal_procedure": 33,
+        "compiler_jump_thunk": 2,
+        "string_attributed_method": 3,
+        "crt_or_static_init_helper": 1,
+        "seh_unwind_thunk": 3,
+        "external_import": 32
+      }
+    },
+    "PW_Data_Versions": {
+      "path": "pw142/element/data/PW_Data_Versions.exe",
+      "size_bytes": 12800,
+      "sha256": "486b3f087af2dd6a543caebacc4a67d866d2987519bc96ec7c9e5bc962021250",
+      "procedures": 15,
+      "rtti_types": 5,
+      "rtti_cols": 0,
+      "vtables": 0,
+      "vtable_slots": 0,
+      "rust_crate": "pw-data",
+      "categories": {
+        "managed_cil_method": 15
+      }
+    }
+  },
+  "category_totals": {
+    "tu_linkmap_classified": 12529,
+    "rtti_virtual_method": 2462,
+    "string_attributed_method": 2176,
+    "exported_or_rtti_named": 2416,
+    "compiler_jump_thunk": 79,
+    "gnet_protocol_stub": 210,
+    "seh_unwind_thunk": 16159,
+    "external_import": 2509,
+    "module_internal_procedure": 10281,
+    "crt_or_static_init_helper": 1325,
+    "skill_or_state_stub": 1411,
+    "managed_cil_method": 15
+  }
+}

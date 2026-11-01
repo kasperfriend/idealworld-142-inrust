@@ -1,0 +1,12 @@
+[package]
+name = "pw-render-audio"
+version.workspace = true
+edition.workspace = true
+description = "1:1 port of Angelica3D (A3DEngine, A3DCamera, UltraWide FOV, DDS/TGA/BMP, 3D Terrain, shaders.pck), AngelicaMedia (WinMM BGM/SFX), FTDriver.dll (fonts.pck TTF), IMMWrapper/ifc22, and SpeedTreeRT.dll"
+
+[dependencies]
+pw-core = { path = "../pw-core" }
+pw-pck = { path = "../pw-pck" }
+pw-data = { path = "../pw-data" }
+pw-world = { path = "../pw-world" }
+pw-aui = { path = "../pw-aui" }

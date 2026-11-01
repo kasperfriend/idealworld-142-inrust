@@ -1,0 +1,178 @@
+    Finished `release` profile [optimized] target(s) in 0.01s
+     Running unittests src/lib.rs (target/release/deps/pw_aui-8849dc4b8756f33d)
+
+running 1 test
+test tests::test_all_199_rtti_classes_and_real_interfaces_pck_dtf_stf_dcf ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running unittests src/lib.rs (target/release/deps/pw_client-ff76208126c5c408)
+
+running 3 tests
+test tests::test_full_cecgame_boot_and_localization_pipeline ... ok
+test tests::test_zero_cjk_english_localization_everywhere ... ok
+test tests::test_interactive_client_app_login_charselect_3d_world_and_modals ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.23s
+
+     Running unittests src/bin/pw-elementclient.rs (target/release/deps/pw_elementclient-8af998702474a02b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/pw-elementlocalize.rs (target/release/deps/pw_elementlocalize-0a49631456825078)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/release/deps/pw_core-46c9da0c47ea4c2a)
+
+running 3 tests
+test tests::test_afile_image_moxb_and_ini ... ok
+test tests::test_gbk_and_utf16_xor_roundtrip ... ok
+test tests::test_zlib_roundtrip_and_checksums ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/release/deps/pw_data-22467aadbe0ea870)
+
+running 4 tests
+test tests::test_all_other_data_files_exact_eof ... ok
+test tests::test_cec_face_and_all_14_character_customize_inis_and_monsters_parity ... ok
+test tests::test_tasks_sample_and_full_tasks_data_v75_exact_eof ... ok
+test tests::test_elements_data_v27_exact_eof_and_roundtrip ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running unittests src/lib.rs (target/release/deps/pw_gnet-ad60f8f968373e22)
+
+running 5 tests
+test live_client::tests::test_build2305_inner_gs_s2c_decoders_and_encoders ... ok
+test tests::test_compact_uint_and_protocol_registry ... ok
+test tests::test_full_glinkd_handshake_mppc_rc4_tunnel ... ok
+test tests::test_md5_rfc1321_vectors ... ok
+test live_client::tests::test_live_glinkd_handshake_rc4_mppc_and_role_list_roundtrip ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/lib.rs (target/release/deps/pw_launcher_patcher-874521a436238ad1)
+
+running 3 tests
+test tests::test_packdll_x_roundtrip_and_pck_version ... ok
+test tests::test_sysinfo_and_launcher_configs ... ok
+test tests::test_pw_data_versions_cil_parity_on_real_data_dir ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/bin/pw-data-versions.rs (target/release/deps/pw_data_versions-1e9dc3b8911146de)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/pw-launcher.rs (target/release/deps/pw_launcher-1a74279b072776c9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/pw-patcher.rs (target/release/deps/pw_patcher-fcb2c516f8764afb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/release/deps/pw_pck-341d78bfa8d3ca27)
+
+running 2 tests
+test tests::test_pck_builder_lossless_roundtrip ... ok
+test tests::test_real_pw142_all_5_pcks_1430_files ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running unittests src/lib.rs (target/release/deps/pw_render_audio-def6f942cbc72fed)
+
+running 4 tests
+test image_dds::tests::test_dds_mipmap_pyramid_trilinear_and_anisotropic_filtering ... ok
+test image_dds::tests::test_bmp_tga_and_dds_dxt1_decoders ... ok
+test tests::test_settings_camera_shaders_and_fonts ... ok
+test tests::test_real_login_world_3d_and_aui_render ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.16s
+
+     Running unittests src/lib.rs (target/release/deps/pw_skill-7ceaf82cac3a8559)
+
+running 1 test
+test tests::test_elementskill_v15_complete_catalog ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/release/deps/pw_world-eeca5508cc9b11a8)
+
+running 1 test
+test tests::test_real_a01_login_and_midlands_world_maps ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+   Doc-tests pw_aui
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_client
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_data
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_gnet
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_launcher_patcher
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_pck
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_render_audio
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_skill
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pw_world
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,15 @@
+[package]
+name = "pw-client"
+version.workspace = true
+edition.workspace = true
+description = "1:1 port of elementclient.exe (Build 2305) & elementlocalize.exe integrating VFS, Data, GNET, Skill v15, World, AUI, and Render/Audio"
+
+[dependencies]
+pw-core = { path = "../pw-core" }
+pw-pck = { path = "../pw-pck" }
+pw-data = { path = "../pw-data" }
+pw-gnet = { path = "../pw-gnet" }
+pw-skill = { path = "../pw-skill" }
+pw-world = { path = "../pw-world" }
+pw-aui = { path = "../pw-aui" }
+pw-render-audio = { path = "../pw-render-audio" }

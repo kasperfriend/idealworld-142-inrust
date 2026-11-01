@@ -1,0 +1,8 @@
+[package]
+name = "pw-pck"
+version.workspace = true
+edition.workspace = true
+description = "Angelica .pck/.pkx v2.0.2 archive reader, lossless repacker, and multi-archive VirtualFileSystem (0x76fff0.c)"
+
+[dependencies]
+pw-core = { path = "../pw-core" }

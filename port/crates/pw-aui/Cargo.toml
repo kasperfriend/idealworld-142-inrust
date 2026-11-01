@@ -1,0 +1,9 @@
+[package]
+name = "pw-aui"
+version.workspace = true
+edition.workspace = true
+description = "1:1 port of AngelicaUI (AUI*) & all 201 RTTI-recovered CDlg*/AUI* dialog classes + interfaces.pck XML layout parser"
+
+[dependencies]
+pw-core = { path = "../pw-core" }
+pw-pck = { path = "../pw-pck" }

@@ -1,0 +1,8 @@
+[package]
+name = "pw-data"
+version.workspace = true
+edition.workspace = true
+description = "Exact zero-remainder (DIFF == 0) binary parsers & serializers for Perfect World 1.4.2 elements.data, tasks.data, dyn_tasks.data, task_npc.data, aipolicy.data, domain.data, and gshop*.data"
+
+[dependencies]
+pw-core = { path = "../pw-core" }
