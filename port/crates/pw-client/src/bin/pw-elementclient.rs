@@ -16,6 +16,10 @@ fn main() {
     let mut cli_user: Option<String> = None;
     let mut cli_pass: Option<String> = None;
     let mut cli_role: Option<String> = None;
+    // Sandbox mode: boot straight into a chosen map at a chosen world position
+    // (e.g. `--map world --pos 1292,1132` = Archosaur West Plaza on the Midlands continent).
+    let mut sandbox_map: Option<String> = None;
+    let mut sandbox_pos: Option<(f32, f32)> = None;
 
     let mut idx = 0usize;
     while idx < args.len() {
@@ -23,6 +27,14 @@ fn main() {
         let low = a.to_ascii_lowercase();
         if low == "--check" || low == "--headless" {
             headless = true;
+        } else if low == "--help" || low == "-h" {
+            println!(
+                "Usage: pw-elementclient [element_dir] [--check] [--offline] [--screenshots DIR]\n\
+                 \x20                     [--connect ADDR | server:ADDR] [--user U | user:U] [--pass P | pwd:P] [--role R | role:R]\n\
+                 \x20                     [--map NAME] [--pos X,Z]\n\
+                 Sandbox: --map boots straight into maps/<NAME> (default login), --pos X,Z sets the world spawn center."
+            );
+            return;
         } else if low == "--offline" {
             start_offline = true;
         } else if low == "--screenshots" {
@@ -50,6 +62,20 @@ fn main() {
                 cli_role = Some(args[idx + 1].clone());
                 idx += 1;
             }
+        } else if low == "--map" {
+            if idx + 1 < args.len() {
+                sandbox_map = Some(args[idx + 1].clone());
+                idx += 1;
+            }
+        } else if low == "--pos" {
+            if idx + 1 < args.len() {
+                if let Some((xs, zs)) = args[idx + 1].split_once(',') {
+                    if let (Ok(x), Ok(z)) = (xs.trim().parse::<f32>(), zs.trim().parse::<f32>()) {
+                        sandbox_pos = Some((x, z));
+                    }
+                }
+                idx += 1;
+            }
         } else if let Some(v) = a.strip_prefix("server:").or_else(|| a.strip_prefix("SERVER:")) {
             connect_addr = Some(v.to_string());
         } else if let Some(v) = a.strip_prefix("user:").or_else(|| a.strip_prefix("USER:")) {
@@ -74,13 +100,34 @@ fn main() {
         }
     };
 
-    let game = match CecGame::init(&root) {
+    let mut game = match CecGame::init(&root) {
         Ok(g) => g,
         Err(e) => {
             eprintln!("CECGame::Init failed (root = '{}'): {e}", root.display());
             process::exit(1);
         }
     };
+
+    // Sandbox mode: `--map <name>` boots directly into `maps/<name>` (instead of the
+    // login screen map), optionally centered at `--pos <x,z>` world meters.
+    if let Some(map) = sandbox_map.as_deref() {
+        let default_center = if map.eq_ignore_ascii_case("world") {
+            pw_world::MapInstanceBundle::ARCHOSAUR_DEFAULT_CENTER
+        } else {
+            pw_core::Vec3::ZERO
+        };
+        let center = sandbox_pos.map_or(default_center, |(x, z)| pw_core::Vec3::new(x, 0.0, z));
+        match game.load_map_by_name_at(map, center) {
+            Ok(()) => println!(
+                "  Sandbox: booted directly into map '{map}' centered at ({:.1}, {:.1})",
+                center.x, center.z
+            ),
+            Err(e) => {
+                eprintln!("Error: --map '{map}' failed: {e}");
+                process::exit(1);
+            }
+        }
+    }
 
     let default_srv = game
         .server_list

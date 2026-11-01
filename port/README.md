@@ -17,6 +17,8 @@ E:\pw142\element\pw-elementclient.exe
 
 You can also launch with `eSTART.bat` flags (`pw-elementclient.exe nocheck game:cpw console:1`), start directly in offline Character Select with `pw-elementclient.exe --offline`, or run one-shot verification with `pw-elementclient.exe --check`.
 
+**Sandbox mode** (headless/scripted play): `--map <name>` boots straight into `maps\<name>` instead of the login map (e.g. `--map world` loads the 8192x11264m Midlands continent), and `--pos <x,z>` sets the world spawn/streaming center in meters (e.g. `--pos 1292,1132` = Archosaur West Plaza). Combine with `--screenshots DIR` to render the scripted 20-frame world tour (Archosaur, City of the Plume, Etherblade, Raging Tides, City of the Lost) or the 8-frame login/a01 suite, and `--check` for a boot-only smoke test.
+
 ### Authentic Game Flow & Controls
 
 - **Login Screen (`Maps\Login` `Cam[0]` + `interfaces\loginui.dcf`)**:
