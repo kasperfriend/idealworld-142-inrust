@@ -580,6 +580,15 @@ impl InteractiveClientApp {
         self.reload_active_scene_3d();
     }
 
+    /// Sandbox `--time HH[:MM]`: sets the time of day (0–24h) and derives the day/night
+    /// `.t2lm`/`.t2lm1` lightmap blend — full day 06:30–17:30, full night 19:30–04:30,
+    /// smooth dawn/dusk ramps in between — then rebuilds the 3D scene.
+    pub fn set_time_of_day(&mut self, hours: f32) {
+        let h = hours.rem_euclid(24.0);
+        self.time_of_day = h;
+        self.set_night_weight(night_weight_for_hour(h));
+    }
+
     /// Switches the active map and rebuilds the 3D scene (sandbox teleport-menu map hop).
     pub fn load_map_and_reload(&mut self, map_name: &str, center: Vec3) -> PwResult<()> {
         self.game.load_map_by_name_at(map_name, center)?;
@@ -597,7 +606,8 @@ impl InteractiveClientApp {
             .map(|w| w.water_height)
             .unwrap_or(-10_000.0);
         let keep_sw = self.scene_3d.show_software_cursor;
-        self.scene_3d = LoadedScene3D::build(&self.game.active_map, &self.game.vfs);
+        self.scene_3d =
+            LoadedScene3D::build_with_night(&self.game.active_map, &self.game.vfs, self.night_weight);
         self.scene_3d.load_cursors_from_dir(&self.game.element_root);
         self.scene_3d.show_software_cursor = keep_sw;
         self.scene_generation = self.scene_generation.wrapping_add(1);
@@ -5231,4 +5241,49 @@ fn find_embedded_dds_path(rec: &[u8]) -> String {
         }
     }
     String::new()
+}
+
+/// Day→night `.t2lm`/`.t2lm1` lightmap blend for a given hour (0–24): full day 06:30–17:30,
+/// full night 19:30–04:30, smooth dawn/dusk ramps in between. Pure function of the hour so
+/// the sandbox `--time HH[:MM]` flag and unit tests share one source of truth.
+pub fn night_weight_for_hour(h: f32) -> f32 {
+    let h = h.rem_euclid(24.0);
+    if (6.5..=17.5).contains(&h) {
+        0.0
+    } else if h > 19.5 || h < 4.5 {
+        1.0
+    } else if h < 6.5 {
+        (6.5 - h) / 2.0 // dawn ramp 04:30 → 06:30
+    } else {
+        (h - 17.5) / 2.0 // dusk ramp 17:30 → 19:30
+    }
+}
+
+#[cfg(test)]
+mod sandbox_time_tests {
+    use super::night_weight_for_hour;
+
+    #[test]
+    fn night_weight_full_day() {
+        for h in [6.5, 10.0, 12.0, 17.5] {
+            assert_eq!(night_weight_for_hour(h), 0.0, "hour {h}");
+        }
+    }
+
+    #[test]
+    fn night_weight_full_night() {
+        for h in [19.5, 22.0, 0.0, 4.5, 25.0, 48.5] {
+            assert_eq!(night_weight_for_hour(h), 1.0, "hour {h}");
+        }
+    }
+
+    #[test]
+    fn night_weight_dawn_dusk_ramps() {
+        assert!((night_weight_for_hour(5.5) - 0.5).abs() < 1e-6);
+        assert!((night_weight_for_hour(18.5) - 0.5).abs() < 1e-6);
+        assert!(night_weight_for_hour(6.0) > 0.0 && night_weight_for_hour(6.0) < 1.0);
+        assert!(night_weight_for_hour(19.0) > 0.0 && night_weight_for_hour(19.0) < 1.0);
+        // wraps modulo 24h
+        assert_eq!(night_weight_for_hour(30.0), night_weight_for_hour(6.0));
+    }
 }

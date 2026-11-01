@@ -24,8 +24,12 @@ fn main() {
     // `--tp <id|name>` (repeatable) renders a screenshot frame at each target.
     let mut list_tp = false;
     let mut tp_specs: Vec<String> = Vec::new();
-    // Sandbox day/night: `--night` blends in the real `.t2lm1` night lightmaps.
+    // Sandbox day/night: `--night` blends in the real `.t2lm1` night lightmaps;
+    // `--time HH[:MM]` picks any time of day (derives the day/night blend automatically).
     let mut night = false;
+    let mut time_arg: Option<f32> = None;
+    // Sandbox world tour: `--tour` renders one screenshot frame at EVERY teleport landmark.
+    let mut tour = false;
 
     let mut idx = 0usize;
     while idx < args.len() {
@@ -37,10 +41,13 @@ fn main() {
             println!(
                 "Usage: pw-elementclient [element_dir] [--check] [--offline] [--screenshots DIR]\n\
                  \x20                     [--connect ADDR | server:ADDR] [--user U | user:U] [--pass P | pwd:P] [--role R | role:R]\n\
-                 \x20                     [--map NAME] [--pos X,Z] [--list-tp] [--tp ID|NAME]... [--night]\n\
+                 \x20                     [--map NAME] [--pos X,Z] [--list-tp] [--tp ID|NAME]... [--tour]\n\
+                 \x20                     [--night | --time HH[:MM]]\n\
                  Sandbox: --map boots straight into maps/<NAME> (default login), --pos X,Z sets the world spawn center.\n\
                  Teleport menu: --list-tp prints all world_targets.txt landmarks; --tp <id|name> (repeatable)\n\
-                 \x20             renders one screenshot frame per target; --night uses the .t2lm1 night lightmaps."
+                 \x20             renders one screenshot frame per target; --tour does ALL landmarks.\n\
+                 Time of day: --night forces the .t2lm1 night lightmaps; --time HH[:MM] (0-24) sets any\n\
+                 \x20             hour with automatic dawn/dusk day-night blending."
             );
             return;
         } else if low == "--offline" {
@@ -93,6 +100,26 @@ fn main() {
             }
         } else if low == "--night" {
             night = true;
+        } else if low == "--tour" {
+            tour = true;
+        } else if low == "--time" {
+            if idx + 1 < args.len() {
+                let v = args[idx + 1].trim();
+                let hours = if let Some((hh, mm)) = v.split_once(':') {
+                    hh.trim().parse::<f32>().ok().map(|h| {
+                        h + mm.trim().parse::<f32>().unwrap_or(0.0) / 60.0
+                    })
+                } else {
+                    v.parse::<f32>().ok()
+                };
+                if let Some(h) = hours {
+                    time_arg = Some(h);
+                } else {
+                    eprintln!("Error: --time expects HH or HH:MM, got '{v}'");
+                    process::exit(1);
+                }
+                idx += 1;
+            }
         } else if let Some(v) = a.strip_prefix("server:").or_else(|| a.strip_prefix("SERVER:")) {
             connect_addr = Some(v.to_string());
         } else if let Some(v) = a.strip_prefix("user:").or_else(|| a.strip_prefix("USER:")) {
@@ -225,6 +252,13 @@ fn main() {
         let out_dir = std::path::Path::new(&sdir);
         let _ = std::fs::create_dir_all(out_dir);
         let mut app = InteractiveClientApp::new(game);
+        if let Some(t) = time_arg {
+            app.set_time_of_day(t);
+            println!(
+                "  Sandbox: time of day = {t:.2}h (day/night blend {:.2})",
+                app.night_weight
+            );
+        }
         if night {
             app.set_night_weight(1.0);
         }
@@ -446,9 +480,34 @@ fn main() {
             println!("  Saved 8 full-parity 1280x800 frames to '{}'", out_dir.display());
         }
 
-        // Sandbox teleport menu: render one 1280x800 frame per `--tp <id|name>` landmark
-        // (targets come from the active map's `world_targets.txt`; hops to `maps/world` if needed).
-        if !tp_specs.is_empty() {
+        // Sandbox teleport menu / world tour: render one 1280x800 frame per `--tp <id|name>`
+        // landmark (or per ALL landmarks with `--tour`); targets come from the active map's
+        // `world_targets.txt`; hops to `maps/world` if needed.
+        let specs: Vec<String> = if !tp_specs.is_empty() {
+            tp_specs.clone()
+        } else if tour {
+            if app.game.active_map.world_targets.is_empty()
+                && app
+                    .game
+                    .available_maps
+                    .iter()
+                    .any(|m| m.eq_ignore_ascii_case("world"))
+            {
+                let _ = app.load_map_and_reload(
+                    "world",
+                    pw_world::MapInstanceBundle::ARCHOSAUR_DEFAULT_CENTER,
+                );
+            }
+            app.game
+                .active_map
+                .world_targets
+                .iter()
+                .map(|t| t.id.to_string())
+                .collect()
+        } else {
+            Vec::new()
+        };
+        if !specs.is_empty() {
             if !app.game.active_map.map_name.eq_ignore_ascii_case("world")
                 && app
                     .game
@@ -468,8 +527,9 @@ fn main() {
                     app.game.active_map.map_name
                 );
             }
+            let prefix = if tour && tp_specs.is_empty() { "tour" } else { "tp" };
             let mut n = 0usize;
-            for spec in &tp_specs {
+            for spec in &specs {
                 let t = if let Ok(id) = spec.parse::<u32>() {
                     targets.iter().find(|t| t.id == id).cloned()
                 } else {
@@ -506,7 +566,7 @@ fn main() {
                     .chars()
                     .map(|c| if c.is_ascii_alphanumeric() { c.to_ascii_lowercase() } else { '_' })
                     .collect();
-                let fname = format!("tp{n:02}_{slug}.bmp");
+                let fname = format!("{prefix}{n:02}_{slug}.bmp");
                 std::fs::write(out_dir.join(&fname), fb.encode_bmp()).unwrap();
                 println!(
                     "  Teleport [{:>2}] {:<40} ({:>9.1}, {:>8.1}, {:>9.1}) => {}",
@@ -523,6 +583,13 @@ fn main() {
 
     println!("  Launching CECGame::Run interactive client window (F11 = Fullscreen, F5 = Offline 3D Sandbox)...");
     let mut app = InteractiveClientApp::new(game);
+    if let Some(t) = time_arg {
+        app.set_time_of_day(t);
+        println!("  Sandbox: time of day = {t:.2}h (day/night blend {:.2})", app.night_weight);
+    }
+    if night {
+        app.set_night_weight(1.0);
+    }
     if console_enabled {
         app.console_log
             .push("Developer console unlocked via console:1 (press ~ or F12 in-world).".into());
