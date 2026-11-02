@@ -227,8 +227,8 @@ pub fn load_minimap_composite_at(
         return Some((tid, (-512.0, 512.0, -512.0, 512.0)));
     }
 
-    // Fallback: single minimap DDS (`minimaps/<map>.dds` or `ingame/<map>.dds`)
-    for cand in [format!("minimaps/{m}.dds"), format!("ingame/<map>.dds")] {
+    // Fallback: single minimap DDS (`minimaps/<map>.dds` or `surfaces/ingame/<map>.dds`)
+    for cand in [format!("minimaps/{m}.dds"), format!("ingame/{m}.dds")] {
         if let Some(bytes) = vfs.read_ui_surface(&cand) {
             if let Ok(img) = decode_surface_auto(&bytes) {
                 let tid = textures.len();

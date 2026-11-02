@@ -81,6 +81,10 @@ pub struct TerrainSubSplat {
     pub world_l: f32,
     pub t2mk: Option<T2MkSubTerrainMasks>,
     pub lm_day: Vec<Option<SurfaceImage>>,
+    /// `.t2lm1` night lightmaps + the active day→night blend, used by the per-pixel
+    /// `sample_terrain_splat_at` path so `--night`/`--time` darken the terrain live.
+    pub lm_night: Vec<Option<SurfaceImage>>,
+    pub night_weight: f32,
 }
 
 #[derive(Debug, Clone)]
@@ -188,6 +192,75 @@ pub struct UiText2D {
     pub clip_rect: Option<(i32, i32, i32, i32)>,
 }
 
+/// Fallback `facedata.pck` texture candidates for a `CECFace` submesh whose raw texture failed
+/// primary resolution. Real archive layout (verified entry-by-entry against the shipped pck):
+///   facedata/{武侠男,法师女,影族男,影族女,妖兽男}/个性化/五官贴图库/{眼型,脸型,眉型,鼻型,嘴型,胡型,眼球}/*.dds
+///   facedata/{...}/头发模型库/textures/*.dds   (+ 预定义/*.ini, 表情库/*.eface)
+/// Only these five class folders exist; other professions share them via their 预定义 presets.
+pub fn cec_face_fallback_candidates(
+    cls: i32,
+    gender: u8,
+    hint: &str,
+    raw_tex: &str,
+    is_hair_skin: bool,
+) -> Vec<String> {
+    let is_female = match cls.clamp(0, 7) {
+        3 => true,
+        4 => false,
+        _ => gender != 0,
+    };
+    let raw_low = raw_tex.to_ascii_lowercase();
+    let class_dir: &str = match (cls.clamp(0, 7), is_female) {
+        (2 | 5, true) => "影族女",
+        (2 | 5, false) => "影族男",
+        (4, _) => "妖兽男",
+        (_, true) => "法师女",
+        _ => "武侠男",
+    };
+    if is_hair_skin || hint.contains("头发") || raw_tex.contains('发') {
+        let hair = if class_dir.starts_with("影族") {
+            format!("facedata/{class_dir}/头发模型库/textures/影族头发a01.dds")
+        } else {
+            format!("facedata/{class_dir}/头发模型库/textures/头发a01.dds")
+        };
+        // Cross-folder fallbacks: 影族 folders only carry 影族头发*.dds, others only 头发*.dds.
+        let other = if class_dir.starts_with("影族") {
+            "facedata/法师女/头发模型库/textures/头发a01.dds".to_string()
+        } else {
+            "facedata/影族女/头发模型库/textures/影族头发a01.dds".to_string()
+        };
+        vec![hair, other]
+    } else if raw_tex.contains("眼珠") || raw_low.contains("eyeball") || raw_tex.contains('瞳') {
+        vec![
+            format!("facedata/{class_dir}/个性化/五官贴图库/眼球/眼珠a01.dds"),
+            "facedata/武侠男/个性化/五官贴图库/眼球/眼珠a01.dds".to_string(),
+            "facedata/法师女/个性化/五官贴图库/眼球/眼珠a01.dds".to_string(),
+        ]
+    } else if raw_tex.contains('嘴') || raw_tex.contains('唇') || raw_low.contains("mouth") {
+        // 嘴型 textures exist only in the 武侠男 / 法师女 folders.
+        vec![
+            format!("facedata/{class_dir}/个性化/五官贴图库/嘴型/嘴唇a01.dds"),
+            "facedata/武侠男/个性化/五官贴图库/嘴型/嘴唇a01.dds".to_string(),
+            "facedata/法师女/个性化/五官贴图库/嘴型/嘴唇a01.dds".to_string(),
+        ]
+    } else {
+        let face = if class_dir.starts_with("影族") {
+            format!("facedata/{class_dir}/个性化/五官贴图库/脸型/rw_头01.dds")
+        } else if class_dir == "妖兽男" {
+            // 妖兽男 has no 脸型 library; reuse the human face base texture.
+            "facedata/武侠男/个性化/五官贴图库/脸型/头01.dds".to_string()
+        } else {
+            format!("facedata/{class_dir}/个性化/五官贴图库/脸型/头01.dds")
+        };
+        vec![
+            face,
+            "facedata/武侠男/个性化/五官贴图库/脸型/头01.dds".to_string(),
+            "facedata/法师女/个性化/五官贴图库/脸型/头01.dds".to_string(),
+            "facedata/影族女/个性化/五官贴图库/脸型/rw_头01.dds".to_string(),
+        ]
+    }
+}
+
 pub struct LoadedScene3D {
     pub map_name: String,
     pub world_width: f32,
@@ -242,10 +315,22 @@ pub struct LoadedScene3D {
     pub npc_portrait_cache: HashMap<String, Option<usize>>,
     pub weapon_batches: HashMap<i32, Vec<GpuMeshBatch>>,
     pub ecm_actors: HashMap<String, Option<CachedEcmActor>>,
+    /// Procedural humanoid fallbacks used when `models.pck` (888MB, unavailable in the
+    /// sandbox asset set) is missing the real `.bon/.smd/.ski` player bodies: one batch
+    /// per `(cls, gender, preset)`, tinted by `CECCustomizeIni.color_body` + class armor.
+    pub procedural_avatars: HashMap<(i32, u8, u8), GpuMeshBatch>,
+    /// Same idea for NPC/monster `.ecm` actors that live in the unavailable `models.pck`.
+    pub procedural_npcs: HashMap<String, GpuMeshBatch>,
 }
 
 impl LoadedScene3D {
     pub fn build(map: &MapInstanceBundle, vfs: &VirtualFileSystem) -> Self {
+        Self::build_with_night(map, vfs, 0.0)
+    }
+
+    /// Builds the scene with a day→night lightmap blend (`night_weight` 0.0 = full day `.t2lm`,
+    /// 1.0 = full night `.t2lm1` baked lightmaps on terrain).
+    pub fn build_with_night(map: &MapInstanceBundle, vfs: &VirtualFileSystem, night_weight: f32) -> Self {
         let mut textures = Vec::new();
         let mut tex_lookup = HashMap::new();
 
@@ -326,7 +411,7 @@ impl LoadedScene3D {
 
         // 2. Terrain (`A3DTerrain2` 16-area tri-planar splat + `.t2lm` DXT1 `MODULATE2X` lightmap compositor)
         let (terrain_blocks, terrain_detail_tex, terrain_sub_splats) =
-            build_terrain_blocks(map, vfs, &mut textures, &mut tex_lookup);
+            build_terrain_blocks(map, vfs, &mut textures, &mut tex_lookup, night_weight);
 
         // 3. Ornaments (`CECOrnament` + `A3DLitModel` `.bmd`)
         let mut bmd_path_to_idx: HashMap<String, usize> = HashMap::new();
@@ -372,9 +457,9 @@ impl LoadedScene3D {
                         continue;
                     }
                     let tex_cache_key = format!("bmdtex:{bmd_dir}/{}", m.raw_texture_name.to_ascii_lowercase());
-                    let (tex_id, has_alpha_tex) = if let Some(&tid) = tex_lookup.get(&tex_cache_key) {
+                    let (tex_id, has_alpha_tex, tex_missing) = if let Some(&tid) = tex_lookup.get(&tex_cache_key) {
                         let ha = surface_has_cutout_alpha(&textures[tid]);
-                        (tid, ha)
+                        (tid, ha, false)
                     } else if let Some(tb) = read_model_texture_bytes(vfs, bmd_dir, &m.raw_texture_name) {
                         if let Ok(mut simg) = decode_surface_auto(&tb) {
                             if m.raw_texture_name.to_ascii_lowercase().ends_with(".bmp") {
@@ -384,20 +469,30 @@ impl LoadedScene3D {
                             let tid = textures.len();
                             textures.push(simg);
                             tex_lookup.insert(tex_cache_key, tid);
-                            (tid, ha)
+                            (tid, ha, false)
                         } else {
-                            (0, false)
+                            (0, false, true)
                         }
                     } else {
-                        (0, false)
+                        (0, false, true)
                     };
+
+                    let mut verts = m.verts;
+                    if tex_missing {
+                        // `textures.pck` unavailable -> tint the white fallback by a stable
+                        // per-model color so buildings read as distinct structures, not blank boxes.
+                        let tint = bmd_placeholder_tint(&lookup_key);
+                        for v in &mut verts {
+                            v.diffuse = mul_color(v.diffuse, tint);
+                        }
+                    }
 
                     batches.push(GpuMeshBatch {
                         tex_id,
                         two_sided: m.two_sided || has_alpha_tex,
                         alpha_test: has_alpha_tex,
                         alpha_blend: false,
-                        verts: m.verts,
+                        verts,
                         indices: m.indices,
                     });
                 }
@@ -940,6 +1035,8 @@ impl LoadedScene3D {
             npc_portrait_cache: HashMap::new(),
             weapon_batches: HashMap::new(),
             ecm_actors: HashMap::new(),
+            procedural_avatars: HashMap::new(),
+            procedural_npcs: HashMap::new(),
         }
     }
 
@@ -1090,42 +1187,14 @@ impl LoadedScene3D {
             return (id, ha);
         }
 
-        let is_female = match cls.clamp(0, 7) {
-            3 => true,
-            4 => false,
-            _ => gender != 0,
-        };
-        let fallback_facedata_path: &str = if is_hair_skin || hint.contains("头发") || raw_tex.contains('发') {
-            match (cls.clamp(0, 7), is_female) {
-                (2 | 5, true) => "facedata/影族女/头发/头发纹理/影族女头发10.dds",
-                (2 | 5, false) => "facedata/影族男/头发/头发纹理/影族男头发10.dds",
-                (_, true) => "facedata/女/头发/头发纹理/法师女头发12.dds",
-                (_, false) => "facedata/男/头发/头发纹理/武侠男头发10.dds",
-            }
-        } else if raw_tex.contains("眼珠") || raw_low.contains("eyeball") || raw_tex.contains('瞳') {
-            if is_female {
-                "facedata/女/眼皮/小眼球/普通眼珠.dds"
-            } else {
-                "facedata/男/眼皮/小眼球/普通眼珠.dds"
-            }
-        } else if raw_tex.contains('嘴') || raw_tex.contains('唇') || raw_low.contains("mouth") {
-            if is_female {
-                "facedata/女/嘴唇/下唇线/女标准双唇.dds"
-            } else {
-                "facedata/男/嘴唇/男标准双唇.dds"
-            }
-        } else {
-            match (cls.clamp(0, 7), is_female) {
-                (2 | 5, true) => "facedata/影族女/脸/基本纹理/巫师女标准脸5/头05.dds",
-                (2 | 5, false) => "facedata/影族男/脸/基本纹理/巫师男标准脸5/头05.dds",
-                (4, _) => "facedata/妖兽/脸/基本纹理/虎.dds",
-                (_, true) => "facedata/女/脸/基本纹理/法师女标准脸/头.dds",
-                (_, false) => "facedata/男/脸/基本纹理/武侠男标准脸/头.dds",
-            }
-        };
+        let fallback_facedata_candidates =
+            cec_face_fallback_candidates(cls, gender, hint, raw_tex, is_hair_skin);
 
-        let tex_bytes = read_model_texture_bytes(vfs, hint, raw_tex)
-            .or_else(|| vfs.read_file(fallback_facedata_path).ok());
+        let tex_bytes = read_model_texture_bytes(vfs, hint, raw_tex).or_else(|| {
+            fallback_facedata_candidates
+                .iter()
+                .find_map(|p| vfs.read_file(p).ok())
+        });
         if let Some(tb) = tex_bytes {
             if let Ok(simg) = decode_surface_auto(&tb) {
                 let tinted = tint_surface_image_rgb(&simg, tint, preserve_alpha);
@@ -1282,6 +1351,39 @@ impl LoadedScene3D {
                 }
                 return draws;
             }
+            // `models.pck` unavailable -> `.ecm` failed to load: draw a tinted procedural
+            // placeholder so the NPC/monster is still visible next to its name label.
+            if self
+                .ecm_actors
+                .get(&ecm_norm)
+                .map(|c| c.is_none())
+                .unwrap_or(false)
+            {
+                if !self.procedural_npcs.contains_key(&ecm_norm) {
+                    let tint = npc_placeholder_tint(&ecm_norm);
+                    self.procedural_npcs.insert(
+                        ecm_norm.clone(),
+                        build_procedural_humanoid_batch(tint, tint, 0xFF3A_3F4A),
+                    );
+                }
+                let actor_world = Mat4::a3d_transform_matrix(
+                    actor.dir,
+                    Vec3::UNIT_Y,
+                    actor.pos,
+                    Vec3::new(actor.scale, actor.scale, actor.scale),
+                );
+                if let Some(b) = self.procedural_npcs.get(&ecm_norm) {
+                    draws.push((actor_world, b.clone()));
+                }
+                draws.push((
+                    Mat4::IDENTITY,
+                    build_ground_shadow_batch(self.shadow_blob_tex_id, actor.pos, 0.92 * actor.scale),
+                ));
+                if actor.selected {
+                    draws.push((Mat4::IDENTITY, build_target_ring_batch(actor.pos, 1.05, 0xCCFF_4838)));
+                }
+                return draws;
+            }
         }
 
         // Branch B: Animated Player Character (`.bon` + `.smd` + `.ski` + `CECFace` `CC_Neck<->HH_Neck` + `HH_*` Weapon)
@@ -1411,27 +1513,46 @@ impl LoadedScene3D {
             .get(&tpl_key)
             .cloned();
 
-        if let Some(submeshes) = self.player_skin_templates.get(&tpl_key) {
-            for csm in submeshes {
-                let mut verts = if let Some((ref tm_blend, _, _, _)) = pose_opt {
-                    skin_submesh_vertices(&csm.submesh, &csm.bone_map, tm_blend, sun_dir)
-                } else {
-                    csm.submesh.verts.clone()
-                };
-                if let Some(ref ini) = custom_ini {
-                    apply_body_proportions_to_vertices(&mut verts, ini);
+        let body_drawn = match self.player_skin_templates.get(&tpl_key) {
+            Some(submeshes) if !submeshes.is_empty() => {
+                for csm in submeshes {
+                    let mut verts = if let Some((ref tm_blend, _, _, _)) = pose_opt {
+                        skin_submesh_vertices(&csm.submesh, &csm.bone_map, tm_blend, sun_dir)
+                    } else {
+                        csm.submesh.verts.clone()
+                    };
+                    if let Some(ref ini) = custom_ini {
+                        apply_body_proportions_to_vertices(&mut verts, ini);
+                    }
+                    draws.push((
+                        actor_world,
+                        GpuMeshBatch {
+                            tex_id: csm.tex_id,
+                            two_sided: true,
+                            alpha_test: csm.alpha_test,
+                            alpha_blend: false,
+                            verts,
+                            indices: csm.submesh.indices.clone(),
+                        },
+                    ));
                 }
-                draws.push((
-                    actor_world,
-                    GpuMeshBatch {
-                        tex_id: csm.tex_id,
-                        two_sided: true,
-                        alpha_test: csm.alpha_test,
-                        alpha_blend: false,
-                        verts,
-                        indices: csm.submesh.indices.clone(),
-                    },
-                ));
+                true
+            }
+            _ => false,
+        };
+        // `models.pck` unavailable -> no `.ski` body: procedural humanoid tinted by the
+        // real `CECCustomizeIni.color_body` + class color (real facedata head still attaches above).
+        if !body_drawn {
+            if !self.procedural_avatars.contains_key(&tpl_key) {
+                let ini = load_character_customize_ini(vfs, cls, gender);
+                let armor = class_armor_tint(cls, gender);
+                self.procedural_avatars.insert(
+                    tpl_key,
+                    build_procedural_humanoid_batch(ini.color_body, armor, 0xFF3A_3F4A),
+                );
+            }
+            if let Some(b) = self.procedural_avatars.get(&tpl_key) {
+                draws.push((actor_world, b.clone()));
             }
         }
 
@@ -2240,9 +2361,21 @@ impl LoadedScene3D {
 
         if let Some(Some(lm)) = splat.lm_day.get(area_idx) {
             let lc = lm.sample_uv_bilinear_clamp(uf, vf);
-            let lr = (((lc >> 16) & 0xFF) as f32) * (2.0 / 255.0);
-            let lg = (((lc >> 8) & 0xFF) as f32) * (2.0 / 255.0);
-            let lb = ((lc & 0xFF) as f32) * (2.0 / 255.0);
+            let mut lr = (((lc >> 16) & 0xFF) as f32) * (2.0 / 255.0);
+            let mut lg = (((lc >> 8) & 0xFF) as f32) * (2.0 / 255.0);
+            let mut lb = ((lc & 0xFF) as f32) * (2.0 / 255.0);
+            // `.t2lm1` night lightmap blend (sandbox `--night` / `--time HH` after dusk)
+            if splat.night_weight > 0.001 {
+                if let Some(Some(nlm)) = splat.lm_night.get(area_idx) {
+                    let nlc = nlm.sample_uv_bilinear_clamp(uf, vf);
+                    let nlr = (((nlc >> 16) & 0xFF) as f32) * (2.0 / 255.0);
+                    let nlg = (((nlc >> 8) & 0xFF) as f32) * (2.0 / 255.0);
+                    let nlb = ((nlc & 0xFF) as f32) * (2.0 / 255.0);
+                    lr += (nlr - lr) * splat.night_weight;
+                    lg += (nlg - lg) * splat.night_weight;
+                    lb += (nlb - lb) * splat.night_weight;
+                }
+            }
             r_acc = (r_acc * lr).clamp(0.0, 255.0);
             g_acc = (g_acc * lg).clamp(0.0, 255.0);
             b_acc = (b_acc * lb).clamp(0.0, 255.0);
@@ -2465,6 +2598,7 @@ fn build_terrain_blocks(
     vfs: &VirtualFileSystem,
     textures: &mut Vec<SurfaceImage>,
     tex_lookup: &mut HashMap<String, usize>,
+    night_weight: f32,
 ) -> (
     Vec<TerrainBlockDraw>,
     Vec<Option<SurfaceImage>>,
@@ -2499,7 +2633,7 @@ fn build_terrain_blocks(
                 sub.t2mk.as_ref(),
                 sub.t2lm_day.as_ref(),
                 sub.t2lm_night.as_ref(),
-                0.0,
+                night_weight,
                 &detail_imgs,
                 &format!("{}_{}", map.map_name, sub.sub_idx + 1),
                 area_sz,
@@ -2520,7 +2654,7 @@ fn build_terrain_blocks(
         map.t2mk.as_ref(),
         map.t2lm_day.as_ref(),
         map.t2lm_night.as_ref(),
-        0.0,
+        night_weight,
         &detail_imgs,
         &map.map_name,
         768,
@@ -2752,6 +2886,8 @@ fn build_subterrain_blocks_one(
         world_l,
         t2mk: t2mk.cloned(),
         lm_day: lm_day_imgs,
+        lm_night: lm_night_imgs,
+        night_weight,
     };
 
     (out_blocks, splat)
@@ -3667,6 +3803,124 @@ pub fn project_world_to_screen(
     let sx = ((ndc_x * 0.5 + 0.5) * (screen_w as f32)).round() as i32;
     let sy = ((0.5 - ndc_y * 0.5) * (screen_h as f32)).round() as i32;
     Some((sx, sy, world_pt.sub(eye).length()))
+}
+
+/// Pushes an axis-aligned box (6 faces x 4 verts) into `verts`/`indices` with per-face
+/// sun-berthed diffuse shading (`0xAARRGGBB`). Used by the procedural avatar fallbacks.
+fn push_box(
+    verts: &mut Vec<A3dLitVertex>,
+    indices: &mut Vec<u16>,
+    min: Vec3,
+    max: Vec3,
+    color: u32,
+    sun_dir: Vec3,
+) {
+    let sun = sun_dir.normalized();
+    let shade = |nx: f32, ny: f32, nz: f32| -> u32 {
+        let n = Vec3::new(nx, ny, nz).normalized();
+        let l = (n.x * sun.x + n.y * sun.y + n.z * sun.z).max(0.0);
+        let f = 0.55 + 0.45 * l;
+        let r = (((color >> 16) & 0xFF) as f32 * f).clamp(0.0, 255.0) as u32;
+        let g = (((color >> 8) & 0xFF) as f32 * f).clamp(0.0, 255.0) as u32;
+        let b = ((color & 0xFF) as f32 * f).clamp(0.0, 255.0) as u32;
+        0xFF00_0000 | (r << 16) | (g << 8) | b
+    };
+    // (normal, 4 corners CCW seen from outside)
+    let faces: [([f32; 3], [[f32; 3]; 4]); 6] = [
+        ([1.0, 0.0, 0.0], [[max.x, min.y, min.z], [max.x, min.y, max.z], [max.x, max.y, max.z], [max.x, max.y, min.z]]),
+        ([-1.0, 0.0, 0.0], [[min.x, min.y, max.z], [min.x, min.y, min.z], [min.x, max.y, min.z], [min.x, max.y, max.z]]),
+        ([0.0, 1.0, 0.0], [[min.x, max.y, min.z], [max.x, max.y, min.z], [max.x, max.y, max.z], [min.x, max.y, max.z]]),
+        ([0.0, -1.0, 0.0], [[min.x, min.y, max.z], [max.x, min.y, max.z], [max.x, min.y, min.z], [min.x, min.y, min.z]]),
+        ([0.0, 0.0, 1.0], [[max.x, min.y, max.z], [min.x, min.y, max.z], [min.x, max.y, max.z], [max.x, max.y, max.z]]),
+        ([0.0, 0.0, -1.0], [[min.x, min.y, min.z], [max.x, min.y, min.z], [max.x, max.y, min.z], [min.x, max.y, min.z]]),
+    ];
+    for (n, corners) in faces {
+        let base = verts.len() as u16;
+        let c = shade(n[0], n[1], n[2]);
+        for [x, y, z] in corners {
+            verts.push(A3dLitVertex { x, y, z, diffuse: c, u: 0.5, v: 0.5 });
+        }
+        indices.extend_from_slice(&[base, base + 1, base + 2, base, base + 2, base + 3]);
+    }
+}
+
+/// Per-class armor tint for the procedural fallback avatar (Perfect World 8 classes).
+fn class_armor_tint(cls: i32, gender: u8) -> u32 {
+    let base = match cls {
+        0 => 0xFFC8_4030u32, // Blademaster - red
+        1 => 0xFF3A_5F_C8, // Wizard - blue
+        2 => 0xFFD8_C8_6A, // Cleric - gold
+        3 => 0xFF4A_A0_50, // Venomancer - green
+        4 => 0xFFB0_6A_30, // Barbarian - orange
+        5 => 0xFF6A_4A_90, // Assassin - purple
+        6 => 0xFF50_A0_60, // Archer - forest green
+        _ => 0xFF7A_C8_E0, // Hierophant - cyan
+    };
+    if gender & 1 == 1 {
+        let r = (((base >> 16) & 0xFF) * 220 / 255) << 16;
+        let g = (((base >> 8) & 0xFF) * 220 / 255) << 8;
+        let b = ((base & 0xFF) * 220 / 255) & 0xFF;
+        0xFF00_0000 | r | g | b
+    } else {
+        base
+    }
+}
+
+/// Builds a simple humanoid (~1.78m tall, origin at feet, facing +Z) used when the real
+/// `.ski` body from `models.pck` is unavailable: legs, torso, arms in `armor`, head/neck in
+/// `skin`. Real `facedata.pck` face/hair submeshes still attach on top at neck height.
+fn build_procedural_humanoid_batch(skin: u32, armor: u32, pants: u32) -> GpuMeshBatch {
+    let sun = Vec3::new(-0.35, 0.78, -0.52);
+    let mut verts = Vec::with_capacity(24 * 7);
+    let mut indices = Vec::with_capacity(36 * 7);
+    // legs
+    push_box(&mut verts, &mut indices, Vec3::new(-0.20, 0.0, -0.10), Vec3::new(-0.03, 0.92, 0.10), pants, sun);
+    push_box(&mut verts, &mut indices, Vec3::new(0.03, 0.0, -0.10), Vec3::new(0.20, 0.92, 0.10), pants, sun);
+    // torso
+    push_box(&mut verts, &mut indices, Vec3::new(-0.23, 0.92, -0.13), Vec3::new(0.23, 1.48, 0.13), armor, sun);
+    // arms
+    push_box(&mut verts, &mut indices, Vec3::new(-0.37, 0.98, -0.08), Vec3::new(-0.24, 1.46, 0.08), armor, sun);
+    push_box(&mut verts, &mut indices, Vec3::new(0.24, 0.98, -0.08), Vec3::new(0.37, 1.46, 0.08), armor, sun);
+    // neck + head
+    push_box(&mut verts, &mut indices, Vec3::new(-0.06, 1.46, -0.06), Vec3::new(0.06, 1.56, 0.06), skin, sun);
+    push_box(&mut verts, &mut indices, Vec3::new(-0.13, 1.56, -0.13), Vec3::new(0.13, 1.80, 0.13), skin, sun);
+    GpuMeshBatch {
+        tex_id: 0, // `textures[0]` is the solid-white 4x4
+        two_sided: false,
+        alpha_test: false,
+        alpha_blend: false,
+        verts,
+        indices,
+    }
+}
+
+/// `a * b` per-channel multiply for `0xAARRGGBB` colors (alpha preserved from `a`).
+fn mul_color(a: u32, b: u32) -> u32 {
+    let r = (((a >> 16) & 0xFF) * ((b >> 16) & 0xFF) / 255) << 16;
+    let g = (((a >> 8) & 0xFF) * ((b >> 8) & 0xFF) / 255) << 8;
+    let bl = ((a & 0xFF) * (b & 0xFF) / 255) & 0xFF;
+    (a & 0xFF00_0000) | r | g | bl
+}
+
+/// Muted stone/plaster palette for `.bmd` buildings whose textures live in the
+/// unavailable `textures.pck` — hashed by model path so neighbors differ.
+fn bmd_placeholder_tint(path: &str) -> u32 {
+    const PALETTE: [u32; 10] = [
+        0xFFC8_BBA8, 0xFFB8_A890, 0xFFC0_B0_98, 0xFF9A_A8B0, 0xFFB0_A8_98,
+        0xFFC8_C0_B0, 0xFFA8_B098, 0xFFB8_C0_A8, 0xFF98_A898, 0xFFC0_B8_C8,
+    ];
+    let h = path.bytes().fold(0u32, |a, b| a.wrapping_mul(31).wrapping_add(b as u32));
+    PALETTE[(h as usize) % PALETTE.len()]
+}
+
+/// Stable per-path tint so different NPC/monster placeholders don't all share one color.
+fn npc_placeholder_tint(path: &str) -> u32 {
+    const PALETTE: [u32; 8] = [
+        0xFF8A_9A_B0, 0xFFB0_8A_6A, 0xFF8A_B0_8A, 0xFFA0_7A_B0,
+        0xFF7A_A0_B8, 0xFFB0_A0_70, 0xFF90_80_A8, 0xFF88_98_80,
+    ];
+    let h = path.bytes().fold(0u32, |a, b| a.wrapping_mul(31).wrapping_add(b as u32));
+    PALETTE[(h as usize) % PALETTE.len()]
 }
 
 fn build_ground_shadow_batch(tex_id: usize, center: Vec3, radius: f32) -> GpuMeshBatch {
@@ -4705,5 +4959,53 @@ fn draw_ui_quad_cpu(fb: &mut FrameBuffer, raw_q: &UiQuad2D, tex: Option<&Surface
                 fb.pixels[idx] = 0xFF00_0000 | (nr << 16) | (ng << 8) | nb;
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod procedural_fallback_tests {
+    use super::*;
+
+    #[test]
+    fn humanoid_batch_has_7_boxes_and_valid_indices() {
+        let b = build_procedural_humanoid_batch(0xFFE8_DFD4, 0xFFC8_4030, 0xFF3A_3F4A);
+        assert_eq!(b.verts.len(), 7 * 24);
+        assert_eq!(b.indices.len(), 7 * 36);
+        assert!(b.indices.iter().all(|&i| (i as usize) < b.verts.len()));
+        assert_eq!(b.tex_id, 0); // solid-white texture slot
+        // head box (last, +Y top face) is skin-tinted, torso (+Y top) is armor-tinted:
+        // sun-shaded skin red (0xE8*0.90≈0xD0) must stay well above armor red (0xC8*0.90≈0xB4)
+        let head_top = b.verts[6 * 24 + 8].diffuse;
+        let torso_top = b.verts[2 * 24 + 8].diffuse;
+        assert!(
+            ((head_top >> 16) & 0xFF) > ((torso_top >> 16) & 0xFF) + 10,
+            "head {head_top:#x} vs torso {torso_top:#x}"
+        );
+    }
+
+    #[test]
+    fn mul_color_multiplies_rgb_keeps_alpha() {
+        assert_eq!(mul_color(0xFFFF_FFFF, 0xFF80_8040), 0xFF80_8040);
+        assert_eq!(mul_color(0xFF40_80C0, 0xFF20_2020), 0xFF08_1018);
+        assert_eq!(mul_color(0x80FF_0000, 0xFFFF_FFFF) & 0xFF00_0000, 0x8000_0000);
+    }
+
+    #[test]
+    fn placeholder_tints_are_stable_and_in_palette() {
+        let a = npc_placeholder_tint("models/npcs/teleport/tp_yao.ecm");
+        let b = npc_placeholder_tint("models/npcs/teleport/tp_yao.ecm");
+        assert_eq!(a, b);
+        let t = bmd_placeholder_tint("litmodels/world/01/litmodel_5.bmd");
+        assert_eq!(t, bmd_placeholder_tint("litmodels/world/01/litmodel_5.bmd"));
+        assert_eq!(t & 0xFF00_0000, 0xFF00_0000);
+    }
+
+    #[test]
+    fn class_armor_tint_varies_by_class_and_gender() {
+        let m = class_armor_tint(0, 0);
+        let f = class_armor_tint(0, 1);
+        assert_ne!(m, f);
+        assert_ne!(class_armor_tint(0, 0), class_armor_tint(1, 0));
+        assert_eq!(class_armor_tint(2, 0) & 0xFF00_0000, 0xFF00_0000);
     }
 }

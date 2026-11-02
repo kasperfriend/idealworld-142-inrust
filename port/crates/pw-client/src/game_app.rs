@@ -15,7 +15,7 @@
 use pw_aui::AuiRuntime;
 use pw_core::{
     decode_gbk_null_terminated, decode_utf16le_null_terminated, find_path_case_insensitive,
-    IniFile, Vec3,
+    IniFile, PwResult, Vec3,
 };
 use pw_data::ElementSectionData;
 use pw_gnet::{CharacterSummary, GLinkEvent, GLinkLiveClient, GsS2cPacket};
@@ -87,8 +87,8 @@ pub enum InWorldModal {
     Warehouse,      // N — `Win_Storage` (`CDlgStorage` Account Bank & Coin Stash)
     CraftProduce,   // I — `Win_Produce` (`CDlgProduce` Blacksmith / Tailor / Craftsman / Apothecary)
     EquipRefine,    // F6 — `Win_EquipRefine` (`CDlgEquipRefine` Elder `+1..+12` Mirage Refinement & Sockets)
-    GenieElf,       // F7 — `Win_ELFProp` (`CDlgELFProp` Rising Tide Elemental Genie Skills & Stamina)
-    PlayerBooth,    // F8 — `Win_Booth` (`CDlgBooth` Cat-Shop Personal Market Stall)
+    GenieElf,       // F7 — `Win_ELF` (`CDlgELFProp` Rising Tide Elemental Genie Skills & Stamina)
+    PlayerBooth,    // F8 — `Win_PShop1` (`CDlgBooth` Cat-Shop Personal Market Stall)
     PkAutolock,     // F5 — `Win_PKSetting` / `Win_AutoLock` (`CDlgPKSetting` + Safety Lock)
     DevConsole,     // ` / F12 — `Dlg_Console` (`configs/console_cmd.txt`)
 }
@@ -200,6 +200,8 @@ pub struct InteractiveClientApp {
     pub cam_yaw: f32,
     pub cam_pitch: f32,
     pub cam_dist: f32,
+    /// Day→night terrain lightmap blend (`0.0` day `.t2lm`, `1.0` night `.t2lm1`); sandbox `--night`.
+    pub night_weight: f32,
     pub player_yaw: f32,
     pub player_vel_y: f32,
     pub player_moving: bool,
@@ -288,7 +290,7 @@ impl InteractiveClientApp {
             }
         }
 
-        let mut scene_3d = LoadedScene3D::build(&game.active_map, &game.vfs);
+        let mut scene_3d = LoadedScene3D::build_with_night(&game.active_map, &game.vfs, 0.0);
         scene_3d.load_cursors_from_dir(&game.element_root);
         scene_3d.show_software_cursor = true;
         let mut login_ui = AuiRuntime::from_dcf(&game.aui_manager, "interfaces/loginui.dcf");
@@ -395,6 +397,7 @@ impl InteractiveClientApp {
             cam_yaw: 0.55,
             cam_pitch: 0.24,
             cam_dist: 8.5,
+            night_weight: 0.0,
             player_yaw: 0.55,
             player_vel_y: 0.0,
             player_moving: false,
@@ -571,6 +574,49 @@ impl InteractiveClientApp {
         app
     }
 
+    /// Sets the day→night terrain lightmap blend and rebuilds the 3D scene (sandbox `--night`).
+    pub fn set_night_weight(&mut self, w: f32) {
+        self.night_weight = w.clamp(0.0, 1.0);
+        self.reload_active_scene_3d();
+    }
+
+    /// Sandbox `--time HH[:MM]`: sets the time of day (0–24h) and derives the day/night
+    /// `.t2lm`/`.t2lm1` lightmap blend — full day 06:30–17:30, full night 19:30–04:30,
+    /// smooth dawn/dusk ramps in between — then rebuilds the 3D scene.
+    pub fn set_time_of_day(&mut self, hours: f32) {
+        let h = hours.rem_euclid(24.0);
+        self.time_of_day = h;
+        self.set_night_weight(night_weight_for_hour(h));
+    }
+
+    /// Switches the active map and rebuilds the 3D scene (sandbox teleport-menu map hop).
+    /// Maps a server `world_tag` (from `s2c::NOTIFY_POS` / slice info) to a local map dir.
+    /// Tag `1` is the main continent (`maps/world`); other tags name dungeon/instance maps
+    /// (`a01`..`b30`) when that directory exists, otherwise we stay on the current map.
+    pub fn world_tag_to_map(&self, world_tag: i32) -> Option<String> {
+        if world_tag <= 1 {
+            if self.game.available_maps.iter().any(|m| m.eq_ignore_ascii_case("world")) {
+                return Some("world".to_string());
+            }
+            if self.game.available_maps.iter().any(|m| m.eq_ignore_ascii_case("a01")) {
+                return Some("a01".to_string());
+            }
+            return None;
+        }
+        let as_name = format!("{world_tag}");
+        self.game
+            .available_maps
+            .iter()
+            .find(|m| m.eq_ignore_ascii_case(&as_name))
+            .cloned()
+    }
+
+    pub fn load_map_and_reload(&mut self, map_name: &str, center: Vec3) -> PwResult<()> {
+        self.game.load_map_by_name_at(map_name, center)?;
+        self.reload_active_scene_3d();
+        Ok(())
+    }
+
     fn reload_active_scene_3d(&mut self) {
         self.water_level = self
             .game
@@ -581,7 +627,8 @@ impl InteractiveClientApp {
             .map(|w| w.water_height)
             .unwrap_or(-10_000.0);
         let keep_sw = self.scene_3d.show_software_cursor;
-        self.scene_3d = LoadedScene3D::build(&self.game.active_map, &self.game.vfs);
+        self.scene_3d =
+            LoadedScene3D::build_with_night(&self.game.active_map, &self.game.vfs, self.night_weight);
         self.scene_3d.load_cursors_from_dir(&self.game.element_root);
         self.scene_3d.show_software_cursor = keep_sw;
         self.scene_generation = self.scene_generation.wrapping_add(1);
@@ -986,13 +1033,15 @@ impl InteractiveClientApp {
                 .iter()
                 .any(|m| m.eq_ignore_ascii_case("world"));
             let target_map = if has_world { "world" } else { "a01" };
-            let init_center = if has_world {
-                if role.pos.0.is_finite() && (role.pos.0.abs() > 0.01 || role.pos.2.abs() > 0.01) {
-                    Vec3::new(role.pos.0, role.pos.1, role.pos.2)
-                } else {
-                    // West Archosaur Plaza (`(529, 663)` = `(1292.0, 219.61, 1132.0)` in `world_38`)
-                    Vec3::new(1292.0, 219.61, 1132.0)
-                }
+            let init_center = if role.pos.0.is_finite() && (role.pos.0.abs() > 0.01 || role.pos.2.abs() > 0.01) {
+                Vec3::new(role.pos.0, role.pos.1, role.pos.2)
+            } else if self.online_mode {
+                // Online: the server's SELF_INFO_1 / NOTIFY_POS will set the exact
+                // spawn (and world_tag -> map); don't hardcode a town position here.
+                Vec3::ZERO
+            } else if has_world {
+                // West Archosaur Plaza (`(529, 663)` = `(1292.0, 219.61, 1132.0)` in `world_38`)
+                Vec3::new(1292.0, 219.61, 1132.0)
             } else {
                 Vec3::ZERO
             };
@@ -1005,6 +1054,9 @@ impl InteractiveClientApp {
         let (spawn_x, spawn_y_hint, spawn_z) =
             if role.pos.0.is_finite() && (role.pos.0.abs() > 0.01 || role.pos.2.abs() > 0.01) {
                 (role.pos.0, Some(role.pos.1), role.pos.2)
+            } else if self.online_mode {
+                // Online with no role.pos yet: wait for server SELF_INFO_1 / NOTIFY_POS.
+                (0.0, None, 0.0)
             } else if is_midlands {
                 // West Archosaur (`world_38`) facing East-Southeast across the Archosaur boulevard & bridges
                 self.player_yaw = 2.18;
@@ -1541,8 +1593,8 @@ impl InteractiveClientApp {
                             self.toggle_modal(InWorldModal::EquipRefine);
                         }
                     }
-                    0x76 => self.toggle_modal(InWorldModal::GenieElf),    // F7 — Elemental Genie (`Win_ELFProp`)
-                    0x77 => self.toggle_modal(InWorldModal::PlayerBooth), // F8 — Cat-Shop Booth (`Win_Booth`)
+                    0x76 => self.toggle_modal(InWorldModal::GenieElf),    // F7 — Elemental Genie (`Win_ELF`)
+                    0x77 => self.toggle_modal(InWorldModal::PlayerBooth), // F8 — Cat-Shop Booth (`Win_PShop1`)
                     0x5A if self.modal == InWorldModal::WorldMap => {
                         // Z — Toggle Continent (`world.dds`) <-> Regional (`surfaces/maps/*.dds`) zoom!
                         self.world_map_regional_zoom = !self.world_map_regional_zoom;
@@ -2290,8 +2342,27 @@ impl InteractiveClientApp {
                     ));
                 }
                 GLinkEvent::GsNotifyPos { pos, world_tag } => {
+                    // Server-authoritative position + world tag: switch to the tagged map
+                    // (tag 1 = main continent `world`) before applying coordinates, so the
+                    // position is interpreted in the correct map's coordinate space.
+                    let target = self.world_tag_to_map(world_tag);
+                    if let Some(map_name) = target {
+                        let active = self.game.active_map.map_name.clone();
+                        if !active.eq_ignore_ascii_case(&map_name) {
+                            let center = Vec3::new(pos.0, pos.1, pos.2);
+                            if self.game.load_map_by_name_at(&map_name, center).is_ok() {
+                                self.reload_active_scene_3d();
+                                self.populate_world_entities();
+                                self.chat_log.push((
+                                    0xFF8C_E8FF,
+                                    format!("[GS] switched to map '{map_name}' (world_tag={world_tag})"),
+                                ));
+                            }
+                        }
+                    }
+                    let gy = self.sample_active_ground_y(pos.0, pos.1 + 4.0, pos.2);
                     if let Some(host) = &mut self.game.host_player {
-                        host.position = Vec3::new(pos.0, pos.1, pos.2);
+                        host.position = Vec3::new(pos.0, gy.max(pos.1), pos.2);
                     }
                     self.chat_log.push((
                         0xFF8C_E8FF,
@@ -2309,8 +2380,9 @@ impl InteractiveClientApp {
                 }
                 GLinkEvent::GsDecoded(pkt) => match pkt {
                     GsS2cPacket::SelfInfo1(info) => {
+                        let gy = self.sample_active_ground_y(info.pos.0, info.pos.1 + 4.0, info.pos.2);
                         if let Some(host) = &mut self.game.host_player {
-                            host.position = Vec3::new(info.pos.0, info.pos.1, info.pos.2);
+                            host.position = Vec3::new(info.pos.0, gy.max(info.pos.1), info.pos.2);
                             if info.level > 0 {
                                 host.level = info.level as u32;
                             }
@@ -3256,10 +3328,10 @@ impl InteractiveClientApp {
                         self.ingame_ui.show_dialog("Win_EquipRefine", true);
                     }
                     InWorldModal::GenieElf => {
-                        self.ingame_ui.show_dialog("Win_ELFProp", true);
+                        self.ingame_ui.show_dialog("Win_ELF", true);
                     }
                     InWorldModal::PlayerBooth => {
-                        self.ingame_ui.show_dialog("Win_Booth", true);
+                        self.ingame_ui.show_dialog("Win_PShop1", true);
                     }
                     InWorldModal::PkAutolock => {
                         self.ingame_ui.show_dialog("Win_PKSetting", true);
@@ -4961,7 +5033,7 @@ impl InteractiveClientApp {
             InWorldModal::GenieElf => {
                 let (dx, dy, dw, dh) = self
                     .ingame_ui
-                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_ELFProp", w, h)
+                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_ELF", w, h)
                     .unwrap_or((150, 130, 360, 340));
                 let clip = Some((dx + 12, dy + 26, (dw - 24).max(80), (dh - 36).max(80)));
                 texts.push(UiText2D {
@@ -4980,7 +5052,7 @@ impl InteractiveClientApp {
             InWorldModal::PlayerBooth => {
                 let (dx, dy, dw, dh) = self
                     .ingame_ui
-                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_Booth", w, h)
+                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_PShop1", w, h)
                     .unwrap_or((150, 130, 360, 360));
                 let clip = Some((dx + 12, dy + 26, (dw - 24).max(80), (dh - 36).max(80)));
                 texts.push(UiText2D {
@@ -5215,4 +5287,49 @@ fn find_embedded_dds_path(rec: &[u8]) -> String {
         }
     }
     String::new()
+}
+
+/// Day→night `.t2lm`/`.t2lm1` lightmap blend for a given hour (0–24): full day 06:30–17:30,
+/// full night 19:30–04:30, smooth dawn/dusk ramps in between. Pure function of the hour so
+/// the sandbox `--time HH[:MM]` flag and unit tests share one source of truth.
+pub fn night_weight_for_hour(h: f32) -> f32 {
+    let h = h.rem_euclid(24.0);
+    if (6.5..=17.5).contains(&h) {
+        0.0
+    } else if h > 19.5 || h < 4.5 {
+        1.0
+    } else if h < 6.5 {
+        (6.5 - h) / 2.0 // dawn ramp 04:30 → 06:30
+    } else {
+        (h - 17.5) / 2.0 // dusk ramp 17:30 → 19:30
+    }
+}
+
+#[cfg(test)]
+mod sandbox_time_tests {
+    use super::night_weight_for_hour;
+
+    #[test]
+    fn night_weight_full_day() {
+        for h in [6.5, 10.0, 12.0, 17.5] {
+            assert_eq!(night_weight_for_hour(h), 0.0, "hour {h}");
+        }
+    }
+
+    #[test]
+    fn night_weight_full_night() {
+        for h in [19.5, 22.0, 0.0, 4.5, 25.0, 48.5] {
+            assert_eq!(night_weight_for_hour(h), 1.0, "hour {h}");
+        }
+    }
+
+    #[test]
+    fn night_weight_dawn_dusk_ramps() {
+        assert!((night_weight_for_hour(5.5) - 0.5).abs() < 1e-6);
+        assert!((night_weight_for_hour(18.5) - 0.5).abs() < 1e-6);
+        assert!(night_weight_for_hour(6.0) > 0.0 && night_weight_for_hour(6.0) < 1.0);
+        assert!(night_weight_for_hour(19.0) > 0.0 && night_weight_for_hour(19.0) < 1.0);
+        // wraps modulo 24h
+        assert_eq!(night_weight_for_hour(30.0), night_weight_for_hour(6.0));
+    }
 }

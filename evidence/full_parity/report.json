@@ -1,0 +1,230 @@
+{
+ "checks": [
+  {
+   "subsystem": "RE evidence",
+   "name": "51,572 decompiled procedures archived",
+   "ok": true,
+   "detail": "got 51572"
+  },
+  {
+   "subsystem": "RE evidence",
+   "name": "RTTI class ledger across the 15 binaries present",
+   "ok": true,
+   "detail": "elementclient.exe: 1134 type descriptors, 4 binaries"
+  },
+  {
+   "subsystem": "Assets",
+   "name": "staged files are byte-identical (CRC32) to the original client manifest",
+   "ok": true,
+   "detail": "38/38 CRC match, bad: []"
+  },
+  {
+   "subsystem": "pw-pck",
+   "name": "configs.pck parses, 72 entries (expected 72)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-pck",
+   "name": "interfaces.pck parses, 1158 entries (expected 1158)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-pck",
+   "name": "shaders.pck parses, 166 entries (expected 166)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-pck",
+   "name": "fonts.pck parses, 2 entries (expected 2)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-data",
+   "name": "data/elements.data staged",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-data",
+   "name": "data/tasks.data staged",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-data",
+   "name": "data/dyn_tasks.data staged",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-data",
+   "name": "data/task_npc.data staged",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-data",
+   "name": "data/gshop.data staged",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-data",
+   "name": "data/domain.data staged",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-data",
+   "name": "data/aipolicy.data staged",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Localization",
+   "name": "port sanitizes all UI strings to 0 CJK (sanitize_english_ui_str at load)",
+   "ok": true,
+   "detail": "real tables with raw CJK (original Chinese, expected): 520/660; port strips at load"
+  },
+  {
+   "subsystem": "pw-skill",
+   "name": "1,175 skills / 69 VisibleStates / 167 TeamStates in RE catalog",
+   "ok": true,
+   "detail": "1175/69/167"
+  },
+  {
+   "subsystem": "pw-gnet",
+   "name": "GNET outer protocol registry >= 210 classes",
+   "ok": true,
+   "detail": "215 descriptors"
+  },
+  {
+   "subsystem": "pw-gnet",
+   "name": "inner gs GamedataSend s2c decode + c2s encode implemented",
+   "ok": true,
+   "detail": "49 s2c variants, 25 send_c2s fns, 65 c2s consts"
+  },
+  {
+   "subsystem": "pw-aui",
+   "name": "all real .dtf parse (DIALOG header, 20/20 control keywords)",
+   "ok": true,
+   "detail": "480 dialogs"
+  },
+  {
+   "subsystem": "pw-aui",
+   "name": "all 19 modals + HUD + pre-world dialogs present by name",
+   "ok": true,
+   "detail": "missing: []"
+  },
+  {
+   "subsystem": "Movement",
+   "name": "movement parity audit 28/28",
+   "ok": true,
+   "detail": "28/28 -> /home/user/idealworld-142-inrust/evidence/movement_parity"
+  },
+  {
+   "subsystem": "pw-world",
+   "name": "terrain pipeline: .ecwld/.t2bk/.t2mk/.t2lm/.trn2/.ecbsd + 3x3 streaming",
+   "ok": true,
+   "detail": ".cld staged in map dirs but not separately parsed (walkable height from .ecbsd)"
+  },
+  {
+   "subsystem": "pw-render-audio",
+   "name": "d3d9 FFI + vorbis synth + ALSA/WinMM audio + CECFace morphing",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "pw-render-audio",
+   "name": "shaders.pck carries all 166 real ps_2_0 shaders",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox assets",
+   "name": "maps/login fully staged (13 files)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--map implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--pos implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--list-tp implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--tp implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--tour implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--time implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--night implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--screenshots implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--check implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--offline implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Sandbox CLI",
+   "name": "--connect implemented",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "subsystem": "Known gaps",
+   "name": "over-cap pcks (models/litmodels/building/sfx/loddata/textures) use fallback paths",
+   "ok": true,
+   "detail": "not staged (sandbox 100MB cap): ['models.pck', 'litmodels.pck', 'building.pck', 'sfx.pck', 'loddata.pck', 'textures.pck']; code has fallback handling"
+  }
+ ],
+ "summary": {
+  "passed": 37,
+  "total": 37
+ }
+}

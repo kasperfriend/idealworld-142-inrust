@@ -1321,5 +1321,51 @@ mod tests {
         let left_edge = rimg.sample_uv_bilinear_clamp(0.0, 0.5);
         assert_eq!(left_edge, 0xFFFF_0000, "clamped bilinear must not wrap u=0 with u=1");
     }
+
+    #[test]
+    fn test_real_surfaces_pck_dds_decode_all_formats() {
+        // Decode real DDS payloads from the shipped `surfaces.pck` (DXT1/DXT3/DXT5 + mipmaps).
+        let Some(elem) = pw_core::find_test_pw142_element(env!("CARGO_MANIFEST_DIR")) else {
+            return;
+        };
+        let pck_path = elem.join("surfaces.pck");
+        if !pck_path.is_file() {
+            return;
+        }
+        let pck = pw_pck::PckArchive::open_path(pck_path).unwrap();
+        let mut dds_entries = 0usize;
+        let mut decoded = 0usize;
+        let mut checked = 0usize;
+        for entry in &pck.entries {
+            let path = entry.path.to_ascii_lowercase();
+            if !path.ends_with(".dds") {
+                continue;
+            }
+            dds_entries += 1;
+            // Sample every 37th entry to keep the test fast, but always include a few known icons.
+            checked += 1;
+            if checked % 37 != 0 && !path.contains("minimaps/a01/") && !path.contains("ingame/a01") {
+                continue;
+            }
+            let bytes = pck.read_entry(entry).unwrap();
+            let img = decode_surface_auto(&bytes)
+                .unwrap_or_else(|e| panic!("DDS decode failed for {}: {e}", entry.path));
+            assert!(img.width >= 4 && img.height >= 4, "bad dims for {}", entry.path);
+            assert_eq!(img.pixels.len(), img.width as usize * img.height as usize);
+            // Mip chain must be strictly decreasing and end at 1x1.
+            let mut pw = img.width as usize;
+            let mut ph = img.height as usize;
+            for (mw, mh, _) in &img.mips {
+                // DDS mip halving is floor (`max(1, prev/2)`), not ceil.
+                assert_eq!((*mw as usize, *mh as usize), ((pw / 2).max(1), (ph / 2).max(1)), "mip step for {}", entry.path);
+                pw = *mw as usize;
+                ph = *mh as usize;
+            }
+            assert_eq!((pw, ph), (1, 1), "mip chain must end at 1x1 for {}", entry.path);
+            decoded += 1;
+        }
+        assert!(dds_entries > 2000, "surfaces.pck should hold thousands of DDS, got {dds_entries}");
+        assert!(decoded > 50, "expected to decode >50 sampled DDS, got {decoded}");
+    }
 }
 

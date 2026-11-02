@@ -28,3 +28,4 @@ source/pw142/element/logs/
 
 # Export zip bundle if regenerated locally
 pw142-rust-port.zip
+google_drive/

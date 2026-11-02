@@ -250,6 +250,50 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_cec_face_fallback_paths_exist_in_facedata_pck() {
+        // Regression: face/hair texture fallbacks must point at REAL facedata.pck entries.
+        let Some(elem) = pw_core::find_test_pw142_element(env!("CARGO_MANIFEST_DIR")) else {
+            return;
+        };
+        if !elem.join("facedata.pck").is_file() {
+            return;
+        }
+        let mut vfs = pw_pck::VirtualFileSystem::new(Some(elem.clone()));
+        vfs.mount_pck("facedata", PckArchive::open_path(elem.join("facedata.pck")).unwrap());
+        // Every (cls, gender) x every submesh category must resolve at least one real file.
+        let cases: &[(i32, u8, &str, &str, bool)] = &[
+            (0, 0, "models/face/x", "脸.dds", false),
+            (0, 1, "models/face/x", "脸.dds", false),
+            (1, 0, "models/face/x", "脸.dds", false),
+            (1, 1, "models/face/x", "脸.dds", false),
+            (2, 0, "models/face/x", "脸.dds", false),
+            (2, 1, "models/face/x", "脸.dds", false),
+            (3, 0, "models/face/x", "脸.dds", false),
+            (4, 0, "models/face/x", "脸.dds", false),
+            (5, 0, "models/face/x", "脸.dds", false),
+            (5, 1, "models/face/x", "脸.dds", false),
+            (6, 1, "models/face/x", "脸.dds", false),
+            (7, 0, "models/face/x", "脸.dds", false),
+            (0, 0, "facedata/x/头发模型库", "头发a01.dds", true),
+            (2, 1, "facedata/x/头发模型库", "头发a01.dds", true),
+            (4, 0, "facedata/x/头发模型库", "x.dds", true),
+            (0, 0, "models/face/x", "眼珠a01.dds", false),
+            (4, 0, "models/face/x", "眼珠a01.dds", false),
+            (1, 1, "models/face/x", "嘴唇a01.dds", false),
+            (5, 0, "models/face/x", "嘴唇a01.dds", false),
+        ];
+        for &(cls, gender, hint, raw, is_hair) in cases {
+            let cands = a3d_scene_renderer::cec_face_fallback_candidates(cls, gender, hint, raw, is_hair);
+            assert!(!cands.is_empty(), "no candidates for cls={cls} gender={gender} raw={raw}");
+            let resolved = cands.iter().find_map(|p| vfs.read_file(p).ok());
+            assert!(
+                resolved.is_some(),
+                "ALL fallback candidates missing from facedata.pck for cls={cls} gender={gender} raw={raw}: {cands:?}"
+            );
+        }
+    }
+
+    #[test]
     fn test_settings_camera_shaders_and_fonts() {
         let syn_ini = b"[Video]\nRenderWid = 3440\nRenderHei = 1440\nWideScreen = 1\n";
         let syn_settings = SystemSettings::from_ini(&IniFile::parse_bytes(syn_ini));

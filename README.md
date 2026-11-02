@@ -136,6 +136,24 @@ cargo run --release --bin pw-elementclient -- /path/to/pw142/element --offline
 
 > **Tip**: If you launch without `--offline`, the client opens on the animated 3D Login Pantheon (`maps/login`). Press **`F5`** at any time on the Login screen to jump straight into Offline Character Select & Open-World Sandbox mode.
 
+#### Sandbox CLI Flags (headless evidence & world touring)
+
+```bash
+cd port
+# Boot straight into any map at any world coordinate:
+cargo run --release --bin pw-elementclient -- /path/to/pw142/element --offline --map world --pos 1292,1132
+# Teleport menu — list all 54 `world_targets.txt` landmarks, then render a 1280x800 frame at each:
+cargo run --release --bin pw-elementclient -- ... --map world --list-tp
+cargo run --release --bin pw-elementclient -- ... --map world --screenshots shots/ --tp 1501 --tp "plume"
+# World tour — one frame at EVERY landmark (tour01_*.bmp .. tour54_*.bmp):
+cargo run --release --bin pw-elementclient -- ... --map world --screenshots shots/ --tour
+# Time of day — --night forces the baked .t2lm1 night lightmaps; --time HH[:MM] (0-24)
+# picks any hour with automatic dawn/dusk day→night blending:
+cargo run --release --bin pw-elementclient -- ... --map world --screenshots shots/ --time 21:30 --tp 1301
+```
+
+> **Asset note**: the sandbox renders faithfully from the real client assets (`surfaces/gfx/litmodels/facedata/trees/grasses/...pck` + all 43 Midlands `world_*.t2*` tiles + `bsdata` + `tasks.data`). `models.pck`/`textures.pck` exceed the 100 MB single-file fetch cap, so when their meshes/textures are absent the renderer falls back to **procedural class-tinted humanoid avatars** (real `facedata.pck` faces still attach at the neck bone), **per-model tinted `.bmd` placeholders**, and the **baked `.t2lm` terrain lightmaps** — the world stays fully explorable and visually faithful.
+
 ---
 
 ### 4.2 Live Perfect World 1.4.2 Server Connection (`glinkd:29000`)

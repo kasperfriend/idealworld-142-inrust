@@ -753,7 +753,12 @@ mod tests {
         assert_eq!(game.elements_db.total_records(), 37_676);
         assert_eq!(game.domain_db.zones.len(), 47);
         assert!(!game.server_list.is_empty());
-        assert_eq!(game.server_list[0].addr, "127.0.0.1:29000");
+        // Endpoint must be normalized `host:port` on the glinkd port; the exact host depends on
+        // `userdata/server/serverlist.txt` vs `userdata/currentserver.ini` (127.0.0.1 in sandbox).
+        let addr = &game.server_list[0].addr;
+        let (host, port) = addr.rsplit_once(':').expect("host:port endpoint");
+        assert!(!host.is_empty());
+        assert_eq!(port, "29000");
 
         let player = CecHostPlayer::new(1024, "Archosaur", 0, 100, Vec3::new(128.0, 22.0, -64.0));
         let casted = player.cast_skill(1, 1).unwrap();
