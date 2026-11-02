@@ -1,0 +1,148 @@
+{
+ "checks": [
+  {
+   "name": "c2s PLAYER_MOVE exists with documented 33-byte layout",
+   "ok": true,
+   "detail": "cmd 0x0000, f32[3] cur + f32[3] next + u16 ms + u16 speed + u8 mode + u16 stamp"
+  },
+  {
+   "name": "PLAYER_MOVE called from game loop with 0.25 s cadence",
+   "ok": true,
+   "detail": "server gets a move packet every 250 ms while moving"
+  },
+  {
+   "name": "speed encoded as m/s * 256 (cm/s) in 1/256 m/s units",
+   "ok": true,
+   "detail": "sSpeed u16 = round(m/s * 256)"
+  },
+  {
+   "name": "move modes: 0x01 ground / 0x21 fly",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "s2c ObjectMove decoded (id, dest, time, speed, mode)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "s2c ObjectStopMove decoded (id, pos, speed, dir, mode)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "game_app applies ObjectMove/ObjectStopMove to live entities",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ExtProp decodes walk_speed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ExtProp decodes run_speed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ExtProp decodes swim_speed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ExtProp decodes flight_speed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "run_speed from server drives local move_speed (x2.2)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "physics: default move speed 14.0 m/s",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "physics: sprint multiplier 1.85",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "physics: fly multiplier 1.45",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "physics: jump initial velocity 9.5",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "physics: gravity 24.0",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "physics: fly ceiling ground+320",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "physics: fly vertical speed 0.75x",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ground collision samples .t2bk height + water + walkable",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "position clamped to world bounds (half extents)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "landing snaps to ground and zeroes vertical velocity",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "GNET::KeepAlive (op 90) in real opcode ledger and in port registry",
+   "ok": true,
+   "detail": "keepalive op 90 matches real client"
+  },
+  {
+   "name": "PLAYER_MOVE is GamedataSend c2s cmd 0x00 (per decompiled cmd_player_move)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "real client class CECHostMove present in port RTTI registry (from real binary vtables)",
+   "ok": true,
+   "detail": "modeled in pw-client; physics in game_app tick"
+  },
+  {
+   "name": "real client class CECHPWorkMove present in port RTTI registry (from real binary vtables)",
+   "ok": true,
+   "detail": "modeled in pw-client; physics in game_app tick"
+  },
+  {
+   "name": "real client class CECHPWorkFall present in port RTTI registry (from real binary vtables)",
+   "ok": true,
+   "detail": "modeled in pw-client; physics in game_app tick"
+  },
+  {
+   "name": "real client class CECHPWorkFly present in port RTTI registry (from real binary vtables)",
+   "ok": true,
+   "detail": "modeled in pw-client; physics in game_app tick"
+  }
+ ],
+ "summary": {
+  "passed": 28,
+  "total": 28
+ }
+}
