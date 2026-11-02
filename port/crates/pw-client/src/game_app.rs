@@ -2360,8 +2360,8 @@ impl InteractiveClientApp {
                             }
                         }
                     }
+                    let gy = self.sample_active_ground_y(pos.0, pos.1 + 4.0, pos.2);
                     if let Some(host) = &mut self.game.host_player {
-                        let gy = self.sample_active_ground_y(pos.0, pos.1 + 4.0, pos.2);
                         host.position = Vec3::new(pos.0, gy.max(pos.1), pos.2);
                     }
                     self.chat_log.push((
@@ -2380,8 +2380,8 @@ impl InteractiveClientApp {
                 }
                 GLinkEvent::GsDecoded(pkt) => match pkt {
                     GsS2cPacket::SelfInfo1(info) => {
+                        let gy = self.sample_active_ground_y(info.pos.0, info.pos.1 + 4.0, info.pos.2);
                         if let Some(host) = &mut self.game.host_player {
-                            let gy = self.sample_active_ground_y(info.pos.0, info.pos.1 + 4.0, info.pos.2);
                             host.position = Vec3::new(info.pos.0, gy.max(info.pos.1), info.pos.2);
                             if info.level > 0 {
                                 host.level = info.level as u32;
