@@ -1,0 +1,63 @@
+{
+ "checks": [
+  {
+   "name": "s2c::SELF_INFO_1 = 0x0008 decoded with f32 pos[3]",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "s2c::NOTIFY_POS = 0x0025 decoded (pos + i32 world_tag)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "live fast-path decodes SELF_INFO_1 pos at body[8..20] and NOTIFY_POS at body[0..16]",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "EnterWorld c2s op 72 sent after SelectRole_Re op 71 result==0",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "c2s PLAYER_MOVE cmd 0x0000 33-byte layout",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "GsNotifyPos switches map via world_tag_to_map before applying pos",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "GsNotifyPos ground-clamps server Y via sample_active_ground_y",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "SelfInfo1 applies server pos with ground clamp",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "online mode never hardcodes Archosaur spawn (waits for server pos)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "world_tag_to_map: tag<=1 -> world (fallback a01), other tags -> matching map dir",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "NPC/player/matter slice entries decode pos (vec3) + dir + state",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "summary": {
+  "passed": 11,
+  "total": 11
+ }
+}

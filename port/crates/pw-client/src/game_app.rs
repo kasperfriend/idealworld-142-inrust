@@ -590,6 +590,27 @@ impl InteractiveClientApp {
     }
 
     /// Switches the active map and rebuilds the 3D scene (sandbox teleport-menu map hop).
+    /// Maps a server `world_tag` (from `s2c::NOTIFY_POS` / slice info) to a local map dir.
+    /// Tag `1` is the main continent (`maps/world`); other tags name dungeon/instance maps
+    /// (`a01`..`b30`) when that directory exists, otherwise we stay on the current map.
+    pub fn world_tag_to_map(&self, world_tag: i32) -> Option<String> {
+        if world_tag <= 1 {
+            if self.game.available_maps.iter().any(|m| m.eq_ignore_ascii_case("world")) {
+                return Some("world".to_string());
+            }
+            if self.game.available_maps.iter().any(|m| m.eq_ignore_ascii_case("a01")) {
+                return Some("a01".to_string());
+            }
+            return None;
+        }
+        let as_name = format!("{world_tag}");
+        self.game
+            .available_maps
+            .iter()
+            .find(|m| m.eq_ignore_ascii_case(&as_name))
+            .cloned()
+    }
+
     pub fn load_map_and_reload(&mut self, map_name: &str, center: Vec3) -> PwResult<()> {
         self.game.load_map_by_name_at(map_name, center)?;
         self.reload_active_scene_3d();
@@ -1012,13 +1033,15 @@ impl InteractiveClientApp {
                 .iter()
                 .any(|m| m.eq_ignore_ascii_case("world"));
             let target_map = if has_world { "world" } else { "a01" };
-            let init_center = if has_world {
-                if role.pos.0.is_finite() && (role.pos.0.abs() > 0.01 || role.pos.2.abs() > 0.01) {
-                    Vec3::new(role.pos.0, role.pos.1, role.pos.2)
-                } else {
-                    // West Archosaur Plaza (`(529, 663)` = `(1292.0, 219.61, 1132.0)` in `world_38`)
-                    Vec3::new(1292.0, 219.61, 1132.0)
-                }
+            let init_center = if role.pos.0.is_finite() && (role.pos.0.abs() > 0.01 || role.pos.2.abs() > 0.01) {
+                Vec3::new(role.pos.0, role.pos.1, role.pos.2)
+            } else if self.online_mode {
+                // Online: the server's SELF_INFO_1 / NOTIFY_POS will set the exact
+                // spawn (and world_tag -> map); don't hardcode a town position here.
+                Vec3::ZERO
+            } else if has_world {
+                // West Archosaur Plaza (`(529, 663)` = `(1292.0, 219.61, 1132.0)` in `world_38`)
+                Vec3::new(1292.0, 219.61, 1132.0)
             } else {
                 Vec3::ZERO
             };
@@ -1031,6 +1054,9 @@ impl InteractiveClientApp {
         let (spawn_x, spawn_y_hint, spawn_z) =
             if role.pos.0.is_finite() && (role.pos.0.abs() > 0.01 || role.pos.2.abs() > 0.01) {
                 (role.pos.0, Some(role.pos.1), role.pos.2)
+            } else if self.online_mode {
+                // Online with no role.pos yet: wait for server SELF_INFO_1 / NOTIFY_POS.
+                (0.0, None, 0.0)
             } else if is_midlands {
                 // West Archosaur (`world_38`) facing East-Southeast across the Archosaur boulevard & bridges
                 self.player_yaw = 2.18;
@@ -2316,8 +2342,27 @@ impl InteractiveClientApp {
                     ));
                 }
                 GLinkEvent::GsNotifyPos { pos, world_tag } => {
+                    // Server-authoritative position + world tag: switch to the tagged map
+                    // (tag 1 = main continent `world`) before applying coordinates, so the
+                    // position is interpreted in the correct map's coordinate space.
+                    let target = self.world_tag_to_map(world_tag);
+                    if let Some(map_name) = target {
+                        let active = self.game.active_map.map_name.clone();
+                        if !active.eq_ignore_ascii_case(&map_name) {
+                            let center = Vec3::new(pos.0, pos.1, pos.2);
+                            if self.game.load_map_by_name_at(&map_name, center).is_ok() {
+                                self.reload_active_scene_3d();
+                                self.populate_world_entities();
+                                self.chat_log.push((
+                                    0xFF8C_E8FF,
+                                    format!("[GS] switched to map '{map_name}' (world_tag={world_tag})"),
+                                ));
+                            }
+                        }
+                    }
                     if let Some(host) = &mut self.game.host_player {
-                        host.position = Vec3::new(pos.0, pos.1, pos.2);
+                        let gy = self.sample_active_ground_y(pos.0, pos.1 + 4.0, pos.2);
+                        host.position = Vec3::new(pos.0, gy.max(pos.1), pos.2);
                     }
                     self.chat_log.push((
                         0xFF8C_E8FF,
@@ -2336,7 +2381,8 @@ impl InteractiveClientApp {
                 GLinkEvent::GsDecoded(pkt) => match pkt {
                     GsS2cPacket::SelfInfo1(info) => {
                         if let Some(host) = &mut self.game.host_player {
-                            host.position = Vec3::new(info.pos.0, info.pos.1, info.pos.2);
+                            let gy = self.sample_active_ground_y(info.pos.0, info.pos.1 + 4.0, info.pos.2);
+                            host.position = Vec3::new(info.pos.0, gy.max(info.pos.1), info.pos.2);
                             if info.level > 0 {
                                 host.level = info.level as u32;
                             }
