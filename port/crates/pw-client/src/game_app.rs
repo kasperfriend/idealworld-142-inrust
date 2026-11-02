@@ -87,8 +87,8 @@ pub enum InWorldModal {
     Warehouse,      // N — `Win_Storage` (`CDlgStorage` Account Bank & Coin Stash)
     CraftProduce,   // I — `Win_Produce` (`CDlgProduce` Blacksmith / Tailor / Craftsman / Apothecary)
     EquipRefine,    // F6 — `Win_EquipRefine` (`CDlgEquipRefine` Elder `+1..+12` Mirage Refinement & Sockets)
-    GenieElf,       // F7 — `Win_ELFProp` (`CDlgELFProp` Rising Tide Elemental Genie Skills & Stamina)
-    PlayerBooth,    // F8 — `Win_Booth` (`CDlgBooth` Cat-Shop Personal Market Stall)
+    GenieElf,       // F7 — `Win_ELF` (`CDlgELFProp` Rising Tide Elemental Genie Skills & Stamina)
+    PlayerBooth,    // F8 — `Win_PShop1` (`CDlgBooth` Cat-Shop Personal Market Stall)
     PkAutolock,     // F5 — `Win_PKSetting` / `Win_AutoLock` (`CDlgPKSetting` + Safety Lock)
     DevConsole,     // ` / F12 — `Dlg_Console` (`configs/console_cmd.txt`)
 }
@@ -1567,8 +1567,8 @@ impl InteractiveClientApp {
                             self.toggle_modal(InWorldModal::EquipRefine);
                         }
                     }
-                    0x76 => self.toggle_modal(InWorldModal::GenieElf),    // F7 — Elemental Genie (`Win_ELFProp`)
-                    0x77 => self.toggle_modal(InWorldModal::PlayerBooth), // F8 — Cat-Shop Booth (`Win_Booth`)
+                    0x76 => self.toggle_modal(InWorldModal::GenieElf),    // F7 — Elemental Genie (`Win_ELF`)
+                    0x77 => self.toggle_modal(InWorldModal::PlayerBooth), // F8 — Cat-Shop Booth (`Win_PShop1`)
                     0x5A if self.modal == InWorldModal::WorldMap => {
                         // Z — Toggle Continent (`world.dds`) <-> Regional (`surfaces/maps/*.dds`) zoom!
                         self.world_map_regional_zoom = !self.world_map_regional_zoom;
@@ -3282,10 +3282,10 @@ impl InteractiveClientApp {
                         self.ingame_ui.show_dialog("Win_EquipRefine", true);
                     }
                     InWorldModal::GenieElf => {
-                        self.ingame_ui.show_dialog("Win_ELFProp", true);
+                        self.ingame_ui.show_dialog("Win_ELF", true);
                     }
                     InWorldModal::PlayerBooth => {
-                        self.ingame_ui.show_dialog("Win_Booth", true);
+                        self.ingame_ui.show_dialog("Win_PShop1", true);
                     }
                     InWorldModal::PkAutolock => {
                         self.ingame_ui.show_dialog("Win_PKSetting", true);
@@ -4987,7 +4987,7 @@ impl InteractiveClientApp {
             InWorldModal::GenieElf => {
                 let (dx, dy, dw, dh) = self
                     .ingame_ui
-                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_ELFProp", w, h)
+                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_ELF", w, h)
                     .unwrap_or((150, 130, 360, 340));
                 let clip = Some((dx + 12, dy + 26, (dw - 24).max(80), (dh - 36).max(80)));
                 texts.push(UiText2D {
@@ -5006,7 +5006,7 @@ impl InteractiveClientApp {
             InWorldModal::PlayerBooth => {
                 let (dx, dy, dw, dh) = self
                     .ingame_ui
-                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_Booth", w, h)
+                    .find_dialog_screen_rect(&self.game.aui_manager, "Win_PShop1", w, h)
                     .unwrap_or((150, 130, 360, 360));
                 let clip = Some((dx + 12, dy + 26, (dw - 24).max(80), (dh - 36).max(80)));
                 texts.push(UiText2D {

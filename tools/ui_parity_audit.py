@@ -215,6 +215,39 @@ def main():
     check("userdata/Layout/*.ini parsed and mostly resolve to DIALOG names", len(layout_bad) <= 5,
           f"{layout_refs} override keys, unknown (also unknown to real client): {layout_bad[:8]}")
 
+    # 6. Control-level parity: every control name the Rust client references must exist
+    #    in the real client's .dtf control inventory
+    ctrl_universe = defaultdict(set)
+    for p, d in dialogs.items():
+        for c in d["controls"]:
+            ctrl_universe[c["name"]].add(p)
+    ctrl_pat = re.compile(r'^(Btn|Chk|Cmb|Combo|Txt|Img|Lst|Tv|Prg|Sld|Edt|Lbl|Frame|Pop|Scroll|Radio|Tree|Stc|Win|Dlg)_')
+    refs = set()
+    for dirpath, _, files in os.walk(os.path.join(ROOT, "port", "crates")):
+        for f in files:
+            if f.endswith(".rs"):
+                txt = open(os.path.join(dirpath, f), encoding="utf-8", errors="replace").read()
+                for m in re.findall(r'"([A-Za-z][A-Za-z0-9_]{2,})"', txt):
+                    if ctrl_pat.match(m):
+                        refs.add(m)
+    dlg_names = {d["name"] for d in dialogs.values()}
+    missing_ctrl = sorted(r for r in refs
+                          if not r.startswith(("Win_", "Dlg_")) and r not in ctrl_universe)
+    # dialog names actually opened at runtime via show_dialog()/find_dialog_screen_rect()
+    src_all = ""
+    for dirpath, _, files in os.walk(os.path.join(ROOT, "port", "crates")):
+        for f in files:
+            if f.endswith(".rs"):
+                src_all += open(os.path.join(dirpath, f), encoding="utf-8", errors="replace").read()
+    live_refs = set(re.findall(
+        r'(?:show_dialog|find_dialog_screen_rect\([^)]*?),\s*"([A-Za-z0-9_]+)"', src_all))
+    missing_dlg = sorted(r for r in live_refs if r not in dlg_names)
+    check("all control names referenced in Rust sources exist in real .dtf inventory",
+          not missing_ctrl, f"{len(refs)} refs, missing controls: {missing_ctrl[:10]}")
+    check("all dialog names referenced in Rust sources exist in real .dtf DIALOG headers",
+          not missing_dlg, f"missing dialogs: {missing_dlg[:10]}")
+    report["summary"]["rust_control_refs"] = len(refs)
+
     # control kind census across all dialogs
     kinds = Counter(c["kind"] for d in dialogs.values() for c in d["controls"])
     report["summary"]["control_kinds"] = dict(kinds)

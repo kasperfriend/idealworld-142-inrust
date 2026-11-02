@@ -65,6 +65,16 @@
    "name": "userdata/Layout/*.ini parsed and mostly resolve to DIALOG names",
    "ok": true,
    "detail": "703 override keys, unknown (also unknown to real client): ['Win_Inventory', 'Win_Inventory']"
+  },
+  {
+   "name": "all control names referenced in Rust sources exist in real .dtf inventory",
+   "ok": true,
+   "detail": "133 refs, missing controls: []"
+  },
+  {
+   "name": "all dialog names referenced in Rust sources exist in real .dtf DIALOG headers",
+   "ok": true,
+   "detail": "missing dialogs: []"
   }
  ],
  "dialogs": {
@@ -12485,6 +12495,7 @@
  },
  "summary": {
   "stf_total_strings": 0,
+  "rust_control_refs": 133,
   "control_kinds": {
    "WINDOWPICTURE": 2,
    "IMAGEPICTURE": 3365,
@@ -12506,7 +12517,7 @@
   },
   "total_controls": 9538,
   "dialog_count": 480,
-  "checks_passed": 11,
-  "checks_total": 11
+  "checks_passed": 13,
+  "checks_total": 13
  }
 }

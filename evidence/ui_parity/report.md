@@ -3,7 +3,7 @@
 - Dialogs parsed: **480** (controls total: 9538)
 - String tables: 483 (0 strings), hint tables: 177
 - Control kinds: {'WINDOWPICTURE': 2, 'IMAGEPICTURE': 3365, 'LABEL': 2791, 'EDIT': 526, 'STILLIMAGEBUTTON': 1919, 'TEXT': 89, 'LIST': 159, 'RADIO': 122, 'CHECK': 154, 'TREE': 12, 'SLIDER': 258, 'SCROLL': 12, 'MODELPICTURE': 1, 'MENUITEM': 57, 'PROGRESS': 56, 'COMBO': 14, 'CONSOLE': 1}
-- Checks: **11/11 passed**
+- Checks: **13/13 passed**
 
 | Check | Result | Detail |
 |---|---|---|
@@ -18,3 +18,5 @@
 | all .dtf referenced by .dcf (as loaded by pw-aui) exist in interfaces.pck | ✅ | 375 refs, missing: [] |
 | all 19 modal + HUD + pre-world DIALOG names present | ✅ | missing: [] |
 | userdata/Layout/*.ini parsed and mostly resolve to DIALOG names | ✅ | 703 override keys, unknown (also unknown to real client): ['Win_Inventory', 'Win_Inventory'] |
+| all control names referenced in Rust sources exist in real .dtf inventory | ✅ | 133 refs, missing controls: [] |
+| all dialog names referenced in Rust sources exist in real .dtf DIALOG headers | ✅ | missing dialogs: [] |
