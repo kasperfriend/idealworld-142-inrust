@@ -36,3 +36,18 @@ client by construction.
    treeview/combobox control types all exercised.
 5. **Fix & re-verify**: fix every discrepancy found in `pw-aui`/`pw-client`, re-run audit +
    screenshots until the report is clean, then commit, push, and post evidence on PR #2.
+
+## Progress (2026-11-02)
+- ✅ Phase 1: staged real assets to `/home/user/pw142/element/` — interfaces/configs/fonts/shaders/
+  surfaces/gfx/trees/grasses/facedata pcks, `data/*.data`, `cursors/`, `userdata/` (Layout ini,
+  SystemSettings.ini, currentserver.ini), `maps/login` (13 files).
+- ✅ Phase 4: `tools/ui_parity_audit.py` (Python, no toolchain needed) — parses real
+  `interfaces.pck` and cross-checks the Rust UI layer. **13/13 checks green**
+  (`evidence/ui_parity/report.{json,md}`): 480 .dtf parse, 483 .stf, 177 .htf, 3 .dcf
+  manifests, all 375 .dcf-referenced dialogs resolve, all 19 modal + HUD + pre-world dialog
+  names present, 133 control-name refs resolve, Layout ini overrides resolve.
+- ✅ Fix found by audit: client opened `Win_ELFProp`/`Win_Booth`, which do not exist in the
+  real client — corrected to the real dialog names `Win_ELF` (genie) and `Win_PShop1`
+  (player booth) in `game_app.rs` (commit 06b21ae).
+- ⚠️ Runtime rendering sweep (Phase 3) blocked: no Rust toolchain obtainable in this sandbox
+  (rust dist hosts blocked; no prebuilt binary downloadable) — CI builds on push instead.
